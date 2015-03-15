@@ -1,0 +1,17 @@
+2015-03-15 17:44:48,979 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: br.com.joocebox:viatge:0.0.1-SNAPSHOT @ /home/manolo/workspaceGit/viatge/pom.xml.
+2015-03-15 17:44:52,725 [Worker-5] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: br.com.joocebox:viatge:0.0.1-SNAPSHOT @ /home/manolo/workspaceGit/viatge/pom.xml.
+2015-03-15 17:45:10,079 [Worker-7] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: br.com.joocebox:viatge:0.0.1-SNAPSHOT @ /home/manolo/workspaceGit/viatge/pom.xml.
+2015-03-15 17:45:18,488 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:45:18,493 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2015-03-15 17:45:18,546 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:45:18,546 [Worker-7] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/manolo/workspaceGit/viatge/src/test/resources
+2015-03-15 17:45:20,492 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: br.com.joocebox:viatge:0.0.1-SNAPSHOT @ /home/manolo/workspaceGit/viatge/pom.xml.
+2015-03-15 17:45:22,380 [Worker-0] INFO  o.e.m.c.i.l.LifecycleMappingFactory - Using org.maven.ide.eclipse.wtp.WarLifecycleMapping lifecycle mapping for MavenProject: br.com.joocebox:viatge:0.0.1-SNAPSHOT @ /home/manolo/workspaceGit/viatge/pom.xml.
+2015-03-15 17:46:11,246 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:46:11,276 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2015-03-15 17:46:11,280 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:46:11,280 [Worker-10] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/manolo/workspaceGit/viatge/src/test/resources
+2015-03-15 17:50:52,264 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:50:52,276 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Copying 3 resources
+2015-03-15 17:50:52,290 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - Using 'UTF-8' encoding to copy filtered resources.
+2015-03-15 17:50:52,290 [Worker-3] INFO  o.e.m.c.i.embedder.EclipseLogger - skip non existing resourceDirectory /home/manolo/workspaceGit/viatge/src/test/resources
