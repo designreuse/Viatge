@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition extends="error" name="error/forbidden">
+		<put-attribute name="errors" value="/public/error/Forbidden.jsp" />
+	</definition>
+
+	<definition extends="error" name="error/notFound">
+		<put-attribute name="errors" value="/public/error/NotFound.jsp" />
+	</definition>
+
+	<definition extends="error" name="error/serverError">
+		<put-attribute name="errors" value="/public/error/InternalServerError.jsp" />
+	</definition>
+</tiles-definitions>

@@ -1,0 +1,178 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<!-- CONTENT -->
+<!--TITLE -->
+<div class="row">
+	<div id="paper-top">
+		<div class="col-sm-12">
+			<!-- TITULO DA PÁGINA -->
+			<h2 class="tittle-content-header">
+				<i class="icon-menu"></i> <span>Atendimentos em Aberto</span>
+			</h2>
+		</div>
+	</div>
+</div>
+<!--/ TITLE -->
+
+
+<!-- BREADCRUMB -->
+<ul id="breadcrumb">
+	<li><span class="entypo-home"></span></li>
+	<li><i class="fa fa-lg fa-angle-right"></i></li>
+	<li><a href="#" title="Sample page 1">Página Inicial</a></li>
+	<li><i class="fa fa-lg fa-angle-right"></i></li>
+	<li><a href="#" title="Sample page 1">Atendimentos em Aberto</a></li>
+</ul>
+<!-- FIM BREADCRUMB -->
+
+
+<div class="content-wrap margin-bottom">
+	<div class="row-cols">
+
+		<ul class="list-metricas list6">
+			<li class="status01">
+				<div>
+					<p>PRÓXIMOS DE VIAJAR</p>
+					<div class="var-metrica">
+						<span class="entypo-clock"></span> 0
+					</div>
+				</div>
+			</li>
+
+			<li class="status02">
+				<div>
+					<p>Orçamento Enviado</p>
+					<div class="var-metrica">
+						<span class="fontawesome-money"></span> <c:out value="${submitted_budget_div}"/>
+					</div>
+				</div>
+
+
+			</li>
+
+			<li class="status03">
+				<div>
+					<p>EM NEGOCIAÇÃO</p>
+					<div class="var-metrica">
+						<span class="fontawesome-comments"></span> <c:out value="${send_budget_div}"/>
+					</div>
+				</div>
+			</li>
+
+			<li class="status04">
+				<div>
+					<p>PRÓXIMOS DE EMBARQUE</p>
+					<div class="var-metrica">
+						<span class="entypo-suitcase"></span> 0
+					</div>
+				</div>
+			</li>
+
+			<li class="status05">
+				<div>
+					<p>EM VIAGEM</p>
+					<div class="var-metrica">
+						<span class="fontawesome-plane"></span> 0
+					</div>
+				</div>
+			</li>
+
+			<li class="status06">
+				<div>
+					<p>RETORNO DE VIAGEM</p>
+					<div class="var-metrica">
+						<span class="entypo-home"></span> 0
+					</div>
+				</div>
+			</li>
+		</ul>
+
+		<div class="col-sm-12">
+
+
+
+			<div class="nest text margin-bottom">
+				<div class="title-alt">
+					<h6>Tarefas em Aberto</h6>
+				</div>
+
+				<form action="#" method="post" class="form-filtro">
+					<div class="col-sm-4">
+						<input class="form-control" id="filter" placeholder="Procurar"
+							type="text" />
+					</div>
+				</form>
+
+				<div class="col-sm-12">
+					<c:choose>
+						<c:when test="${!empty serviceListRegister}">
+
+
+							<table id="footable-res2" class="demo margin-bottom"
+								data-filter="#filter" data-filter-text-only="true">
+								<thead>
+									<tr>
+										<th>Nome</th>
+										<th>Sobrenome</th>
+										<th>Valor Estimado</th>
+										<th>Data de Abertura</th>										
+										<th>Status</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${serviceListRegister}" var="service" varStatus="status">
+									<tr>
+										<td>
+											<a href="editService/${service.id}">${service.firstName}</a>
+                                        </td>
+                                        <td>${service.lastName}</td>
+                                        <td>
+                                        	<fmt:setLocale value="pt_BR"/>
+                                        	<fmt:formatNumber value="${service.price}" type="currency"/>
+                                        </td>
+                                        <td>
+                                        	<fmt:formatDate value="${service.dateService}"/>                                   
+                                        </td>
+                                        <c:choose>
+                                        	<c:when test="${service.saleType eq 'SUBMITTED_BUDGET'}">
+                                        		<td><span class="label label-success status02">&nbsp;&nbsp;</span></td>
+                                        	</c:when>
+                                        	<c:when test="${service.saleType eq 'SEND_BUDGET'}">
+                                        		<td><span class="label label-success status03">&nbsp;&nbsp;</span></td>
+                                        	</c:when>
+                                        </c:choose>
+                                        
+                                    </tr> 
+									</c:forEach>
+								</tbody>
+							</table>
+						</c:when>
+						<c:otherwise>
+							<div class="alert alert-info">								
+								<span class="entypo-info-circled"></span> <strong>Hummm!</strong>&nbsp;&nbsp;Parece
+								que você ainda não possui nenhuma atendimento cadastrado, clique
+								no menu <b>"Novo Atendimento"</b>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</div>
+
+			</div>
+
+
+			<p class="size14">
+				<c:out value="${ListSize}"></c:out>
+				Atendimentos em Aberto
+			</p>
+			<p class="size14">
+				Valor de Negócios Estimado:
+				<fmt:setLocale value="pt_BR" />
+				<fmt:formatNumber value="${totalAmount}" type="currency" />
+			</p>
+		</div>
+
+	</div>
+</div>

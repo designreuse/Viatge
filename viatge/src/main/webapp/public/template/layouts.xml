@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- Layout definido para a pagina de cadastro na Landing Page -->
+	<definition name="landing" template="/public/template/landing.jsp" />
+	<definition name="register" template="/public/template/register.jsp" />
+	<definition name="wizard" template="/public/template/wizard.jsp" />
+	<definition name="error" template="/public/template/Error.jsp"/>
+</tiles-definitions>
