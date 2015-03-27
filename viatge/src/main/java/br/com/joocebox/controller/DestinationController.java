@@ -1,5 +1,6 @@
 package br.com.joocebox.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -18,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,13 +27,18 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.google.gson.Gson;
+
 import br.com.joocebox.model.Category;
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Destination;
+import br.com.joocebox.model.FileMeta;
 import br.com.joocebox.model.Image;
+import br.com.joocebox.model.ImageJson;
 import br.com.joocebox.model.StreetView;
 import br.com.joocebox.model.Video;
 import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.utils.JooceBoxProperties;
 
 @Controller
 @Transactional(propagation = Propagation.REQUIRED)
@@ -47,9 +52,6 @@ public class DestinationController{
 	
 	@Autowired
 	public FileController fileController;
-	
-	@Autowired
-	public Mapper dozerBeanMapper;
 	
 	//Retorna o body do destino para inclusão
 	@RequestMapping("destination")
@@ -133,10 +135,15 @@ public class DestinationController{
 					Country countryId = dashboardFacade.getCountryId(destination.getCountry().getIdCountry());
 					destination.setCountry(countryId);
 					
-					destination.setStreetView(parseStreetViewCod(destination.getStreetView())); 
-					
+					destination.setStreetView(parseStreetViewCod(destination.getStreetView())); 				
 					
 					destination.setVideo(parseYouTubeVideo(destination.getVideo()));
+					
+					if(destination.getDtAppearWebsite() == null)
+						destination.setDtAppearWebsite(false);
+					
+					if(destination.getDtHighlightWebsite() == null)
+						destination.setDtHighlightWebsite(false);
 										
 					dashboardFacade.addDestination(destination);
 
@@ -146,13 +153,17 @@ public class DestinationController{
 					return new ModelAndView(new RedirectView("destination"));
 					
 				} catch (Exception e) {
-					redirectAttributes.addFlashAttribute("message", "Não foi possivel adicionar o destino "+ destination.getDtName());
+					e.printStackTrace();
+					fileController.deleteAllImages(destination.getImages(), destination.getDtName());
+					//TODO: apagar as pastas com as imagens assim como os registros na tabela de image
+					redirectAttributes.addFlashAttribute("errorMessage", "Não foi possivel adicionar o destino "+ destination.getDtName());
 					return new ModelAndView(new RedirectView("destination"));
 				}
 			}
 		}
 	}
-	
+
+
 	private Video parseYouTubeVideo(Video video) {
 		String[] result = video.getCode().split("=");
 		
@@ -211,6 +222,31 @@ public class DestinationController{
 				try {
 					//Retrive Destination of DB
 					destinationId =dashboardFacade.getDestinationId(id);
+										
+					if (destinationId.getDtName() != altDestination.getDtName()) {
+						 String oldName = destinationId.getDtName();
+						 String newName = altDestination.getDtName();
+						 
+						 File oldFileOriginal = new File(new JooceBoxProperties().getPathOriginalImages(dashboardFacade.getAgency().getSubdomain())+"/"+oldName);
+						 oldFileOriginal.renameTo(new File(new JooceBoxProperties().getPathOriginalImages(dashboardFacade.getAgency().getSubdomain())+"/"+newName));
+						 
+						 File oldFileResized = new File(new JooceBoxProperties().getPathResizedImage(dashboardFacade.getAgency().getSubdomain())+"/"+oldName);
+						 oldFileResized.renameTo(new File(new JooceBoxProperties().getPathResizedImage(dashboardFacade.getAgency().getSubdomain())+"/"+newName));
+						 
+						 File oldFileThumbnail = new File(new JooceBoxProperties().getPathThumbnailImage(dashboardFacade.getAgency().getSubdomain())+"/"+oldName);
+						 oldFileThumbnail.renameTo(new File(new JooceBoxProperties().getPathThumbnailImage(dashboardFacade.getAgency().getSubdomain())+"/"+newName));
+						 
+						 for (Image image : destinationId.getImages()) {
+							Gson gson = new Gson();
+							FileMeta fromJson = gson.fromJson(image.getJson(), FileMeta.class);							
+							String imagePath = fromJson.getFileTmpPath();
+							
+							//TODO: Realizar o replace do nome do destino apenas na pasta;
+							imagePath.replace(oldName, altDestination.getDtName());
+							
+						}
+					}
+
 					
 					//Atualiza a Categoria
 					Category category = dashboardFacade.getCategoryId(altDestination.getCategories().getIdCategory());
@@ -266,15 +302,17 @@ public class DestinationController{
 					destinationId.getWeatherprofile().setWinter(altDestination.getWeatherprofile().getWinter());
 					//End of Profile
 					
-					//Appear in website controller
-//					destinationId.getDtAppearWebsite(altDestination.getDtAppearWebsite());
-//					destinationId.getDtHighlightWebsite();
-					
 					//Destination's Image
 					Set<Image> imageReplication = fileController.imageReplication(destinationId);
 					for (Image image : imageReplication) {
 						destinationId.getImages().add(image);
 					}
+					
+					if(altDestination.getDtAppearWebsite() == null)
+						destinationId.setDtAppearWebsite(false);
+					
+					if(altDestination.getDtHighlightWebsite() == null)
+						destinationId.setDtHighlightWebsite(false);
 					
 					//Destination Update
 					dashboardFacade.destinationUpdate(destinationId);
@@ -285,7 +323,8 @@ public class DestinationController{
 					return new ModelAndView(new RedirectView("destination"));
 					
 				} catch (Exception e) {
-					redirectAttributes.addFlashAttribute("message", "Não foi possivel adicionar o destino "+ altDestination.getDtName());
+					e.printStackTrace();
+					redirectAttributes.addFlashAttribute("errorMessage", "Não foi possivel alterar o destino "+ altDestination.getDtName());
 					return new ModelAndView(new RedirectView("destination"));
 				}
 			}

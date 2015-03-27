@@ -24,6 +24,10 @@ import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 @Entity
 @Table(name = "customer_service")
 @Multitenant
@@ -127,6 +131,26 @@ public class CustomerService implements Serializable {
 
 	public void setAverageBudget(BigDecimal averageBudget) {
 		this.averageBudget = averageBudget;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final CustomerService other = (CustomerService) obj;
+	        return Objects.equal(this.date, other.date)
+	            && Objects.equal(this.serviceObservations, other.serviceObservations);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(ServiceItem.class)
+				.add("Id do serviço do cliente", getId()).toString();
 	}
 
 }

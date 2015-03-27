@@ -44,9 +44,9 @@
 
 			<li class="status02">
 				<div>
-					<p>Orçamento Enviado</p>
+					<p>ENVIAR ORÇAMENTO</p>
 					<div class="var-metrica">
-						<span class="fontawesome-money"></span> <c:out value="${submitted_budget_div}"/>
+						<span class="fontawesome-money"></span> <c:out value="${send_budget_div}"/>
 					</div>
 				</div>
 
@@ -57,7 +57,7 @@
 				<div>
 					<p>EM NEGOCIAÇÃO</p>
 					<div class="var-metrica">
-						<span class="fontawesome-comments"></span> <c:out value="${send_budget_div}"/>
+						<span class="fontawesome-comments"></span> <c:out value="${submitted_budget_div}"/>
 					</div>
 				</div>
 			</li>
@@ -118,7 +118,8 @@
 										<th>Nome</th>
 										<th>Sobrenome</th>
 										<th>Valor Estimado</th>
-										<th>Data de Abertura</th>										
+										<th>Data de Abertura</th>
+										<th>Visualizar em</th>										
 										<th>Status</th>
 									</tr>
 								</thead>
@@ -126,7 +127,7 @@
 									<c:forEach items="${serviceListRegister}" var="service" varStatus="status">
 									<tr>
 										<td>
-											<a href="editService/${service.id}">${service.firstName}</a>
+											<a href="editService?id=${service.id}&cs=${service.idCustomerService}">${service.firstName}</a>
                                         </td>
                                         <td>${service.lastName}</td>
                                         <td>
@@ -136,11 +137,14 @@
                                         <td>
                                         	<fmt:formatDate value="${service.dateService}"/>                                   
                                         </td>
+                                        <td>
+                                        	<fmt:formatDate value="${service.seeIn}"/>
+                                        </td>
                                         <c:choose>
-                                        	<c:when test="${service.saleType eq 'SUBMITTED_BUDGET'}">
+                                        	<c:when test="${service.saleType eq 'SEND_BUDGET'}">
                                         		<td><span class="label label-success status02">&nbsp;&nbsp;</span></td>
                                         	</c:when>
-                                        	<c:when test="${service.saleType eq 'SEND_BUDGET'}">
+                                        	<c:when test="${service.saleType eq 'SUBMITTED_BUDGET'}">
                                         		<td><span class="label label-success status03">&nbsp;&nbsp;</span></td>
                                         	</c:when>
                                         </c:choose>

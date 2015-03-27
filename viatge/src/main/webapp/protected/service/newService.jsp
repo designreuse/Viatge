@@ -91,8 +91,10 @@
 									<div class="aling-form">
 
 										<div class="box01">
-											<f:input id="first-name" placeholder="Primeiro Nome"
-												path="firstName" type="text" class="form-control" />
+        									<div class="ui-widget">
+												<input id="first-name" placeholder="Primeiro Nome" name="firstName" type="text" class="form-control"/>
+											</div>
+
 										</div>
 
 										<div class="box02">
@@ -614,7 +616,7 @@
 									<div id="div-modal-input-body-destination"
 										class="aling-form col-sm-12 nest text"
 										style="padding-top: 25px">
-										<c:if test="${updateError}">
+										<c:if test="${errUpdateDestinationRequested}">
 										<div class="alert alert-danger">
 											<span class="entypo-attention"></span>Você
 												precisa preencher todos os campos ou inserirum intervalo de datas
@@ -628,13 +630,14 @@
 												</c:forEach>
 											</select>
 										</div>
-
+										
 										<div class="box02">
-											<div class="input-group skin skin-flat">
-												<input id="ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
-													id="ckb-label" for="ckb-requested">Destino
-													Solicitado pelo Passageiro?</label>
-
+											<div class="input-group ">
+												<span id="span-arrive" class="input-group-addon btn-success"><i
+													class="fa fa-calendar"></i></span> <input id="see-in"
+													type="text"
+													name="${customerService.serviceItem.seeIn}"
+													class="form-control" placeholder="Ver em..." />
 											</div>
 										</div>
 
@@ -677,11 +680,20 @@
 													class="form-control" />
 											</div>
 										</div>
-
+						
 
 										<div class="box03">
 											<textarea id="destination-observations" name="${customerService.serviceItem.negociationObservations}" rows="3" placeholder="Observações..." class="form-control"
 												style="min-height: 130px;"></textarea>
+										</div>
+										
+										<div class="box02">
+											<div class="input-group skin skin-flat">
+												<input id="ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
+													id="ckb-label" for="ckb-requested">Destino
+													Solicitado pelo Passageiro?</label>
+
+											</div>
 										</div>
 
 
@@ -692,10 +704,10 @@
 
 								</div>
 								<div class="modal-footer clear" style="margin: 0px;">
-									<button type="button" class="btn btn-danger"
-										data-dismiss="modal">Cancelar</button>
 									<button id="button-add-destination" type="submit"
 										class="btn btn-primary">Cadastrar</button>
+									<button type="button" class="btn btn-danger"
+										data-dismiss="modal">Cancelar</button>
 								</div>
 							</form>
 						</div>
@@ -721,7 +733,7 @@
 									<div id="div-modal-input-body-destination"
                                         class="aling-form col-sm-12 nest text"
                                         style="padding-top: 25px">
-                                        <c:if test="${updateError}">
+                                        <c:if test="${errUpdateDestinationRequested}">
 										<div class="alert alert-danger">
 											<span class="entypo-attention"></span>Você precisa preencher
 											todos os campos ou inserir um intervalo de datas compatíveis!
@@ -815,8 +827,46 @@
 	</div>
 </div>
 
-
 <script type="text/javascript">
+
+$(document).ready(function() {
+    $(function() {
+            $("#first-name").autocomplete({     
+            source : function(request, response) {
+            $.ajax({
+                    url : "${pageContext.request.contextPath}/auth/getCustomerAJAX",
+                    type : "GET",
+                    data : {
+                    	paramName : request.term
+                    },
+                    dataType : "json",
+                    success : function(data) {
+                    	var obj = JSON.parse(data);
+                    	alert(obj);
+                            response(obj.firstName);
+                    }
+            });
+    }
+});
+});
+});
+
+/*$("#first-name").on('focus', function () {
+    $.ajax({
+        type: 'GET',
+        url: '${pageContext.request.contextPath}/auth/getCustomerAJAX',
+        dataType: 'json',
+        success: function (resposta) {
+            console.log(resposta)
+            var json = [resposta];
+            $("#first-name").autocomplete({
+                source: json
+            });
+        }
+    });
+});*/
+
+
 
 $('#div-modal-input-body-destination').on('click', '#input-departure', function (e){
 	   $("#input-price").maskMoney(); 
@@ -905,7 +955,7 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   var observations = $('#destination-observations').val();
 	   var ckb = $('#ckb-requested').val();
 	   
-	   var url = "${pageContext.request.contextPath}/auth/addSelectedDestination?${_csrf.parameterName}=${_csrf.token}";
+	   var url = "${pageContext.request.contextPath}/auth/saveOrUpdateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
 	   
 	   $.ajax({
 		type:'POST',
@@ -922,36 +972,31 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 		dataType: "json",
 		success: function(jsonData){
 			if (jsonData != null) {
-        	    var destinationName = jsonData[0];
-        	    var destinationId = jsonData[1];
-	        	   
-        		$('#destination-list').append('<li id="list-all-destination" ><label><b>'+destinationName+'</b></label></li>');
-        		
-        		$('#destination-list li').each(function(i){
-        			 var button = $(this).find("button");
-        			if(! button.length){
-        				
-        				$(this).prepend('<button id="edit-'+destinationId+'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;"><span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>');
-                        $(this).prepend('<button id="cancel-'+destinationId+'" type="button" class="btn btn-danger pull-right" style="position: relative;><span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover</button>');
-        			}
-                });
-        		
-        	    $('#destinationModal').modal('hide');
-        	    
-        		$('#input-departure').val('');
-        		$('#input-arrive').val('');
-        		$('#input-price').val('');
-        		$('#combo-saleType').val('');
-        		$('#destination-passenger-list').val('');
-        		$('#destination-observations').val('');
-        		$('#ckb-requested').val('');
-        		
-			} else {
-
-			}
+				
+				$.map(jsonData, function(destinationName, destinationId){
+	        		$('#destination-list').append('<li id="list-all-destination" ><label><b>'+destinationName+'</b></label></li>');
+	        		
+	        		$('#destination-list li').each(function(i){
+	        			var button = $(this).find("button");
+	        			if(! button.length){	        				
+	        				$(this).prepend('<button id="'+destinationId+'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;"><span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>');
+	                        $(this).prepend('<button id="'+destinationId+'" type="button" class="btn btn-danger pull-right" style="position: relative;><span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover</button>');
+	        			}
+	                });
+	        		
+	        	    $('#destinationModal').modal('hide');	        	    
+	        		//$('#input-departure').val('');
+	        		$('#input-arrive').val('');
+	        		$('#input-price').val('');
+	        		//$('#combo-saleType').val('');
+	        		$('#destination-passenger-list').val('');
+	        		$('#destination-observations').val('');
+	        		$('#ckb-requested').val('');
+				});	
+			} 
 		}, 
 		error: function(error){
-			alert("Erro: Tente Novamente preenchendo todos os campos, ou entre em contato com o administrador do sistema.");
+			alert("Erro: Houve um erro quando você tentou incluir/editar o destino. Tente novamente mais tarde :(");
 		}
 	   });
 	   e.preventDefault();
@@ -961,9 +1006,9 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	    e.returnValue = false;
 	    var dialog =  '<div id="dialog" <h1>Remover o destino selecionado?</h1></div>';
 	    $('body').append(dialog);
-	    var clickedID = this.id.split('-');
-	    var destinationId = clickedID[1];
-	    var url = "${pageContext.request.contextPath}/auth/deleteRequestedDestination/"+destinationId+"?${_csrf.parameterName}=${_csrf.token}";
+	    
+	    var idServiceItem = $(this).attr('id');
+	    var url = "${pageContext.request.contextPath}/auth/deleteRequestedDestination?${_csrf.parameterName}=${_csrf.token}";
 
 	    var $li = $(this).closest('li');
 
@@ -976,9 +1021,10 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	            "Sim": function () {
 	                $(this).dialog("close");
 	                $.ajax({
-	                    type: "DELETE",
+	                    type: "GET",
 	                    url: url,
-	                    dataType: "json",
+	                    data:{ idServiceItem: idServiceItem,
+	                    	deleteType:1},
 	                    success: function (response) {
 	                        $li.fadeOut(500, function () {
 	                            $li.remove();
@@ -999,9 +1045,8 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 
    $("body").on("click", "#list-all-destination button.btn-info", function (e) {
 	    e.returnValue = false;
-	    var clickedID = this.id.split('-');
-	    var destinationId = clickedID[1];
-	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestination/"+destinationId+"?${_csrf.parameterName}=${_csrf.token}";
+	    var idServiceItem = $(this).attr('id');
+	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestination/"+idServiceItem;
 	    
 	    $.get(url,function(jsonData,status){
 	    	

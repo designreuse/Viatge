@@ -14,7 +14,7 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
     
-    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/start/jquery-ui.css"></link>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"></link>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/loader-style.css">
@@ -68,10 +68,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/datepicker/datepicker.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/datepicker/clockface.css">
     <!-- FIM DATE PICKER -->
-    
-    <!-- Inicio Multi-Select -->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/js/multi-select/css/multi-select.css">
-    <!-- Fim -->
+
     
     <script type="text/javascript" src="https://www.google.com/jsapi"></script>
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -133,8 +130,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/wizard/build/jquery.steps.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/wizard/jquery.stepy.js" type="text/javascript"></script>
     <!-- Fim do Wizard -->
-    
-
     
     <script src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"  type="text/javascript"></script>
     

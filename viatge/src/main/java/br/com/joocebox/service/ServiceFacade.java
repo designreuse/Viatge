@@ -23,9 +23,7 @@ public class ServiceFacade {
 
 	@Autowired
 	private ServiceRepository serviceRepository;
-
-
-
+	
 	@Autowired
 	private OpenServiceRepository vwOpenService;
 
@@ -37,11 +35,6 @@ public class ServiceFacade {
 		return serviceRepository.save(service);
 
 	}
-
-//	public List<DestinationRequested> getDestinationRequestedList() {
-//		return destinationRequestedRepository.findAll();
-//
-//	}
 
 	public List<Customer> getServiceList() {
 		return serviceRepository.findAll();

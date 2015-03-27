@@ -1,7 +1,6 @@
 package br.com.joocebox.controller;
 
 import java.text.DateFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,9 +9,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.validation.Valid;
 
@@ -37,6 +37,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import br.com.joocebox.model.Customer;
@@ -53,11 +54,14 @@ import br.com.joocebox.service.CustomerServiceFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.ServiceFacade;
 import br.com.joocebox.service.ServiceItemFacade;
+import br.com.joocebox.utils.FormatObjects;
+
+import com.google.common.base.Strings;
 
 @Controller
 @Transactional(propagation = Propagation.REQUIRED)
 @RequestMapping("/auth")
-public class CustomerController {
+public class CustomerController{
 
 	final static Logger logger = LoggerFactory
 			.getLogger(CustomerController.class);
@@ -81,6 +85,8 @@ public class CustomerController {
 	
 	private Set<Passenger> passengerList = new HashSet<Passenger>();
 
+	
+	HashMap<String, String> mapOfRequestedDestination = new HashMap<String, String>();
 	private List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
 	
 	private List<History> history;
@@ -120,7 +126,7 @@ public class CustomerController {
 		return mv;
 
 	}
-
+	
 	public void initializeComponents(Model model) {
 
 		// Carrega os destinos no mutiple-select
@@ -155,7 +161,7 @@ public class CustomerController {
      * @return ModelAndView
      */
 	@RequestMapping(value = "/addService", method = RequestMethod.POST)
-	public ModelAndView processForm(@ModelAttribute("customer") @Valid Customer customer, BindingResult result, Model model) {
+	public ModelAndView addService(@ModelAttribute("customer") @Valid Customer customer, BindingResult result, Model model) {
 		if (customer.getBirthDate() == null) {
 			customer.setBirthDate(customer.getBirthDate());
 		}
@@ -208,9 +214,32 @@ public class CustomerController {
             
             //Salva um objeto do tipo ServiceItem
             for (ServiceItem si : serviceItemList) {
+            	 
+            	String formatDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
             	
-            	//Adiciona um "Registo" no historico
-            	history.add(new History("[ " + si.getSaleType() + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + si.getArrivalDate().toString()));
+            	String saleType = "";  
+				if (si.getSaleType() == SaleType.SEND_BUDGET) {
+					saleType = SaleType.SEND_BUDGET.getSaleType();
+					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate));
+
+				}else if(si.getSaleType() == SaleType.SUBMITTED_BUDGET){
+					saleType = SaleType.SUBMITTED_BUDGET.getSaleType();
+					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
+					
+				}else if(si.getSaleType() == SaleType.NOT_WANTED){
+					saleType = SaleType.NOT_WANTED.getSaleType();
+					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
+					
+				}else if(si.getSaleType() == SaleType.MAYBE_FUTURE){
+					saleType = SaleType.MAYBE_FUTURE.getSaleType();
+					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
+					
+				}else if(si.getSaleType() == SaleType.BOUGHT){
+					saleType = SaleType.BOUGHT.getSaleType();
+					//TODO: Fazer um link que redirecione para a faura da venda.
+					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
+					
+				}
             	
             	customerService.setHistory(history);
                 si.setCustomerService(customerService);
@@ -224,28 +253,91 @@ public class CustomerController {
 
 	}
 	
+	@RequestMapping(value="editService", method = RequestMethod.POST)
+	public ModelAndView editService(@ModelAttribute("serviceModify") @Valid Customer customer, BindingResult result, RedirectAttributes redirectAttributes, Model model, @RequestParam Long id){
+		
+		
+		if (customer.getBirthDate() == null) {
+			customer.setBirthDate(customer.getBirthDate());
+		}
+
+		List<String> error = new ArrayList<String>();
+
+		if (result.hasErrors()) {
+			List<ObjectError> allErrors = result.getAllErrors();
+
+			for (ObjectError objectError : allErrors) {
+				String objectName = objectError.getDefaultMessage();
+				error.add(objectName);
+			}
+
+			model.addAttribute("errors", error);
+			model.addAttribute("validator", true);
+
+			initializeComponents(model);
+			return new ModelAndView("service/newService");
+
+		} else {
+			
+			//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
+			Customer customerId = customerFacade.getCustomerId(id);
+			customerId.setPassenger(customer.getPassenger());
+			
+			//Persiste um novo Cliente
+			//customerFacade.saveCustomer(customerId);
+			
+            //Inicia um objeto do tipo CustomerService para abrir um atendimento.
+            customerId.setCustomerService(customer.getCustomerService());
+			
+            //Atualiza a data de abertura do serviço
+            //customerService.setDate(new Date());
+            
+            //Verifica se existe algum atendimento marcado como "Orçamento", e marca como aberto e atualiza a data do mesmo
+			if(isOpenService()){
+				
+				//customerService.setSituation(Boolean.TRUE);			
+			}else{
+				//customerService.setSituation(Boolean.FALSE);
+			}
+			
+            //Adiciona o atendimento em uma lista
+            //customerServiceList.add(customerService);
+            
+            //Seta uma lista de Atendimentos
+           // customer.setCustomerService(customerServiceList);
+                       
+            //Cria um objeto com o Historico
+            history = new ArrayList<History>();
+		}
+         
+		
+		return new ModelAndView(new RedirectView("serviceList"));
+	}
+	
+	
     /**
-     * Ação responsável por apresentar o formulário de edição do serviço
+     * Ação responsável por apresentar o formulário de edição do novo a
      * @param id
      * @param model
+     * @param cs
      * @return destinationNegotiated
      */
-    @RequestMapping(value = "/editService/{id}", method = RequestMethod.GET)
-    public String editService(@PathVariable Long id, Model model) {
+    @RequestMapping(value = "editService", method = RequestMethod.GET)
+    public String editService(@RequestParam Long id, @RequestParam Long cs,Model model) {
+    	initializeComponents(model);
     	
     	Customer customerId = customerFacade.getCustomerId(id);
     	getHistoryListCustomerId(model, customerId);
     	
-    	List<String> destinationName = new ArrayList<String>();
+    	List<ServiceItem> destinationNegotiated = new ArrayList<ServiceItem>();
     	
-    	for(CustomerService cs : customerId.getCustomerService()){
-    		for(ServiceItem si : cs.getServiceItem()){
-    			String dtName = si.getDestination().getDtName();
-    			destinationName.add(dtName);
-    			
-    		}
-    	}
-    	model.addAttribute("destinationNegotiated", destinationName);
+		for (ServiceItem serviceItem : serviceItemFacade.getAllServiceItems()) {
+			if (cs.equals(serviceItem.getCustomerService().getId())) {
+				destinationNegotiated.add(serviceItem);
+			}
+		}
+		
+    	model.addAttribute("destinationNegotiated", destinationNegotiated);
         model.addAttribute("serviceModify", customerId);
         return "service/editService";
     }
@@ -351,193 +443,197 @@ public class CustomerController {
 	}
 	
     /**
-     * Ação responsável por deletar os destinos requisitados
+     * Ação responsável por deletar os destinos requisitados em um atendimento
      * @param id
      * @return ServiceItem
      */
-	@RequestMapping(value="/deleteRequestedDestination/{id}", method=RequestMethod.DELETE)
-	public @ResponseBody List<ServiceItem> deleteRequestedDestination(@PathVariable Long id){
-		for (ServiceItem sil : serviceItemList) {
-			if (sil.getDestination().getIdDestination() == id) {
-				serviceItemList.remove(sil);
-				logger.info("[Novo Atendimento] Destino excluido do atendimento...");
-				return serviceItemList;
+	@RequestMapping(value="/deleteRequestedDestination", method=RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
+	public void deleteRequestedDestination(@RequestParam(value = "idServiceItem") String idServiceItem,
+			@RequestParam(value= "deleteType") Long id){
+		if(id == 1){
+			if(mapOfRequestedDestination.containsKey(idServiceItem)){
+				mapOfRequestedDestination.remove(idServiceItem);
 			}
+			
+		}else{
+			//Recuperar o id da base de dados e apagar!
 		}
-		return serviceItemList;
 	}
 	
     /**
-     * Ação responsável por retornar o Destino Requisitado
+     * Ação resposavel por editar um destino requisitado
      * @param id
      * @param model
      * @return ServiceItem
      */
     @RequestMapping(value = "/editRequestedDestination/{id}", method = RequestMethod.GET)
-    public @ResponseBody ServiceItem editRequestedDestination(@PathVariable Long id, Model model) {
-    	try {
-            return getDestinationRequestedList(id);
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-		}
-    	return getDestinationRequestedList(id);
-    }
-    
-    
-    private ServiceItem getDestinationRequestedList(Long id) {
-		for (ServiceItem serviceItem : serviceItemList) {
-			if(serviceItem.getDestination().getIdDestination() == id){
-				return serviceItem;
-			}
-		}
+	public @ResponseBody ServiceItem editRequestedDestination(@PathVariable String id, Model model) {
+    	
+    	String string = mapOfRequestedDestination.get(id);
+
+
 		return null;
 	}
+    
+    @RequestMapping(value = "/editRequestedDestinationUpdate/{id}", method = RequestMethod.GET)
+    public @ResponseBody ServiceItem editRequestedDestinationUpdate(@PathVariable Long id, Model model) {
+    	try { 
+    		
+    		for(ServiceItem s : serviceItemFacade.getAllServiceItems()){
+    			if (id.equals(s.getId())) {
+    	    		
+    	            return s;
+				}
+    			
+    		}
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			
+		}
+    	return null;
+    }
 
 	/**
-     * Ação responsável por atualizar os dados enviados pelo formulário.
+     * Metodo responsavel por salvar/atualizar o destino requisitado, quando o atendimento já estiver sido persistido.
      * 
      * @param result
      * @param ServiceItem
      * @param model
      */
-    @RequestMapping(value = "/updateDestinationRequested", method = RequestMethod.POST)
-    @ResponseStatus(value=HttpStatus.OK)
-    public void updateCategory(@RequestParam Long id,
-			@RequestParam(value = "arrive", required = true) Date arrive,
-            @RequestParam(value = "departure", required = true) Date departure,
-            @RequestParam(value = "price", required = true) String price,
-            @RequestParam(value = "saletype", required = true) SaleType saletype,
-            @RequestParam(value = "destinationId", required = true) Long destinationId,
-            @RequestParam(value = "observations", required = true) String observations,
-            @RequestParam(value = "ckb", required = true) Boolean ckb,
-            Model model) {
+    @RequestMapping(value = "/saveOrUpdateDestinationRequested", method = RequestMethod.POST)
+	public @ResponseBody ConcurrentHashMap<String, String> saveOrUpdateDestinationRequested(
+			@RequestParam(value = "customerServiceId", required = false) Long customerServiceId,
+			@RequestParam(value = "arrive", required = false) String arrive,
+			@RequestParam(value = "departure", required = false) String departure,
+			@RequestParam(value = "price", required = false) String price,
+			@RequestParam(value = "saletype", required = true) SaleType saletype,
+			@RequestParam(value = "destinationId", required = true) Long destinationId,
+			@RequestParam(value = "observations", required = false) String observations,
+			@RequestParam(value = "ckb", required = true) Boolean ckb,
+			RedirectAttributes redirectAttributes, Model model) {
+    		    	
+			Number valueFormated = FormatObjects.formatStringPriceToNumberObject(price, redirectAttributes);
+			Date arriveFormated = FormatObjects.formatStringDateToDateObject(arrive, redirectAttributes);
+			Date departureFormated = FormatObjects.formatStringDateToDateObject(departure, redirectAttributes);
+			
+    		if (customerServiceId == null) {
+				//Cria um novo e salva em BD
+    	        if (saletype.equals(SaleType.MAYBE_FUTURE) || saletype.equals(SaleType.SUBMITTED_BUDGET) || saletype.equals(SaleType.NOT_WANTED)) {
+    	        	
+    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString())) {
+    	            	
+    	            		ServiceItem serviceItem = new ServiceItem();
+    	            		List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
+    	            		
+	            			 List<ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
+									destinationId, observations, ckb,
+									valueFormated, arriveFormated,
+									departureFormated, serviceItem,
+									serviceItemList);
+	            			 
+	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = null;
+	            			 
+	            			 for (ServiceItem serviceItem2 : saveOrUpdateRequestedDestination) {
+	            				 mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+	            				 String uniqueID = UUID.randomUUID().toString();
+	            				 mapRequestedDestinationAux.put(uniqueID, serviceItem2.getDestination().getDtName());
+	            				 mapOfRequestedDestination.put(uniqueID, serviceItem2.getDestination().getDtName());
+							}
+	            			return mapRequestedDestinationAux;
+	            			 
 
-        if ((!"".equals(arrive) && !"".equals(departure) && !"".equals(price)
-                && !"".equals(saletype) && !"".equals(destinationId))
-                && (!arrive.before(departure))){
-        	
-        	for(ServiceItem si : serviceItemList){
-        		if(id.equals(si.getDestination().getIdDestination())){
-        			Locale locBrazil = new Locale("pt", "BR");
-        			NumberFormat nf = NumberFormat.getInstance(locBrazil);
-        			try {
-        				Number parse = nf.parse(price);
-        				
-        				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-        				String formatArrive = df.format(arrive);
-        				String formatDeparture = df.format(departure);
-        								
-        				Destination destinationObj = dashboardFacade.getDestinationId(destinationId);
-        								
-        				si.setDestination(destinationObj);
-        				si.setArrivalDate(formatDate(formatArrive));
-        				si.setDepartureDate(formatDate(formatDeparture));
-        				si.setNegociationObservations(observations);
-        				si.setSaleType(saletype);
-        				si.setValueNegotiated(parse.doubleValue());
-        				si.setRequestedDestination(ckb);
+    	            }
+    	        } else {
 
-        				serviceItemList.set(serviceItemList.indexOf(si), si);
-                        			
-        				logger.info("[Novo Atendimento] Destino atualizado com sucesso...");
+    	            if ((!Strings.isNullOrEmpty(arrive.toString()) && !Strings.isNullOrEmpty(departure.toString()) && !Strings.isNullOrEmpty(price) && !Strings.isNullOrEmpty(saletype.toString()) && !Strings
+    	                        .isNullOrEmpty(destinationId.toString())) && !departureFormated.after(arriveFormated)) {
+    	            	
+	            			ServiceItem serviceItem = new ServiceItem();
+	            			List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
 
-        			} catch (ParseException e) {
+	            			List<ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
+									destinationId, observations, ckb,
+									valueFormated, arriveFormated,
+									departureFormated, serviceItem,
+									serviceItemList);
+	            			
+	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = null;
+	            			 
+	            			 for (ServiceItem serviceItem2 : saveOrUpdateRequestedDestination) {
+	            				 mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+	            				 mapRequestedDestinationAux.put(UUID.randomUUID().toString(), serviceItem2.getDestination().getDtName());
+	            				 mapOfRequestedDestination.put(UUID.randomUUID().toString(), serviceItem2.getDestination().getDtName());
+							}
+	            			return mapRequestedDestinationAux;
 
-        				e.printStackTrace();
-        			}
-        		}
-        	}
-        	
-		}else{
-			model.addAttribute("updateError", true);
-		}
 
-    }
-    
-    /**
-     * Adiciona um novo destino requisitado
-     * @return ServiceItem
-     */
-	@RequestMapping(value = "/addSelectedDestination", method = RequestMethod.POST)
-	public @ResponseBody List<String> addSelectedDestination(
-			@RequestParam(value = "arrive", required = true) Date arrive,
-            @RequestParam(value = "departure", required = true) Date departure,
-            @RequestParam(value = "price", required = true) String price,
-            @RequestParam(value = "saletype", required = true) SaleType saletype,
-            @RequestParam(value = "destinationId", required = true) Long destinationId,
-            @RequestParam(value = "observations", required = true) String observations,
-            @RequestParam(value = "ckb", required = true) Boolean ckb,
-		    Model model) {
-		
-			List<String> strList = null;
-		
-			ServiceItem serviceItem = new ServiceItem();
-
-        if ((!"".equals(arrive) && !"".equals(departure) && !"".equals(price)
-                && !"".equals(saletype) && !"".equals(destinationId))
-                && (!arrive.before(departure))){
-
-			Locale locBrazil = new Locale("pt", "BR");
-			NumberFormat nf = NumberFormat.getInstance(locBrazil);
-			try {
-				Number parse = nf.parse(price);			
-				
-				String arriveFormat = new SimpleDateFormat("dd/MM/yyyy").format(arrive);
-				String departureFormat = new SimpleDateFormat("dd/MM/yyyy").format(departure);
-								
-				Destination destinationObj = dashboardFacade.getDestinationId(destinationId);
-								
-                serviceItem.setDestination(destinationObj);
-                serviceItem.setArrivalDate(formatDate(arriveFormat));
-                serviceItem.setDepartureDate(formatDate(departureFormat));
-                serviceItem.setNegociationObservations(observations);
-                serviceItem.setSaleType(saletype);
-                serviceItem.setValueNegotiated(parse.doubleValue());
-                serviceItem.setRequestedDestination(ckb);
-                			
-				logger.info("[Novo Atendimento] Destino negociado com sucesso...");
-
-			} catch (ParseException e) {
-
-				e.printStackTrace();
+    	            } else {
+    	                redirectAttributes.addFlashAttribute("errUpdateDestinationRequested","Você precisa obrigatoriamente preencher todos os atributos!");
+    	            }
+    	        }
+			} else {
+				//Recupera do BD e retorna para o ajax
 			}
-
-			serviceItemList.add(serviceItem);
-			
-			String destinationName = serviceItem.getDestination().getDtName();
-			
-			String destinationIdStr =  String.valueOf(serviceItem.getDestination().getIdDestination());
-			
-			strList = new ArrayList<String>();
-			
-			strList.add(destinationName);
-			strList.add(destinationIdStr);
-			
-			return strList;
-
-		}
-		logger.warn("[Novo Atendimento] Argumentos passados para adição de destino em falta ou data de partida superior a de chegada");
-		return strList;
+			return null;
 
 	}
+
+	/**
+	 * @param saletype
+	 * @param destinationId
+	 * @param observations
+	 * @param ckb
+	 * @param valueFormated
+	 * @param arriveFormated
+	 * @param departureFormated
+	 * @param serviceItem
+	 * @param serviceItemList
+	 * @return
+	 */
+	private List<ServiceItem> saveOrUpdateRequestedDestination(
+			SaleType saletype, Long destinationId, String observations,
+			Boolean ckb, Number valueFormated, Date arriveFormated,
+			Date departureFormated, ServiceItem serviceItem,
+			List<ServiceItem> serviceItemList) {
+		serviceItem.setDestination(dashboardFacade.getDestinationId(destinationId));
+		serviceItem.setArrivalDate(arriveFormated);
+		serviceItem.setDepartureDate(departureFormated);
+		serviceItem.setNegociationObservations(observations);
+		serviceItem.setSaleType(saletype);
+		serviceItem.setValueNegotiated(valueFormated.doubleValue());
+		serviceItem.setRequestedDestination(ckb);
+
+		serviceItemList.add(serviceItem);
+		
+		logger.info("[Novo Atendimento] Destino incluido com sucesso...");
+		return serviceItemList;
+	}
+
+		
+	@RequestMapping(value="/getCustomerAJAX", method=RequestMethod.GET)
+	public @ResponseBody List<Customer> getCustomerAJAX(@RequestParam String paramName){
+		
+		List<Customer> customerByFirstName = customerFacade.getCustomerByFirstName(paramName, dashboardFacade.getAgency().getTenantId());
+		List<Customer> customerList = new ArrayList<Customer>();
+		for (Customer customer : customerByFirstName) {
+			Customer c = new Customer();
+			c.setIdCustomer(customer.getIdCustomer());
+			c.setFirstName(customer.getFirstName());
+			c.setLastName(customer.getLastName());
+			c.setEmail(customer.getEmail());
+			customerList.add(c);
+		}
+		return customerList;	
+	}
+	
 	
 	@InitBinder(value = "customer")
 	public void bindingPreparationDate(WebDataBinder binder) {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		CustomDateEditor birthDateEditor = new CustomDateEditor(df, false);
 		binder.registerCustomEditor(Date.class, birthDateEditor);
-	}
-
-	public Date formatDate(String date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		try {
-			Date parse = sdf.parse(date);
-			return parse;
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		return null;
-		
 	}
 
 }

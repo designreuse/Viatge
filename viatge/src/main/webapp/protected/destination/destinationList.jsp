@@ -48,6 +48,11 @@
 							<span class="entypo-thumbs-up"></span> <strong>Legal!</strong>&nbsp;&nbsp;${message}
 						</div>
 					</c:if>
+					<c:if test="${errorMessage != null}">
+						<div class="alert alert-danger">
+							<span class="entypo-attention"></span> <strong>Ops...!</strong>&nbsp;&nbsp;${errorMessage}
+						</div>
+					</c:if>
 					<div class="row" style="margin-bottom: 10px;">
 						<div class="col-sm-4">
 							<input class="form-control" id="filter" placeholder="Procurar"
@@ -56,7 +61,7 @@
 
 						<div class="col-sm-2">
 								<f:select path="category" cssClass="filter-status form-control">
-									<f:option value="-1" label="Categorias" />
+									<f:option value="-1" label="Todas..." />
 									<f:options items="${categoryList}" itemValue="idCategory" itemLabel="ctName"/>
 								</f:select>
 						</div>
@@ -140,18 +145,14 @@
 			$(document).ready(function() {
 				// usando id para identificar o checkbox
 				$('#ckDestination').click(function() {
-													var action = $(this).is(
-															':checked') ? 'ativarDestino'
-															: 'desativarDestino';
+					var action = $(this).is(':checked') ? true : false;
 
-													// uma vez determinada a action, é só usar o get do jQuery
-													$.get(action,
-															function(data) {
-																// faz alguma coisa com o retorno, manda msg de sucesso, algo assim
-															}).fail(
-															function(error) {
-																// se der problema cai aqui. Você pode exibir o erro e desfazer a checagem do checkbox
-															});
-												});
-							});
+					// uma vez determinada a action, é só usar o get do jQuery
+					$.get(action, function(data) {
+						// faz alguma coisa com o retorno, manda msg de sucesso, algo assim
+						}).fail(function(error) {
+						// se der problema cai aqui. Você pode exibir o erro e desfazer a checagem do checkbox
+						});
+				});
+			});
 		</script>

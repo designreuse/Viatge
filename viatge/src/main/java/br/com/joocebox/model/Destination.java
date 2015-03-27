@@ -14,12 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.NamedStoredProcedureQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.ParameterMode;
-import javax.persistence.StoredProcedureParameter;
 import javax.persistence.Table;
 import javax.validation.Valid;
 

@@ -146,6 +146,22 @@ public class FileController{
 		}
 
 	}
+	public void deleteAllImages(Set<Image> images, String destinationName) {
+		
+		for (Image image : images) {			
+			dashboardFacade.deleteImageId(image.getId());
+		}
+		
+		File originalImageToDelete = new File(new JooceBoxProperties().getPathOriginalImages(dashboardFacade.getAgency().getSubdomain())+"/"+destinationName);
+		originalImageToDelete.delete();
+		File resizedImageToDelete = new File(new JooceBoxProperties().getPathResizedImage(dashboardFacade.getAgency().getSubdomain())+"/"+destinationName);
+		resizedImageToDelete.delete();
+		File thumbnailImageToDelete = new File(new JooceBoxProperties().getPathThumbnailImage(dashboardFacade.getAgency().getSubdomain())+"/"+destinationName);
+		thumbnailImageToDelete.delete();
+		
+		
+
+	}
 	
 	@RequestMapping(value="/imageDelete/{idImage}/{imageName}", method=RequestMethod.GET)
 	@ResponseStatus(value= HttpStatus.OK)

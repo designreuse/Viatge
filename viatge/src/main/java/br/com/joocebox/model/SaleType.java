@@ -8,7 +8,7 @@ public enum SaleType {
 	MAYBE_FUTURE("Pode Querer no Futuro");
 	
 	private final String sale ;
-	
+
 	private SaleType(String sale){
 		this.sale=sale;
 	}

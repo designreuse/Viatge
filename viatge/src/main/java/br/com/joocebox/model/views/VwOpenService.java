@@ -28,6 +28,9 @@ public class VwOpenService implements Serializable {
 	@Column(name="id_customer")
 	private Long id;
 	
+	@Column(name="id_customer_service")
+	private Long idCustomerService;
+	
 	@Column(name="tenant_id", insertable=false, updatable=false)
 	private Long tenantId;
 	
@@ -40,6 +43,10 @@ public class VwOpenService implements Serializable {
 	@Column(name="date_service")
 	@Temporal(TemporalType.DATE)
 	private Date dateService;
+	
+	@Column(name="see_in")
+	@Temporal(TemporalType.DATE)
+	private Date seeIn;
 	
 	@Id
 	@Column(name="value_negotiated")
@@ -62,6 +69,16 @@ public class VwOpenService implements Serializable {
 		this.id = id;
 	}
 
+
+
+	public Long getIdCustomerService() {
+		return idCustomerService;
+	}
+
+
+	public void setIdCustomerService(Long idCustomerService) {
+		this.idCustomerService = idCustomerService;
+	}
 
 
 	public Long getTenantId() {
@@ -112,6 +129,16 @@ public class VwOpenService implements Serializable {
 
 
 
+	public Date getSeeIn() {
+		return seeIn;
+	}
+
+
+	public void setSeeIn(Date seeIn) {
+		this.seeIn = seeIn;
+	}
+
+
 	public Double getPrice() {
 		return price;
 	}
@@ -134,7 +161,6 @@ public class VwOpenService implements Serializable {
 		this.saleType = saleType;
 	}
 
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -144,6 +170,10 @@ public class VwOpenService implements Serializable {
 		result = prime * result
 				+ ((firstName == null) ? 0 : firstName.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime
+				* result
+				+ ((idCustomerService == null) ? 0 : idCustomerService
+						.hashCode());
 		result = prime * result
 				+ ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result + ((price == null) ? 0 : price.hashCode());
@@ -161,7 +191,7 @@ public class VwOpenService implements Serializable {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof VwOpenService))
+		if (getClass() != obj.getClass())
 			return false;
 		VwOpenService other = (VwOpenService) obj;
 		if (dateService == null) {
@@ -178,6 +208,11 @@ public class VwOpenService implements Serializable {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (idCustomerService == null) {
+			if (other.idCustomerService != null)
+				return false;
+		} else if (!idCustomerService.equals(other.idCustomerService))
 			return false;
 		if (lastName == null) {
 			if (other.lastName != null)
@@ -206,6 +241,7 @@ public class VwOpenService implements Serializable {
 	@Override
 	public String toString() {
 		return "VwOpenService [id=" + id + ", tenantId=" + tenantId
+				+ "idCustomerService=" + idCustomerService 
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateService=" + dateService + ", price=" + price
 				+ ", saleType=" + saleType + "]";

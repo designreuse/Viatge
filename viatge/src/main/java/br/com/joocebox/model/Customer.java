@@ -11,6 +11,10 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 import java.util.Date;
 import java.util.Set;
 
@@ -177,6 +181,27 @@ public class Customer implements Serializable {
 
 	public void setCustomerService(Set<CustomerService> customerService) {
 		this.customerService = customerService;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final Customer other = (Customer) obj;
+	        return Objects.equal(this.lastName, other.lastName)
+	            && Objects.equal(this.email, other.email);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(ServiceItem.class)
+				.add("Nome do Cliente", getFirstName())
+				.add("Email", getEmail()).toString();
 	}
 
 }

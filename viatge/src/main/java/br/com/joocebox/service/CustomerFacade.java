@@ -9,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Customer;
+import br.com.joocebox.model.CustomerService;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
+import br.com.joocebox.repositories.CustomerServiceRepository;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
@@ -32,6 +34,10 @@ public class CustomerFacade {
 
 	public Customer getCustomerId(Long id) {
 		return customerRepository.findOne(id);
+	}
+	
+	public List<Customer> getCustomerByFirstName(String firstName, Long tenant) {
+		return customerRepository.findByfirstNameAndTenantId(firstName, tenant);
 	}
 
 }

@@ -1,6 +1,5 @@
 package br.com.joocebox.service;
 
-import java.sql.Types;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -9,10 +8,6 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.SqlOutParameter;
-import org.springframework.jdbc.core.SqlParameter;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -119,8 +114,9 @@ public class DashboardFacade {
 		inParamMap.put("tenantId", tenantId);
 		SqlParameterSource in = new MapSqlParameterSource(inParamMap);
 
-		Map<String, Object> simpleJdbcCallResult = simpleJdbcCall.execute(in);
+//		Map<String, Object> simpleJdbcCallResult = simpleJdbcCall.execute(in);
 //		System.out.println(simpleJdbcCallResult);
+		simpleJdbcCall.execute(in);
 
 	}
 	

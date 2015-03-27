@@ -18,4 +18,9 @@ public class CustomerServiceFacade {
 	public CustomerService saveCustomerService(CustomerService customerService){
 		return customerServiceRepository.save(customerService);
 	}
+
+	public CustomerService getCustomerServiceById(Long customerServiceId) {
+		return customerServiceRepository.findOne(customerServiceId);
+		
+	}
 }

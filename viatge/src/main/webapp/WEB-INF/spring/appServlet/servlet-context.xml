@@ -44,8 +44,6 @@
             </beans:list>
         </beans:property>
     </beans:bean>
-	
-    <beans:bean id="dozerMapper" class="org.dozer.spring.DozerBeanMapperFactoryBean"/>
 
     <beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 
 

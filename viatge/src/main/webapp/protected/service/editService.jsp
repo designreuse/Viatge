@@ -47,10 +47,9 @@
 					</div>
 				</c:if>
 
-				<f:form id="transition-duration-demo" class="transition-form" method="post"
-				 action="mergeService" modelAttribute="serviceModify">
+				<f:form id="transition-duration-demo" class="transition-form" method="post" action="editService" modelAttribute="serviceModify">
 
-				
+				<input id="id" type="hidden" name="id" value="${serviceModify.idCustomer}"/>
 
 					<fieldset class="row-cols margin-bottom fluida"
 						title="Dados do Cliente">
@@ -344,10 +343,16 @@
 												Destino</a>
 										</div>										
 										<ul id="destination-list" class="list-user">
-											<c:forEach items="${destinationNegotiated}" var="name">
+											<c:forEach items="${destinationNegotiated}" var="destinationNegotiated">
+
 												<ul class="list-user">
-													<li><b>${name}</b></li>
+													<li id="list-all-destination">
+														<b>${destinationNegotiated.destination.dtName}</b>
+														<button id="edit-'${destinationNegotiated.destination.idDestination}'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;">
+														<span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>
+													</li>
 												</ul>
+
 											</c:forEach>
 
 										</ul>
@@ -715,7 +720,7 @@
                             <form id="destination-edit-form">
 
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">class="list-user"
+                                    <button type="button" class="close" data-dismiss="modal">
                                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                                     </button>
                                     <h4 class="modal-title" id="myModalLabelDestination">Editar Novo
@@ -800,6 +805,7 @@
 
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <input id="destinationid-hidden" type="hidden"/>
+                                        <input id="customerServiceId-hidden" type="hidden" value="${customerService.id}"/>
 
                                     </div>
 
@@ -962,81 +968,45 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   });
 	   e.preventDefault();
    });
-   
-   $("body").on("click", "#list-all-destination button.btn-danger", function (e) {
-	    e.returnValue = false;
-	    var dialog =  '<div id="dialog" <h1>Remover o destino selecionado?</h1></div>';
-	    $('body').append(dialog);
-	    var clickedID = this.id.split('-');
-	    var destinationId = clickedID[1];
-	    var url = "${pageContext.request.contextPath}/auth/deleteRequestedDestination/"+destinationId+"?${_csrf.parameterName}=${_csrf.token}";
-
-	    var $li = $(this).closest('li');
-
-	    $('#dialog').dialog({
-	        resizable: false,
-	        height: 140,
-	        modal: true,
-	        title: "Cancelar o Destino?",
-	        buttons: {
-	            "Sim": function () {
-	                $(this).dialog("close");
-	                $.ajax({
-	                    type: "DELETE",
-	                    url: url,
-	                    dataType: "json",
-	                    success: function (response) {
-	                        $li.fadeOut(500, function () {
-	                            $li.remove();
-	                        });
-	                    },
-	                    error: function (xhr, ajaxOptions, thrownError) {
-	                        //On error, we alert user
-	                        alert(thrownError);
-	                    }
-	                });
-	            },
-	                "Não": function () {
-	                $(this).dialog("close");
-	            }
-	        }
-	    });
-	});
 
    $("body").on("click", "#list-all-destination button.btn-info", function (e) {
 	    e.returnValue = false;
 	    var clickedID = this.id.split('-');
-	    var destinationId = clickedID[1];
-	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestination/"+destinationId+"?${_csrf.parameterName}=${_csrf.token}";
+	    var destinationId = clickedID[1].split("'");
+	    
+
+	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestinationUpdate/"+destinationId[1]+"?${_csrf.parameterName}=${_csrf.token}";
 	    
 	    $.get(url,function(jsonData,status){
 	    	
-	    	var destinationName = jsonData.destination.idDestination;
+	    	var destinationName = jsonData.destination.dtName;
 	    	var arrive = jsonData.arrivalDate;
 	    	var departure = jsonData.departureDate;
 	    	var price = jsonData.valueNegotiated;
 	    	var saleType = jsonData.saleType; 
 	    	var observations = jsonData.negociationObservations;
 	    	var ckb = jsonData.requestedDestination;
+	    	var customerServiceId = jsonData.customerService.id;
 	    	
 	    	var arriveFormated = $.format.date(arrive, "dd/MM/yyyy");
 	    	var departureFormated = $.format.date(departure, "dd/MM/yyyy");
 	    	
-	 	    $("#edit-input-price").maskMoney(); 
+	 	    $("#edit-input-price").maskMoney('mask'); 
 		    $('#edit-input-arrive').mask('99/99/9999');
 		    $('#edit-input-departure').mask('99/99/9999');
+		    
 	    	
-		    $('#destinationid-hidden').val(destinationName);
+		    $('#destinationid-hidden').val(jsonData.destination.idDestination);
 		    
     		$('#edit-input-departure').val(departureFormated);
     		$('#edit-input-arrive').val(arriveFormated);
     		$('#edit-input-price').val(price);
     		$('#edit-combo-saleType').val(saleType);
     		
-    		$('#edit-destination-passenger-list').val(destinationName);
+    		$('#customerServiceId-hidden').val(customerServiceId);
+    		
     		$('#edit-destination-passenger-list').attr('disabled', true);
-    		
-    		
+    		   		
     		$('#edit-destination-observations').val(observations);
     		$('#edit-ckb-requested').prop("checked", ckb);
     		
@@ -1047,10 +1017,11 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
    $('#destination-edit-form').submit( function(e) {
 	   var destinationID = $('#destinationid-hidden').val();
 	   
-	   var url = "${pageContext.request.contextPath}/auth/updateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
+	   var url = "${pageContext.request.contextPath}/auth/updateDestinationRequestedSaved?${_csrf.parameterName}=${_csrf.token}";
 	   
 	   
 	   var xxx = $('#destinationid-hidden').val();
+	   var customerServiceId = $('#customerServiceId-hidden').val();
 	   var departure =  $('#edit-input-departure').val();
 	   var arrive = $('#edit-input-arrive').val();
 	   var price = $('#edit-input-price').val();
@@ -1064,8 +1035,9 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	        type: 'POST',
 	        data:{
 	        	id: xxx,
+	        	customerServiceId: customerServiceId,
+	        	arrive: arrive,
 				departure: departure,
-				arrive: arrive,
 				price: price,
 				saletype: saleType,
 				destinationId: destinationId,

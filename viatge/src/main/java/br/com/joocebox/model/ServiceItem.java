@@ -23,10 +23,17 @@ import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 @Entity
 @Table(name = "service_item")
 @Multitenant
 @TenantDiscriminatorColumn(name = "tenant_id", discriminatorType = DiscriminatorType.INTEGER, contextProperty = PersistenceUnitProperties.MULTITENANT_PROPERTY_DEFAULT)
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
 public class ServiceItem implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -37,11 +44,11 @@ public class ServiceItem implements Serializable{
 	private Long id;
 	
     @ManyToOne
-    @JoinColumn(name = "fk_service_item_destination")
+    @JoinColumn(name = "fk_destination")
     private Destination destination;
 
     @ManyToOne
-    @JoinColumn(name = "fk_service_item_customer_service")
+    @JoinColumn(name = "fk_customer_service")
     private CustomerService customerService;
     
 	@Column(name = "tenant_id", insertable = false, updatable = false)
@@ -64,6 +71,11 @@ public class ServiceItem implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date arrivalDate;
     
+    @Column(name="see_in")
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Temporal(TemporalType.DATE)
+    private Date seeIn;
+    
     @Column(name="requested_destination")
     private Boolean requestedDestination;
     
@@ -77,6 +89,7 @@ public class ServiceItem implements Serializable{
 	public ServiceItem(Destination destination,
 			CustomerService customerService, double valueNegotiated,
 			SaleType saleType, Date departureDate, Date arrivalDate,
+			Date seeIn,
 			Boolean requestedDestination, String negociationObservations) {
 		this.destination = destination;
 		this.customerService = customerService;
@@ -86,6 +99,14 @@ public class ServiceItem implements Serializable{
 		this.arrivalDate = arrivalDate;
 		this.requestedDestination = requestedDestination;
 		this.negociationObservations = negociationObservations;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Destination getDestination() {
@@ -140,6 +161,14 @@ public class ServiceItem implements Serializable{
 		return arrivalDate;
 	}
 
+	public Date getSeeIn() {
+		return seeIn;
+	}
+
+	public void setSeeIn(Date seeIn) {
+		this.seeIn = seeIn;
+	}
+
 	public void setArrivalDate(Date arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
@@ -162,93 +191,29 @@ public class ServiceItem implements Serializable{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((arrivalDate == null) ? 0 : arrivalDate.hashCode());
-		result = prime * result
-				+ ((customerService == null) ? 0 : customerService.hashCode());
-		result = prime * result
-				+ ((departureDate == null) ? 0 : departureDate.hashCode());
-		result = prime * result
-				+ ((destination == null) ? 0 : destination.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime
-				* result
-				+ ((negociationObservations == null) ? 0
-						: negociationObservations.hashCode());
-		result = prime
-				* result
-				+ ((requestedDestination == null) ? 0 : requestedDestination
-						.hashCode());
-		result = prime * result
-				+ ((saleType == null) ? 0 : saleType.hashCode());
-		result = prime * result
-				+ ((tenantId == null) ? 0 : tenantId.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valueNegotiated);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		return result;
+		return Hashing.sha1().hashCode();
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof ServiceItem))
-			return false;
-		ServiceItem other = (ServiceItem) obj;
-		if (arrivalDate == null) {
-			if (other.arrivalDate != null)
-				return false;
-		} else if (!arrivalDate.equals(other.arrivalDate))
-			return false;
-		if (customerService == null) {
-			if (other.customerService != null)
-				return false;
-		} else if (!customerService.equals(other.customerService))
-			return false;
-		if (departureDate == null) {
-			if (other.departureDate != null)
-				return false;
-		} else if (!departureDate.equals(other.departureDate))
-			return false;
-		if (destination == null) {
-			if (other.destination != null)
-				return false;
-		} else if (!destination.equals(other.destination))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (negociationObservations == null) {
-			if (other.negociationObservations != null)
-				return false;
-		} else if (!negociationObservations
-				.equals(other.negociationObservations))
-			return false;
-		if (requestedDestination == null) {
-			if (other.requestedDestination != null)
-				return false;
-		} else if (!requestedDestination.equals(other.requestedDestination))
-			return false;
-		if (saleType != other.saleType)
-			return false;
-		if (tenantId == null) {
-			if (other.tenantId != null)
-				return false;
-		} else if (!tenantId.equals(other.tenantId))
-			return false;
-		if (Double.doubleToLongBits(valueNegotiated) != Double
-				.doubleToLongBits(other.valueNegotiated))
-			return false;
-		return true;
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final ServiceItem other = (ServiceItem) obj;
+	        return Objects.equal(this.arrivalDate, other.arrivalDate)
+	            && Objects.equal(this.departureDate, other.departureDate)
+	            && Objects.equal(this.seeIn, other.seeIn)
+	            && Objects.equal(this.tenantId, other.tenantId)
+	            && Objects.equal(this.customerService, other.customerService)
+	            && Objects.equal(this.saleType, other.saleType);
 	}
 
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(ServiceItem.class)
+				.add("Destino negociado", getDestination().getDtName())
+				.add("Tipo de Negociação", getSaleType()).toString();
+	}
 
+	
 
 }
