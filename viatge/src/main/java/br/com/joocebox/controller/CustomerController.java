@@ -1,7 +1,6 @@
 package br.com.joocebox.controller;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -84,10 +83,8 @@ public class CustomerController{
 	private Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
 	
 	private Set<Passenger> passengerList = new HashSet<Passenger>();
-
 	
-	HashMap<String, String> mapOfRequestedDestination = new HashMap<String, String>();
-	private List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
+	ConcurrentHashMap<String, ServiceItem> mapOfRequestedDestination = new ConcurrentHashMap<String, ServiceItem>();
 	
 	private List<History> history;
 	
@@ -213,7 +210,7 @@ public class CustomerController{
             history = new ArrayList<History>();
             
             //Salva um objeto do tipo ServiceItem
-            for (ServiceItem si : serviceItemList) {
+            for (ServiceItem si : mapOfRequestedDestination.values()) {
             	 
             	String formatDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
             	
@@ -241,11 +238,11 @@ public class CustomerController{
 					
 				}
             	
-            	customerService.setHistory(history);
+            	customerService.setHistory(history);          	          	
                 si.setCustomerService(customerService);
             }
-            
-            serviceItemFacade.saveServiceItem(serviceItemList);
+            List<ServiceItem> list = new ArrayList<ServiceItem>(mapOfRequestedDestination.values());
+            serviceItemFacade.saveServiceItem(list);
 			
 			
 			return new ModelAndView(new RedirectView("serviceList"));
@@ -328,16 +325,12 @@ public class CustomerController{
     	
     	Customer customerId = customerFacade.getCustomerId(id);
     	getHistoryListCustomerId(model, customerId);
-    	
-    	List<ServiceItem> destinationNegotiated = new ArrayList<ServiceItem>();
-    	
-		for (ServiceItem serviceItem : serviceItemFacade.getAllServiceItems()) {
-			if (cs.equals(serviceItem.getCustomerService().getId())) {
-				destinationNegotiated.add(serviceItem);
-			}
-		}
-		
-    	model.addAttribute("destinationNegotiated", destinationNegotiated);
+
+    	CustomerService customerServiceById = customerServiceFacade.getCustomerServiceById(id);
+    	Set<ServiceItem> serviceItem = customerServiceById.getServiceItem();
+
+
+    	model.addAttribute("destinationNegotiated", serviceItem);
         model.addAttribute("serviceModify", customerId);
         return "service/editService";
     }
@@ -376,7 +369,7 @@ public class CustomerController{
      * @return Boolean
      */
 	public Boolean isOpenService() {
-		for (ServiceItem serviceItem : serviceItemList) {
+		for (ServiceItem serviceItem : mapOfRequestedDestination.values()) {
 			if(serviceItem.getSaleType() == SaleType.SEND_BUDGET || serviceItem.getSaleType() == SaleType.SUBMITTED_BUDGET){
 				return Boolean.TRUE;
 			}
@@ -454,6 +447,7 @@ public class CustomerController{
 		if(id == 1){
 			if(mapOfRequestedDestination.containsKey(idServiceItem)){
 				mapOfRequestedDestination.remove(idServiceItem);
+				
 			}
 			
 		}else{
@@ -461,39 +455,26 @@ public class CustomerController{
 		}
 	}
 	
-    /**
-     * Ação resposavel por editar um destino requisitado
-     * @param id
-     * @param model
-     * @return ServiceItem
-     */
-    @RequestMapping(value = "/editRequestedDestination/{id}", method = RequestMethod.GET)
-	public @ResponseBody ServiceItem editRequestedDestination(@PathVariable String id, Model model) {
-    	
-    	String string = mapOfRequestedDestination.get(id);
+	/**
+	 * Ação resposavel por editar um destino requisitado
+	 * 
+	 * @param id
+	 * @param model
+	 * @return ServiceItem
+	 */
+	@RequestMapping(value = "/editRequestedDestination/{id}/{update}", method = RequestMethod.GET)
+	public @ResponseBody ServiceItem editRequestedDestination(
+			@PathVariable String id, @PathVariable int update, Model model) {
 
+		if (update == 0) {
+			ServiceItem serviceItem = mapOfRequestedDestination.get(id);
+			return serviceItem;
+		} else {
+
+		}
 
 		return null;
 	}
-    
-    @RequestMapping(value = "/editRequestedDestinationUpdate/{id}", method = RequestMethod.GET)
-    public @ResponseBody ServiceItem editRequestedDestinationUpdate(@PathVariable Long id, Model model) {
-    	try { 
-    		
-    		for(ServiceItem s : serviceItemFacade.getAllServiceItems()){
-    			if (id.equals(s.getId())) {
-    	    		
-    	            return s;
-				}
-    			
-    		}
-
-		} catch (NullPointerException e) {
-			e.printStackTrace();
-			
-		}
-    	return null;
-    }
 
 	/**
      * Metodo responsavel por salvar/atualizar o destino requisitado, quando o atendimento já estiver sido persistido.
@@ -502,7 +483,7 @@ public class CustomerController{
      * @param ServiceItem
      * @param model
      */
-    @RequestMapping(value = "/saveOrUpdateDestinationRequested", method = RequestMethod.POST)
+	@RequestMapping(value = "/saveOrUpdateDestinationRequested", method = RequestMethod.POST)
 	public @ResponseBody ConcurrentHashMap<String, String> saveOrUpdateDestinationRequested(
 			@RequestParam(value = "customerServiceId", required = false) Long customerServiceId,
 			@RequestParam(value = "arrive", required = false) String arrive,
@@ -512,6 +493,7 @@ public class CustomerController{
 			@RequestParam(value = "destinationId", required = true) Long destinationId,
 			@RequestParam(value = "observations", required = false) String observations,
 			@RequestParam(value = "ckb", required = true) Boolean ckb,
+			@RequestParam(value = "destinationNegotiatedID", required = false) String destinationNegotiatedID,
 			RedirectAttributes redirectAttributes, Model model) {
     		    	
 			Number valueFormated = FormatObjects.formatStringPriceToNumberObject(price, redirectAttributes);
@@ -519,54 +501,75 @@ public class CustomerController{
 			Date departureFormated = FormatObjects.formatStringDateToDateObject(departure, redirectAttributes);
 			
     		if (customerServiceId == null) {
-				//Cria um novo e salva em BD
-    	        if (saletype.equals(SaleType.MAYBE_FUTURE) || saletype.equals(SaleType.SUBMITTED_BUDGET) || saletype.equals(SaleType.NOT_WANTED)) {
-    	        	
-    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString())) {
-    	            	
-    	            		ServiceItem serviceItem = new ServiceItem();
-    	            		List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
-    	            		
-	            			 List<ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
-									destinationId, observations, ckb,
-									valueFormated, arriveFormated,
-									departureFormated, serviceItem,
-									serviceItemList);
-	            			 
-	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = null;
-	            			 
-	            			 for (ServiceItem serviceItem2 : saveOrUpdateRequestedDestination) {
-	            				 mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
-	            				 String uniqueID = UUID.randomUUID().toString();
-	            				 mapRequestedDestinationAux.put(uniqueID, serviceItem2.getDestination().getDtName());
-	            				 mapOfRequestedDestination.put(uniqueID, serviceItem2.getDestination().getDtName());
-							}
-	            			return mapRequestedDestinationAux;
-	            			 
+    	        if (saletype.equals(SaleType.MAYBE_FUTURE) || saletype.equals(SaleType.SUBMITTED_BUDGET) || saletype.equals(SaleType.NOT_WANTED)) {    	        	
+    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString())) {          		
+    	            		if(!Strings.isNullOrEmpty(destinationNegotiatedID)){
+    	            			if(mapOfRequestedDestination.containsKey(destinationNegotiatedID)){
+    	            				ServiceItem serviceItem = mapOfRequestedDestination.get(destinationNegotiatedID);
+    	            				mapOfRequestedDestination.remove(destinationNegotiatedID);
+    	            				
+    	            				ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype, destinationId, observations, ckb, valueFormated,
+    	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID);
+    	            				
+	       	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+	       							 mapRequestedDestinationAux.put(destinationNegotiatedID, saveOrUpdateRequestedDestination.get(destinationNegotiatedID).getDestination().getDtName());
+	       							
+	       	            			return mapRequestedDestinationAux;
+    	            			}
+    	            			
+    	            			
+    	            		}else{
+        	            		ServiceItem serviceItem = new ServiceItem();
+        	            		
+        	            		String uniqueID = UUID.randomUUID().toString();
+    	            			 Map<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
+    									destinationId, observations, ckb,
+    									valueFormated, arriveFormated,
+    									departureFormated, serviceItem, uniqueID);
+
+    	            			 	
+    	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+    							 mapRequestedDestinationAux.put(uniqueID, saveOrUpdateRequestedDestination.get(uniqueID).getDestination().getDtName());
+    							
+    	            			return mapRequestedDestinationAux;
+    	            			
+    	            		}
 
     	            }
     	        } else {
 
     	            if ((!Strings.isNullOrEmpty(arrive.toString()) && !Strings.isNullOrEmpty(departure.toString()) && !Strings.isNullOrEmpty(price) && !Strings.isNullOrEmpty(saletype.toString()) && !Strings
     	                        .isNullOrEmpty(destinationId.toString())) && !departureFormated.after(arriveFormated)) {
-    	            	
-	            			ServiceItem serviceItem = new ServiceItem();
-	            			List<ServiceItem> serviceItemList = new ArrayList<ServiceItem>();
-
-	            			List<ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
+    	            	if(!Strings.isNullOrEmpty(destinationNegotiatedID)){
+	            			if(mapOfRequestedDestination.containsKey(destinationNegotiatedID)){
+	            				ServiceItem serviceItem = mapOfRequestedDestination.get(destinationNegotiatedID);
+	            				mapOfRequestedDestination.remove(destinationNegotiatedID);
+	            				
+	            				ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype, destinationId, observations, ckb, valueFormated,
+	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID);
+	            				
+       	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+       							 mapRequestedDestinationAux.put(destinationNegotiatedID, saveOrUpdateRequestedDestination.get(destinationNegotiatedID).getDestination().getDtName());
+       							
+       	            			return mapRequestedDestinationAux;
+	            			}
+    	            	}else{
+		            		ServiceItem serviceItem = new ServiceItem();
+		            		
+		            		String uniqueID = UUID.randomUUID().toString();
+	            			 Map<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
 									destinationId, observations, ckb,
 									valueFormated, arriveFormated,
-									departureFormated, serviceItem,
-									serviceItemList);
-	            			
-	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = null;
-	            			 
-	            			 for (ServiceItem serviceItem2 : saveOrUpdateRequestedDestination) {
-	            				 mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
-	            				 mapRequestedDestinationAux.put(UUID.randomUUID().toString(), serviceItem2.getDestination().getDtName());
-	            				 mapOfRequestedDestination.put(UUID.randomUUID().toString(), serviceItem2.getDestination().getDtName());
-							}
+									departureFormated, serviceItem, uniqueID);
+
+	            			 	
+	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
+							 mapRequestedDestinationAux.put(uniqueID, saveOrUpdateRequestedDestination.get(uniqueID).getDestination().getDtName());
+							
 	            			return mapRequestedDestinationAux;
+    	            	}
+    	            	
+
 
 
     	            } else {
@@ -592,11 +595,11 @@ public class CustomerController{
 	 * @param serviceItemList
 	 * @return
 	 */
-	private List<ServiceItem> saveOrUpdateRequestedDestination(
+	private ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination(
 			SaleType saletype, Long destinationId, String observations,
 			Boolean ckb, Number valueFormated, Date arriveFormated,
-			Date departureFormated, ServiceItem serviceItem,
-			List<ServiceItem> serviceItemList) {
+			Date departureFormated, ServiceItem serviceItem, String uniqueID) {
+		
 		serviceItem.setDestination(dashboardFacade.getDestinationId(destinationId));
 		serviceItem.setArrivalDate(arriveFormated);
 		serviceItem.setDepartureDate(departureFormated);
@@ -604,11 +607,11 @@ public class CustomerController{
 		serviceItem.setSaleType(saletype);
 		serviceItem.setValueNegotiated(valueFormated.doubleValue());
 		serviceItem.setRequestedDestination(ckb);
-
-		serviceItemList.add(serviceItem);
+			
+		mapOfRequestedDestination.put(uniqueID, serviceItem);
 		
 		logger.info("[Novo Atendimento] Destino incluido com sucesso...");
-		return serviceItemList;
+		return mapOfRequestedDestination;
 	}
 
 		

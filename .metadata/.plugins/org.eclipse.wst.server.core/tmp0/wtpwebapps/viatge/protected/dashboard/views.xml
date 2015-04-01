@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<!-- Lista as categorias da agencia -->
+	<definition extends="default" name="home">
+		<put-attribute name="body" value="/protected/dashboard/home.jsp" />
+	</definition>
+</tiles-definitions>

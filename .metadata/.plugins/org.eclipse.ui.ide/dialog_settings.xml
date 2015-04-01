@@ -5,10 +5,18 @@
 		<item value="false" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
 		<item value="false" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
 		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="/home/manolo/workspaceGit/Servers"/>
 			<item value="/home/manolo/workspaceGit/viatge"/>
 		</list>
 		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
 			<item value=""/>
 		</list>
+	</section>
+	<section name="CleanDialogSettings">
+		<item value="1003" key="DIALOG_WIDTH"/>
+		<item value="46" key="DIALOG_Y_ORIGIN"/>
+		<item value="834" key="DIALOG_HEIGHT"/>
+		<item value="1885" key="DIALOG_X_ORIGIN"/>
+		<item value="false" key="TOGGLE_SELECTED"/>
 	</section>
 </section>

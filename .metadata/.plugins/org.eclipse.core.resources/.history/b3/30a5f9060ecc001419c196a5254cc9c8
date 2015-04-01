@@ -1,0 +1,340 @@
+package br.com.joocebox.controller;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import javax.validation.Valid;
+
+import org.dozer.Mapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
+
+import br.com.joocebox.model.Category;
+import br.com.joocebox.model.Country;
+import br.com.joocebox.model.Destination;
+import br.com.joocebox.model.Image;
+import br.com.joocebox.model.StreetView;
+import br.com.joocebox.model.Video;
+import br.com.joocebox.service.DashboardFacade;
+
+@Controller
+@Transactional(propagation = Propagation.REQUIRED)
+@RequestMapping("/auth")
+public class DestinationController{
+
+	final static Logger logger = LoggerFactory.getLogger(DestinationController.class);
+	
+	@Autowired
+	public DashboardFacade dashboardFacade;
+	
+	@Autowired
+	public FileController fileController;
+	
+	@Autowired
+	public Mapper dozerBeanMapper;
+	
+	//Retorna o body do destino para inclusão
+	@RequestMapping("destination")
+	public String getMenudestination(Model model){
+		List<Destination> destinationList = dashboardFacade.getDestinationList();
+		model.addAttribute("destination", destinationList);
+		model.addAttribute("category", new Category());
+		model.addAttribute("categoryList", getActiveCategories());
+		return "destination/destinationList";	
+	}
+	
+	//Entra na tela de cadastro de um novo destino
+	@RequestMapping("newDestination")
+	public ModelAndView setnewDestination(Model model){
+		
+		fileController.deleteTmp();
+		
+		initializedCategoryAndCountries(model);
+		
+		return new ModelAndView("destination/newDestination", "command", new Destination());
+	}
+
+
+	public List<Category> getActiveCategories() {
+		//Inicializa o Componente DropDown de Categoria
+		List<Category> allCategory = dashboardFacade.getCategoryList();
+		
+		Iterator<Category> iterator = allCategory.iterator();
+		//Verificação de categorias que não estão ativas		
+		while (iterator.hasNext()) {
+			Category category = (Category) iterator.next();
+			if(category.getCtActive() != 1){ 
+				iterator.remove();							
+			}
+		}
+		return allCategory;
+	}
+	
+	 @ModelAttribute("destination")
+	 public Destination getDestinationObject() {
+	  return new Destination();
+	 }
+
+	//Adicona um novo destino
+	@RequestMapping(value="/addDestination", method = RequestMethod.POST)
+	public ModelAndView addDestination(@ModelAttribute("destination") @Valid Destination destination, BindingResult result, RedirectAttributes redirectAttributes, Model model){
+		
+		List<String> error = new ArrayList<>();
+		
+		if(result.hasErrors()){
+			List<ObjectError> allErrors = result.getAllErrors();
+			
+			 
+			for (ObjectError objectError : allErrors) {
+				String objectName = objectError.getDefaultMessage();
+				error.add(objectName);
+			}
+			
+			model.addAttribute("errors", error);
+			model.addAttribute("validator", true);
+			
+			setnewDestination(model);
+			return new ModelAndView("destination/newDestination");
+		
+		}else{
+			
+			if(destination.getCategories().getIdCategory() == -1 || destination.getCountry().getIdCountry() == -1){			
+				error.add("Você esqueceu de selecionar uma categoria ou  país de destino!");
+				model.addAttribute("errors", error);
+				fileController.deleteTmp();
+				return new ModelAndView("destination/newDestination");
+				
+			}else{
+
+				try {
+					destination.setImages(fileController.imageReplication(destination));
+
+					Category category = dashboardFacade.getCategoryId(destination.getCategories().getIdCategory());
+					destination.setCategories(category);
+					
+					Country countryId = dashboardFacade.getCountryId(destination.getCountry().getIdCountry());
+					destination.setCountry(countryId);
+					
+					destination.setStreetView(parseStreetViewCod(destination.getStreetView())); 				
+					
+					destination.setVideo(parseYouTubeVideo(destination.getVideo()));
+					
+					if(destination.getDtAppearWebsite() == null)
+						destination.setDtAppearWebsite(false);
+					
+					if(destination.getDtHighlightWebsite() == null)
+						destination.setDtHighlightWebsite(false);
+										
+					dashboardFacade.addDestination(destination);
+
+					redirectAttributes.addFlashAttribute("message", "O destino " + destination.getDtName()+ " foi adicionado(a) com sucesso!");
+
+					logger.info("Destino " + destination.getDtName()+ " adicionado com sucesso para a agência: " + dashboardFacade.getAgency());
+					return new ModelAndView(new RedirectView("destination"));
+					
+				} catch (Exception e) {
+					e.printStackTrace();
+					fileController.deleteAllImages(destination.getImages(), destination.getDtName());
+					//TODO: apagar as pastas com as imagens assim como os registros na tabela de image
+					redirectAttributes.addFlashAttribute("errorMessage", "Não foi possivel adicionar o destino "+ destination.getDtName());
+					return new ModelAndView(new RedirectView("destination"));
+				}
+			}
+		}
+	}
+
+
+	private Video parseYouTubeVideo(Video video) {
+		String[] result = video.getCode().split("=");
+		
+        if("https://www.youtube.com/watch?v".equals(result[0]) || "www.youtube.com/watch?v".equals(result[0]) || "http://www.youtube.com/watch?v".equals(result[0])){
+            
+            video.setCode("//www.youtube.com/embed/"+result[1]);
+            
+        }
+        
+		return video;
+		
+	}
+
+	private StreetView parseStreetViewCod(StreetView streetView) {
+		String embedCode = streetView.getEmbedCode();
+		streetView.setSrc(embedCode.replaceAll(".*src=\"(.+?)\".*", "$1"));
+		return streetView;
+		
+	}
+
+	@RequestMapping(value="editDestination", method = RequestMethod.POST)
+	public ModelAndView mergeDestination(@ModelAttribute("destinationModify") @Valid Destination altDestination, BindingResult result, RedirectAttributes redirectAttributes, Model model, @RequestParam Long id){
+		
+		//destination.setIdDestination(id);
+		Destination destinationId;
+		
+		List<String> error = new ArrayList<>();
+		
+		if(result.hasErrors()){
+			List<ObjectError> allErrors = result.getAllErrors();
+			
+			 
+			for (ObjectError objectError : allErrors) {
+				String objectName = objectError.getDefaultMessage();
+				error.add(objectName);
+			}
+			
+			model.addAttribute("errors", error);
+			model.addAttribute("validator", true);
+			
+			fileController.deleteTmp();
+		
+			
+			return new ModelAndView("destination/destinationList");
+		
+		}else{
+			
+			if(altDestination.getCategories().getIdCategory() == -1 || altDestination.getCountry().getIdCountry() == -1){			
+				error.add("Você esqueceu de selecionar uma categoria ou país de destino!");
+				model.addAttribute("errors", error);
+				fileController.deleteTmp();
+				return new ModelAndView("destination/newDestination");
+				
+			}else{
+
+				try {
+					//Retrive Destination of DB
+					destinationId =dashboardFacade.getDestinationId(id);
+					
+					//Atualiza a Categoria
+					Category category = dashboardFacade.getCategoryId(altDestination.getCategories().getIdCategory());
+					destinationId.setCategories(category);
+					
+					//Atualiza o Pais
+					Country country = dashboardFacade.getCountryId(altDestination.getCountry().getIdCountry());
+					destinationId.setCountry(country);
+					
+					destinationId.setDtName(altDestination.getDtName());
+					
+					//Atualiza o Street View				
+					destinationId.getStreetView().setEmbedCode(altDestination.getStreetView().getEmbedCode());	
+					
+					//Atualiza os Video do Youtube
+					destinationId.getVideo().setCode(altDestination.getVideo().getCode());
+
+					//Profile
+					//Economic Profile
+					destinationId.getEconomicProfiles().setEconomic(altDestination.getEconomicProfiles().getEconomic());
+					destinationId.getEconomicProfiles().setIntermediate(altDestination.getEconomicProfiles().getIntermediate());
+					destinationId.getEconomicProfiles().setLuxury(altDestination.getEconomicProfiles().getLuxury());
+					
+					//General Profile
+					destinationId.getGeneralProfiles().setBeach(altDestination.getGeneralProfiles().getBeach());
+					destinationId.getGeneralProfiles().setCity(altDestination.getGeneralProfiles().getCity());
+					destinationId.getGeneralProfiles().setCottage(altDestination.getGeneralProfiles().getCottage());
+					destinationId.getGeneralProfiles().setMountain(altDestination.getGeneralProfiles().getMountain());
+					
+					//Social Profiles
+					destinationId.getSocialProfiles().setAccompanying(altDestination.getSocialProfiles().getAccompanying());
+					destinationId.getSocialProfiles().setAlone(altDestination.getSocialProfiles().getAlone());
+					destinationId.getSocialProfiles().setChildren(altDestination.getSocialProfiles().getChildren());
+					destinationId.getSocialProfiles().setElderly(altDestination.getSocialProfiles().getElderly());
+					destinationId.getSocialProfiles().setFamilyChildren(altDestination.getSocialProfiles().getFamilyChildren());
+					destinationId.getSocialProfiles().setFriends(altDestination.getSocialProfiles().getFriends());
+					destinationId.getSocialProfiles().setTeenager(altDestination.getSocialProfiles().getTeenager());
+					
+					//Trip Profile
+					destinationId.getTripProfiles().setChill(altDestination.getTripProfiles().getChill());
+					destinationId.getTripProfiles().setEntertainment(altDestination.getTripProfiles().getEntertainment());
+					destinationId.getTripProfiles().setFun(altDestination.getTripProfiles().getFun());
+					destinationId.getTripProfiles().setGastronomy(altDestination.getTripProfiles().getGastronomy());
+					destinationId.getTripProfiles().setHistory(altDestination.getTripProfiles().getHistory());
+					destinationId.getTripProfiles().setParty(altDestination.getTripProfiles().getParty());
+					destinationId.getTripProfiles().setRomance(altDestination.getTripProfiles().getRomance());
+					destinationId.getTripProfiles().setShopping(altDestination.getTripProfiles().getShopping());
+					destinationId.getTripProfiles().setSports(altDestination.getTripProfiles().getSports());
+					
+					//Weather Profile
+					destinationId.getWeatherprofile().setCold(altDestination.getWeatherprofile().getCold());
+					destinationId.getWeatherprofile().setHeat(altDestination.getWeatherprofile().getHeat());
+					destinationId.getWeatherprofile().setWinter(altDestination.getWeatherprofile().getWinter());
+					//End of Profile
+					
+					//Appear in website controller
+//					destinationId.getDtAppearWebsite(altDestination.getDtAppearWebsite());
+//					destinationId.getDtHighlightWebsite();
+					
+					//Destination's Image
+					Set<Image> imageReplication = fileController.imageReplication(destinationId);
+					for (Image image : imageReplication) {
+						destinationId.getImages().add(image);
+					}
+					
+					if(altDestination.getDtAppearWebsite() == null)
+						destinationId.setDtAppearWebsite(false);
+					
+					if(altDestination.getDtHighlightWebsite() == null)
+						destinationId.setDtHighlightWebsite(false);
+					
+					//Destination Update
+					dashboardFacade.destinationUpdate(destinationId);
+
+					redirectAttributes.addFlashAttribute("message", "O destino " + altDestination.getDtName()+ " foi alterado(a) com sucesso!");
+
+					logger.info("Destino " + altDestination.getDtName()+ " alterado com sucesso para a agência: " + dashboardFacade.getAgency());
+					return new ModelAndView(new RedirectView("destination"));
+					
+				} catch (Exception e) {
+					redirectAttributes.addFlashAttribute("errorMessage", "Não foi possivel alterar o destino "+ altDestination.getDtName());
+					return new ModelAndView(new RedirectView("destination"));
+				}
+			}
+		}
+	}
+
+	public void initializedCategoryAndCountries(Model model) {
+		//Inicializa o componente de paises
+		List<Country> countriesList = dashboardFacade.getCountriesList();		
+		model.addAttribute("countriesList", countriesList);
+		
+		List<Category> allCategory = getActiveCategories();
+		model.addAttribute("categoryDropDown", allCategory);
+	}
+	
+	//Edição do Destino
+	@RequestMapping(value="editDestination", method = RequestMethod.GET)
+	public String editDestination(@RequestParam Long id, Model model){	
+			initializedCategoryAndCountries(model);
+			model.addAttribute("destinationModify", dashboardFacade.getDestinationId(id));
+			return "destination/editDestination";	
+	}
+	
+	
+	@RequestMapping(value="/getStreetViewCode", method = RequestMethod.GET)
+	public @ResponseBody String getStreetViewCode(@RequestParam Long destinationId){
+			Destination destination = dashboardFacade.getDestinationId(destinationId);
+			return destination.getStreetView().getEmbedCode();	
+	}
+	
+	@RequestMapping(value="/getVideoCode", method = RequestMethod.GET)
+	public @ResponseBody String getVideoCode(@RequestParam Long destinationId){
+			Destination destination = dashboardFacade.getDestinationId(destinationId);
+			return destination.getVideo().getCode();	
+	}
+	
+}

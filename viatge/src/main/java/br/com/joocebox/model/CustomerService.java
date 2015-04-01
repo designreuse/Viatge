@@ -10,6 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -55,7 +56,7 @@ public class CustomerService implements Serializable {
 	@Column(name = "service_situation")
 	private boolean situation;
 
-	@OneToMany(mappedBy = "customerService")
+	@OneToMany(mappedBy="customerService",fetch=FetchType.EAGER)
 	private Set<ServiceItem> serviceItem;
 
 	@OneToMany(cascade = CascadeType.PERSIST)

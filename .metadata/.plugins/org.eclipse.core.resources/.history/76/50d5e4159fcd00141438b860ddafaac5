@@ -1,0 +1,33 @@
+package br.com.joocebox.model;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public enum SaleType {
+	BOUGHT("Comprou"),
+	SEND_BUDGET("Enviar Orçamento"),
+	SUBMITTED_BUDGET("Orçamento Enviado"),
+	NOT_WANTED("Não quis"),
+	MAYBE_FUTURE("Pode Querer no Futuro");
+	
+	private final String sale ;
+	private static Map<String, SaleType> relations; 
+	
+	private SaleType(String sale){
+		this.sale=sale;
+	}
+	
+	public String getSaleType(){
+		return sale;
+	}
+	
+    public static SaleType getSexoPorDescr(String descr) {  
+        return relations.get(descr);  
+      }
+    
+    static {  
+        relations = new HashMap<String, SaleType>();  
+        for(SaleType s : values()) relations.put(s.getSaleType(), s);      
+      } 
+
+}

@@ -99,7 +99,7 @@ public class Destination implements Serializable {
 	@Valid
 	private Set<Image> images;
 	
-	@OneToMany(mappedBy = "destination")
+	@OneToMany(mappedBy="destination", fetch=FetchType.EAGER)
 	private Set<ServiceItem> serviceItem;
 	
 	@OneToOne

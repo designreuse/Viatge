@@ -1,0 +1,20 @@
+package br.com.joocebox.model;
+
+public enum SaleType {
+	BOUGHT("Comprou"),
+	SEND_BUDGET("Enviar Orçamento"),
+	SUBMITTED_BUDGET("Orçamento Enviado"),
+	NOT_WANTED("Não quis"),
+	MAYBE_FUTURE("Pode Querer no Futuro");
+	
+	private final String sale ;
+
+	private SaleType(String sale){
+		this.sale=sale;
+	}
+	
+	public String getSaleType(){
+		return this.sale;
+	}
+
+}

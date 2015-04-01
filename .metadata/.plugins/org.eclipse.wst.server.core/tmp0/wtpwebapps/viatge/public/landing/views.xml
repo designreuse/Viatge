@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+2.1//EN" "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+	<definition extends="register" name="landing/register">
+		<put-attribute name="register" value="/public/landing/Register.jsp" />
+	</definition>
+	
+	<definition extends="wizard" name="landing/wizard">
+		<put-attribute name="wizard" value="/public/landing/Wizard.jsp" />
+	</definition>
+	
+	<definition extends="landing" name="landing/login">
+		<put-attribute name="register" value="/public/landing/Login.jsp" />
+	</definition>
+</tiles-definitions>

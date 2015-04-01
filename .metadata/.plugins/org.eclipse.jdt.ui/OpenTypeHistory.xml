@@ -1,2 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<typeInfoHistroy/>
+<typeInfoHistroy>
+<typeInfo handle="=viatge/\/home\/manolo\/.m2\/repository\/net\/sf\/dozer\/dozer\/5.3.2\/dozer-5.3.2.jar&lt;org.dozer.factory(DestBeanCreator.class[DestBeanCreator" modifiers="49" timestamp="1414368684000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{Category.java[Category" modifiers="1" timestamp="1421977499000"/>
+<typeInfo handle="=viatge/\/home\/manolo\/.m2\/repository\/org\/apache\/geronimo\/specs\/geronimo-jms_1.1_spec\/1.1.1\/geronimo-jms_1.1_spec-1.1.1.jar&lt;javax.jms(Destination.class[Destination" modifiers="1537" timestamp="1414368732000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.multitenancy{ViatgeTenantResolver.java[ViatgeTenantResolver" modifiers="1" timestamp="1421977500000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.multitenancy{MultiTenantJpaRepositoryFactoryBean.java[MultiTenantJpaRepositoryFactoryBean" modifiers="1" timestamp="1421977500000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.service{ServiceItemFacade.java[ServiceItemFacade" modifiers="1" timestamp="1427679473000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{Customer.java[Customer" modifiers="1" timestamp="1427224921000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.controller{AgencyController.java[AgencyController" modifiers="1" timestamp="1426041840000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{ServiceItem.java[ServiceItem" modifiers="1" timestamp="1427728051000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{CustomerService.java[CustomerService" modifiers="1" timestamp="1427727920000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model.views{VwOpenService.java[VwOpenService" modifiers="1" timestamp="1427379732000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{Destination.java[Destination" modifiers="1" timestamp="1427727467000"/>
+<typeInfo handle="=viatge/src\/main\/java&lt;br.com.joocebox.model{SaleType.java[SaleType" modifiers="16385" timestamp="1426706450000"/>
+</typeInfoHistroy>

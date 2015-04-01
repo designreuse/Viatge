@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Lista os destinos da agencia -->
+	<definition extends="default" name="destination/destinationList">
+		<put-attribute name="body" value="/protected/destination/destinationList.jsp" />
+	</definition>
+	
+	<!-- Novo Destino -->
+	<definition extends="default" name="destination/newDestination">
+		<put-attribute name="body" value="/protected/destination/newDestination.jsp" />
+	</definition>
+	
+	<!-- Editar Destino -->
+	<definition extends="default" name="destination/editDestination">
+		<put-attribute name="body" value="/protected/destination/editDestination.jsp" />
+	</definition>
+</tiles-definitions>

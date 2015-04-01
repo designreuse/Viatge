@@ -1,0 +1,190 @@
+package br.com.joocebox.service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import br.com.joocebox.model.Agency;
+import br.com.joocebox.model.Category;
+import br.com.joocebox.model.Country;
+import br.com.joocebox.model.Destination;
+import br.com.joocebox.model.Image;
+import br.com.joocebox.model.ImageJson;
+import br.com.joocebox.model.Role;
+import br.com.joocebox.multitenancy.CurrentTenantResolver;
+import br.com.joocebox.repositories.AgencyRepository;
+import br.com.joocebox.repositories.CategoryRepository;
+import br.com.joocebox.repositories.CountryRepository;
+import br.com.joocebox.repositories.DestinationRepository;
+import br.com.joocebox.repositories.ImageTempRepository;
+import br.com.joocebox.repositories.ImagesRepository;
+
+@Service
+@Transactional(propagation = Propagation.MANDATORY)
+public class DashboardFacade {
+
+	// Injeção dependencias do repositorio(DAO)
+	@Autowired
+	private AgencyRepository agencyRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private CurrentTenantResolver<Long> tenantResolver;
+	
+	@Autowired
+	private DestinationRepository destinationRepository;
+	
+	@Autowired
+	private ImagesRepository imagesRepository;
+	
+	@Autowired
+	private ImageTempRepository imageTempRep;
+	
+	@Autowired
+	private CountryRepository countryRepository;
+	
+	@Autowired  
+	private DataSource dataSource;
+	   
+	//Image
+	public ImageJson addImagePathTmp(ImageJson tempPath){
+		return imageTempRep.save(tempPath);
+	}
+	
+	public List<ImageJson> getImagePathTmpList() {
+		return imageTempRep.findAll();
+		
+	}
+
+	public Image addImagePath(Image path) {
+		return imagesRepository.save(path);
+	}
+	
+	public void deleteAllTmpImages(ImageJson imageTmp){
+		imageTempRep.delete(imageTmp);
+	}
+	
+	public void deleteImageId(Long id){
+		imagesRepository.delete(id);
+	}
+	//Image Finish
+	
+	//Destination
+	public Destination addDestination(Destination destination){
+		return destinationRepository.save(destination);
+	}
+	
+	public List<Destination> getDestinationList() {
+		return destinationRepository.findAll();	
+	}
+	
+	public List<Country> getCountriesList() {
+		return countryRepository.findAll();		
+	}	
+	public Country getCountryId(Long countryId){
+		return countryRepository.findOne(countryId);
+	}
+	
+	public Destination getDestinationId(Long destinationId){
+		return destinationRepository.findOne(destinationId);
+	}
+	
+	public void destinationUpdate(Destination destinationUpdate) {
+		destinationRepository.save(destinationUpdate);
+	}
+	
+	public void callReplicationDestinationProcedure(String subdomain, Long tenantId) {
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("replicationDestinationData");
+		
+		Map<String, Object> inParamMap = new HashMap<String, Object>();
+		inParamMap.put("subdomain", subdomain);
+		inParamMap.put("tenantId", tenantId);
+		SqlParameterSource in = new MapSqlParameterSource(inParamMap);
+
+		Map<String, Object> simpleJdbcCallResult = simpleJdbcCall.execute(in);
+//		System.out.println(simpleJdbcCallResult);
+
+	}
+	
+	//Destination Finish
+	
+	//Category
+	public Category addCategory(Category category){
+		return categoryRepository.save(category);				
+	}
+	
+	public List<Category> getCategoryList(){
+		return categoryRepository.findAll();
+	}
+	
+	public Category getCategoryId(Long categoryId){
+		return categoryRepository.findOne(categoryId);
+	}
+	
+	public void categoryUpdate(String categoryName, Long categoryId) {
+		Category categoria = categoryRepository.findOne(categoryId);
+		categoria.setCtName(categoryName);
+		categoryRepository.save(categoria);
+	}
+	//Finish Category
+	
+	//Authentication
+	public Agency findByEmail(String email) {	
+		return agencyRepository.findByEmail(email);
+	}
+	//final
+	
+	public Agency addAgency(Agency agency) {
+		return agencyRepository.save(agency);
+	}
+	
+	public void updateAgency(Agency agency) {
+		agencyRepository.save(agency);
+	}
+
+	public Agency getAgency() {
+		return agencyRepository.findOne(tenantResolver.getCurrentTenantId());
+	}
+	
+	public boolean isAgencySubdomainRegistrered(String subdomain) {
+		
+		if(agencyRepository.getBySubdomain(subdomain) != null){
+			return true;
+		} 
+	
+		return false;
+	}
+	
+	
+	//Cria os dados do tenant principal na base via harded-code
+	public void createMasterData() {
+		if (agencyRepository.getBySubdomain("www") == null) {
+			//Cria a agência
+			Agency agency = new Agency();
+			agency.setFirstName("JooceBox");
+			agency.setLastName("Viatge");
+			agency.setSubdomain("www");
+			agency.setEmail("contato@joocebox.com");
+			agency.setPassword("ViaTge");
+			agency.setActive(true);
+			agency.setCreationDate(new Date());
+			agency.setRole(Role.ROLE_ADMIN);
+			
+			agencyRepository.save(agency);
+		}
+	}
+
+}
