@@ -18,7 +18,6 @@ public class FormatObjects {
     	try {
 			value = nf.parse(price);
 		} catch (ParseException e) {
-			redirectAttributes.addFlashAttribute("errUpdateDestinationRequested", "Ocorreu um problema na corversão do valor R$" + price + "tente novamnete!");
 			e.printStackTrace();
 		}
 		return value;
@@ -33,7 +32,6 @@ public class FormatObjects {
 			parseDate = df.parse(date);
 
 		} catch (ParseException e) {
-			redirectAttributes.addFlashAttribute("errUpdateDestinationRequested", "Parece que a data fornecida não coincide com o padrão dia/mês/ano");
 			e.printStackTrace();
 		}
 		return parseDate;

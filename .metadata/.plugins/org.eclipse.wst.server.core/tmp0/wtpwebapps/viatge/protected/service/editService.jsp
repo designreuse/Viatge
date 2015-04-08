@@ -47,7 +47,7 @@
 					</div>
 				</c:if>
 
-				<f:form id="transition-duration-demo" class="transition-form" method="post" action="editService" modelAttribute="serviceModify">
+				<f:form id="transition-duration-demo" class="transition-form" method="post" action="addService" modelAttribute="serviceModify">
 
 				<input id="id" type="hidden" name="id" value="${serviceModify.idCustomer}"/>
 
@@ -92,12 +92,12 @@
 									<div class="aling-form">
 
 										<div class="box01">
-											<f:input id="first-name" placeholder="Primeiro Nome"
+											<f:input id="edit-first-name" placeholder="Primeiro Nome"
 												path="firstName" type="text" class="form-control" />
 										</div>
 
 										<div class="box02">
-											<f:input id="last-name" placeholder="Sobrenome"
+											<f:input id="edit-last-name" placeholder="Sobrenome"
 												path="lastName" type="text" class="form-control" />
 										</div>
 
@@ -105,7 +105,7 @@
 											<div class="input-group ">
 												<span class="input-group-addon btn-success"><i
 													class="fa fontawesome-envelope-alt"></i></span>
-												<f:input id="email" placeholder="E-mail" path="email"
+												<f:input id="edit-email" placeholder="E-mail" path="email"
 													type="text" class="form-control" />
 											</div>
 										</div>
@@ -114,7 +114,7 @@
 											<div class="input-group ">
 												<span class="input-group-addon btn-success"><i
 													class="fa fa-phone-square"></i></span>
-												<f:input id="residential-phone"
+												<f:input id="edit-residential-phone"
 													placeholder="Telefone Residencial"
 													path="customerPhone.homePhone" type="text"
 													class="form-control" />
@@ -125,7 +125,7 @@
 											<div class="input-group ">
 												<span class="input-group-addon btn-success"><i
 													class="fa entypo-mobile"></i></span>
-												<f:input id="mobile-telefone" placeholder="Telefone Celular"
+												<f:input id="edit-mobile-telefone" placeholder="Telefone Celular"
 													path="customerPhone.celPhone" type="text"
 													class="form-control" />
 											</div>
@@ -135,7 +135,7 @@
 											<div class="input-group ">
 												<span class="input-group-addon btn-success"><i
 													class="fa fa-phone-square"></i></span>
-												<f:input id="work-telephone"
+												<f:input id="edit-work-telephone"
 													placeholder="Telefone comercial"
 													path="customerPhone.workPhone" type="text"
 													class="form-control" />
@@ -146,19 +146,19 @@
 											<div class="input-group ">
 												<span class="input-group-addon btn-success"><i
 													class="fa fa-calendar"></i></span>
-												<f:input id="birthday" placeholder="Data de Nascimento"
+												<f:input id="edit-birthday" placeholder="Data de Nascimento"
 													path="birthDate" type="text" class="form-control" />
 											</div>
 										</div>
 
 										<div class="box02 skin skin-flat">
 											<div class="box-radio">
-												<f:radiobutton id="gender-male" path="gender" value="M" />
+												<f:radiobutton id="edit-gender-male" path="gender" value="M" />
 												<label for="line-radio-1">Masculino</label>
 											</div>
 
 											<div class="box-radio">
-												<f:radiobutton id="gender-female" path="gender" value="F" />
+												<f:radiobutton id="edit-gender-female" path="gender" value="F" />
 												<label for="line-radio-2">Feminino</label>
 											</div>
 										</div>
@@ -188,53 +188,53 @@
 									<div class="aling-form">
 
 										<div class="box01">
-											<f:input id="cpf" placeholder="CPF ou CNPJ"
+											<f:input id="edit-cpf" placeholder="CPF ou CNPJ"
 												path="document.cpf" type="text" class="form-control" />
 										</div>
 
 										<div class="box02">
-											<f:input id="rg" placeholder="RG" path="document.rg"
+											<f:input id="edit-rg" placeholder="RG" path="document.rg"
 												type="text" class="form-control" />
 										</div>
 
 
 
 										<div class="box01">
-											<f:input id="cep" placeholder="CEP"
+											<f:input id="edit-cep" placeholder="CEP"
 												path="customerAddress.cep" type="text" class="form-control" />
 										</div>
 
 										<div class="box02">
-											<f:input id="estado" placeholder="UF"
+											<f:input id="edit-estado" placeholder="UF"
 												path="customerAddress.state" type="text"
 												class="form-control" />
 										</div>
 
 										<div class="box01">
-											<f:input id="cidade" placeholder="Cidade"
+											<f:input id="edit-cidade" placeholder="Cidade"
 												path="customerAddress.city" type="text" class="form-control" />
 										</div>
 
 										<div class="box02">
-											<f:input id="bairro" placeholder="Bairro"
+											<f:input id="edit-bairro" placeholder="Bairro"
 												path="customerAddress.quarter" type="text"
 												class="form-control" />
 										</div>
 
 										<div class="box01">
-											<f:input id="endereco" placeholder="Rua"
+											<f:input id="edit-endereco" placeholder="Rua"
 												path="customerAddress.street" type="text"
 												class="form-control" />
 										</div>
 
 										<div class="box02">
-											<f:input id="numero" placeholder="Número"
+											<f:input id="edit-numero" placeholder="Número"
 												path="customerAddress.number" type="text"
 												class="form-control" />
 										</div>
 
 										<div class="box01">
-											<f:input id="complemento" placeholder="Complemento"
+											<f:input id="edit-complemento" placeholder="Complemento"
 												path="customerAddress.complement" type="text"
 												class="form-control" />
 										</div>
@@ -345,13 +345,18 @@
 										<ul id="destination-list" class="list-user">
 											<c:forEach items="${destinationNegotiated}" var="destinationNegotiated">
 
-												<ul class="list-user">
-													<li id="list-all-destination">
-														<b>${destinationNegotiated.destination.dtName}</b>
-														<button id="edit-'${destinationNegotiated.destination.idDestination}'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;">
-														<span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>
-													</li>
-												</ul>
+
+												<li id="list-all-destination"><label> <b>${destinationNegotiated.destination.dtName}</b>
+
+														<button id="${destinationNegotiated.id}" type="button"
+															data-toggle="modal" data-backdrop="static"
+															data-target="#EditDestinationModal"
+															class="btn btn-info pull-right"
+															style="position: relative;">
+															<span class="entypo-pencil"></span>&nbsp;&nbsp;Editar
+														</button>
+												</label></li>
+
 
 											</c:forEach>
 
@@ -625,7 +630,7 @@
 									<div id="div-modal-input-body-destination"
 										class="aling-form col-sm-12 nest text"
 										style="padding-top: 25px">
-										<c:if test="${updateError}">
+										<c:if test="${errUpdateDestinationRequested}">
 										<div class="alert alert-danger">
 											<span class="entypo-attention"></span>Você
 												precisa preencher todos os campos ou inserirum intervalo de datas
@@ -639,13 +644,14 @@
 												</c:forEach>
 											</select>
 										</div>
-
+										
 										<div class="box02">
-											<div class="input-group skin skin-flat">
-												<input id="ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
-													id="ckb-label" for="ckb-requested">Destino
-													Solicitado pelo Passageiro?</label>
-
+											<div class="input-group ">
+												<span id="span-arrive" class="input-group-addon btn-success"><i
+													class="fa fa-calendar"></i></span> <input id="see-in"
+													type="text"
+													name="${customerService.serviceItem.seeIn}"
+													class="form-control" placeholder="Ver em..." />
 											</div>
 										</div>
 
@@ -688,25 +694,35 @@
 													class="form-control" />
 											</div>
 										</div>
-
+						
 
 										<div class="box03">
 											<textarea id="destination-observations" name="${customerService.serviceItem.negociationObservations}" rows="3" placeholder="Observações..." class="form-control"
 												style="min-height: 130px;"></textarea>
 										</div>
+										
+										<div class="box02">
+											<div class="input-group skin skin-flat">
+												<input id="ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
+													id="ckb-label" for="ckb-requested">Destino
+													Solicitado pelo Passageiro?</label>
+
+											</div>
+										</div>
 
 
 										<input type="hidden" name="${_csrf.parameterName}"
 											value="${_csrf.token}" />
+										
 
 									</div>
 
 								</div>
 								<div class="modal-footer clear" style="margin: 0px;">
-									<button type="button" class="btn btn-danger"
-										data-dismiss="modal">Cancelar</button>
 									<button id="button-add-destination" type="submit"
 										class="btn btn-primary">Cadastrar</button>
+									<button type="button" class="btn btn-danger"
+										data-dismiss="modal">Cancelar</button>
 								</div>
 							</form>
 						</div>
@@ -732,7 +748,7 @@
 									<div id="div-modal-input-body-destination"
                                         class="aling-form col-sm-12 nest text"
                                         style="padding-top: 25px">
-                                        <c:if test="${updateError}">
+                                        <c:if test="${errUpdateDestinationRequested}">
 										<div class="alert alert-danger">
 											<span class="entypo-attention"></span>Você precisa preencher
 											todos os campos ou inserir um intervalo de datas compatíveis!
@@ -746,15 +762,16 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
-
+                                        
                                         <div class="box02">
-                                            <div class="input-group skin skin-flat">
-                                                <input id="edit-ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
-                                                    id="ckb-label" for="edit-ckb-requested">Destino
-                                                    Solicitado pelo Passageiro?</label>
-
-                                            </div>
-                                        </div>
+											<div class="input-group ">
+												<span id="span-arrive" class="input-group-addon btn-success"><i
+													class="fa fa-calendar"></i></span> <input id="edit-see-in"
+													type="text"
+													name="${customerService.serviceItem.seeIn}"
+													class="form-control" placeholder="Ver em..." />
+											</div>
+										</div>
 
                                         <div class="box01">
                                             <div class="input-group ">
@@ -801,11 +818,19 @@
                                             <textarea id="edit-destination-observations" name="${customerService.serviceItem.negociationObservations}" rows="3" placeholder="Observações..." class="form-control"
                                                 style="min-height: 130px;"></textarea>
                                         </div>
+                                        
+                                         <div class="box02">
+                                            <div class="input-group skin skin-flat">
+                                                <input id="edit-ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
+                                                    id="ckb-label" for="edit-ckb-requested">Destino
+                                                    Solicitado pelo Passageiro?</label>
+
+                                            </div>
+                                        </div>
 
 
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <input id="destinationid-hidden" type="hidden"/>
-                                        <input id="customerServiceId-hidden" type="hidden" value="${customerService.id}"/>
+                                        
 
                                     </div>
 
@@ -830,11 +855,91 @@
 
 <script type="text/javascript">
 
-$('#div-modal-input-body-destination').on('click', '#input-departure', function (e){
+$('#edit-first-name').attr('readonly', true);
+$('#edit-last-name').attr('readonly', true);
+$('#edit-email').attr('readonly', true);
+$('#edit-mobile-telefone').attr('readonly', true);
+$('#edit-work-telephone').attr('readonly', true);
+$('#edit-residential-phone').attr('readonly', true);
+$('#edit-birthday').attr('readonly', true);
+$('#edit-gender-male').attr('disabled', true);
+$('#edit-gender-female').attr('disabled', true);
+$('#edit-cpf').attr('readonly', true);
+$('#edit-rg').attr('readonly', true);
+$('#edit-cep').attr('readonly', true);
+$('#edit-estado').attr('readonly', true);
+$('#edit-cidade').attr('readonly', true);
+$('#edit-bairro').attr('readonly', true);
+$('#edit-endereco').attr('readonly', true);
+$('#edit-numero').attr('readonly', true);
+$('#edit-complemento').attr('readonly', true);
+
+$("#combo-saleType").change(function () {
+    var selectedSaleType = this.value;
+    
+    if(selectedSaleType === "MAYBE_FUTURE" || selectedSaleType === "SUBMITTED_BUDGET" || selectedSaleType === "NOT_WANTED"){
+    	$('#input-arrive').attr('readonly', true);
+    	$('#input-departure').attr('readonly', true);
+    	$('#input-price').attr('readonly', true);
+    }else{
+    	$('#input-arrive').val('');
+    	$('#input-departure').val();
+    	$('#input-price').val('');
+    	$('#input-arrive').attr('readonly', false);
+    	$('#input-departure').attr('readonly', false);
+    	$('#input-price').attr('readonly', false);
+    }
+    
+});
+
+$("#edit-combo-saleType").change(function () {
+    var selectedSaleType = this.value;
+    
+    if(selectedSaleType === "MAYBE_FUTURE" || selectedSaleType === "SUBMITTED_BUDGET" || selectedSaleType === "NOT_WANTED"){
+    	$('#edit-input-arrive').attr('readonly', true);
+    	$('#edit-input-departure').attr('readonly', true);
+    	$('#edit-input-price').attr('readonly', true);
+    }else{
+    	$('#edit-input-arrive').val('');
+    	$('#edit-input-departure').val('');
+    	$('#edit-input-price').val('');
+    	$('#edit-input-arrive').attr('readonly', false);
+    	$('#edit-input-departure').attr('readonly', false);
+    	$('#edit-input-price').attr('readonly', false);
+    }
+    
+});
+
+
+$(document).ready(function() {
+    $(function() {
+        $("#first-name").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/auth/getCustomerAJAX",
+                    type: "GET",
+                    data: {
+                        paramName: request.term
+                    },
+                    dataType: "json",
+                    success: function(data) {
+                        var obj = JSON.parse(data);
+                        alert(obj);
+                        response(obj.firstName);
+                    }
+                });
+            }
+        });
+    });
+});
+
+$(document).ready(function() {
 	   $("#input-price").maskMoney(); 
 	   $('#input-arrive').mask('99/99/9999');
 	   $('#input-departure').mask('99/99/9999');
+	   $('#see-in').mask('99/99/9999');
 });
+
 
    $("#cep").change(function(){
       var cep_code = $(this).val();
@@ -916,8 +1021,13 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   var destinationId = $('#destination-passenger-list').val();
 	   var observations = $('#destination-observations').val();
 	   var ckb = $('#ckb-requested').val();
+
 	   
-	   var url = "${pageContext.request.contextPath}/auth/addSelectedDestination?${_csrf.parameterName}=${_csrf.token}";
+	   //Apenas para o update
+	   var destinationNegotiatedID =null;
+	   var seeIn = $('#see-in').val();
+	   
+	   var url = "${pageContext.request.contextPath}/auth/saveOrUpdateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
 	   
 	   $.ajax({
 		type:'POST',
@@ -928,85 +1038,131 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 			saletype: saleType,
 			destinationId: destinationId,
 			observations: observations,
-			ckb: ckb
+			ckb: ckb,
+			destinationNegotiatedID: destinationNegotiatedID,
+			seeIn: seeIn
 		},
 		url: url,
 		dataType: "json",
 		success: function(jsonData){
 			if (jsonData != null) {
-        	    var destinationName = jsonData[0];
-        	    var destinationId = jsonData[1];
-	        	   
-        		$('#destination-list').append('<li id="list-all-destination" ><label><b>'+destinationName+'</b></label></li>');
-        		
-        		$('#destination-list li').each(function(i){
-        			 var button = $(this).find("button");
-        			if(! button.length){
-        				
-        				$(this).prepend('<button id="edit-'+destinationId+'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;"><span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>');
-                        $(this).prepend('<button id="cancel-'+destinationId+'" type="button" class="btn btn-danger pull-right" style="position: relative;><span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover</button>');
-        			}
-                });
-        		
-        	    $('#destinationModal').modal('hide');
-        	    
-        		$('#input-departure').val('');
-        		$('#input-arrive').val('');
-        		$('#input-price').val('');
-        		$('#combo-saleType').val('');
-        		$('#destination-passenger-list').val('');
-        		$('#destination-observations').val('');
-        		$('#ckb-requested').val('');
-        		
-			} else {
-
-			}
+				
+				$.map(jsonData, function(destinationName, destinationId){
+	        		$('#destination-list').append('<li id="list-all-destination" ><label><b>'+destinationName+'</b></label></li>');
+	        		
+	        		$('#destination-list li').each(function(i){
+	        			var button = $(this).find("button");
+	        			if(! button.length){	        				
+	        				$(this).prepend('<button id="'+destinationId+'" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;"><span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>');
+	                        $(this).prepend('<button id="'+destinationId+'" type="button" class="btn btn-danger pull-right" style="position: relative;><span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover</button>');
+	                        $(this).prepend('<input id="destination-negotiated-id" type="hidden" value="'+destinationId+'"/>');
+	        			}
+	                });
+	        		
+	        	    $('#destinationModal').modal('hide');	        	    
+	        		$('#input-departure').val('');
+	        		$('#input-arrive').val('');
+	        		$('#input-price').val('');
+	        		$('#destination-observations').val('');
+	        		$('#ckb-requested').val('');
+	        		$('#see-in').val('');
+				});	
+			} 
 		}, 
 		error: function(error){
-			alert("Erro: Tente Novamente preenchendo todos os campos, ou entre em contato com o administrador do sistema.");
+			alert("Erro: Houve um erro quando você tentou incluir/editar o destino. Tente novamente mais tarde :(");
 		}
 	   });
 	   e.preventDefault();
    });
+   
+   //Função de deleção de um destino requisitado.
+   $("body").on("click", "#list-all-destination button.btn-danger", function (e) {
+	    e.returnValue = false;
+	    var dialog =  '<div id="dialog" <h1>Remover o destino selecionado?</h1></div>';
+	    $('body').append(dialog);
+	    
+	    var idServiceItem = $(this).attr('id');
+	    var url = "${pageContext.request.contextPath}/auth/deleteRequestedDestination?${_csrf.parameterName}=${_csrf.token}";
 
+	    var $li = $(this).closest('li');
+
+	    $('#dialog').dialog({
+	        resizable: false,
+	        height: 140,
+	        modal: true,
+	        title: "Cancelar o Destino?",
+	        buttons: {
+	            "Sim": function () {
+	                $(this).dialog("close");
+	                $.ajax({
+	                    type: "GET",
+	                    url: url,
+	                    data:{ idServiceItem: idServiceItem,
+	                    	deleteType:1},
+	                    success: function (response) {
+	                        $li.fadeOut(500, function () {
+	                            $li.remove();
+	                        });
+	                    },
+	                    error: function (xhr, ajaxOptions, thrownError) {
+	                        //On error, we alert user
+	                        alert(thrownError);
+	                    }
+	                });
+	            },
+	                "Não": function () {
+	                $(this).dialog("close");
+	            }
+	        }
+	    });
+	});
+
+   //Abre o modal de edição de destino requisitado com os dados.
    $("body").on("click", "#list-all-destination button.btn-info", function (e) {
 	    e.returnValue = false;
-	    var clickedID = this.id.split('-');
-	    var destinationId = clickedID[1].split("'");
-	    
-
-	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestinationUpdate/"+destinationId[1]+"?${_csrf.parameterName}=${_csrf.token}";
+	    var idServiceItem = $(this).attr('id');
+	    var url = "${pageContext.request.contextPath}/auth/editRequestedDestination/"+idServiceItem+"/1";
 	    
 	    $.get(url,function(jsonData,status){
 	    	
-	    	var destinationName = jsonData.destination.dtName;
+	    	var destinationName = jsonData.destination.idDestination;
 	    	var arrive = jsonData.arrivalDate;
 	    	var departure = jsonData.departureDate;
 	    	var price = jsonData.valueNegotiated;
 	    	var saleType = jsonData.saleType; 
 	    	var observations = jsonData.negociationObservations;
 	    	var ckb = jsonData.requestedDestination;
-	    	var customerServiceId = jsonData.customerService.id;
+	    	var seeIn = jsonData.seeIn;
 	    	
-	    	var arriveFormated = $.format.date(arrive, "dd/MM/yyyy");
-	    	var departureFormated = $.format.date(departure, "dd/MM/yyyy");
+	    	if((arrive !== null || arrive !== undefined) && (departure !== null || departure !== undefined)){
+		    	var arriveFormated = $.format.date(arrive, "dd/MM/yyyy");
+		    	var departureFormated = $.format.date(departure, "dd/MM/yyyy");
+	    	}
 	    	
-	 	    $("#edit-input-price").maskMoney('mask'); 
+	    	var seeInFormated = $.format.date(seeIn, "dd/MM/yyyy");
+	    	
+	    	$('#destination-negotiated-id').remove();
+	    	
+	    	$('#destination-edit-form').prepend('<input id="destination-negotiated-id" type="hidden" value="'+idServiceItem+'"/>');
+	    	
+	 	    $("#edit-input-price").maskMoney('mask', price); 
 		    $('#edit-input-arrive').mask('99/99/9999');
 		    $('#edit-input-departure').mask('99/99/9999');
-		    
+		   	$('#edit-see-in').mask("99/99/9999");
 	    	
-		    $('#destinationid-hidden').val(jsonData.destination.idDestination);
+		    $('#destinationid-hidden').val(destinationName);
 		    
     		$('#edit-input-departure').val(departureFormated);
     		$('#edit-input-arrive').val(arriveFormated);
     		$('#edit-input-price').val(price);
+    		$('#edit-see-in').val(seeInFormated);
     		$('#edit-combo-saleType').val(saleType);
     		
-    		$('#customerServiceId-hidden').val(customerServiceId);
-    		
+    		$('#edit-destination-passenger-list').val(destinationName);
     		$('#edit-destination-passenger-list').attr('disabled', true);
-    		   		
+    		
+    		
     		$('#edit-destination-observations').val(observations);
     		$('#edit-ckb-requested').prop("checked", ckb);
     		
@@ -1014,43 +1170,51 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 
 	});
    
-   $('#destination-edit-form').submit( function(e) {
-	   var destinationID = $('#destinationid-hidden').val();
-	   
-	   var url = "${pageContext.request.contextPath}/auth/updateDestinationRequestedSaved?${_csrf.parameterName}=${_csrf.token}";
-	   
-	   
-	   var xxx = $('#destinationid-hidden').val();
-	   var customerServiceId = $('#customerServiceId-hidden').val();
-	   var departure =  $('#edit-input-departure').val();
-	   var arrive = $('#edit-input-arrive').val();
-	   var price = $('#edit-input-price').val();
-	   var saleType = $('#edit-combo-saleType').val();
-	   var destinationId = $('#edit-destination-passenger-list').val();
-	   var observations = $('#edit-destination-observations').val();
-	   var ckb = $('#edit-ckb-requested').val();
-	   
-	    $.ajax({
-	        url: url,
-	        type: 'POST',
-	        data:{
-	        	id: xxx,
-	        	customerServiceId: customerServiceId,
-	        	arrive: arrive,
-				departure: departure,
-				price: price,
-				saletype: saleType,
-				destinationId: destinationId,
-				observations: observations,
-				ckb: ckb
-			},
-	        statusCode: {
-	        	200: function(){
-	        		$('#EditDestinationModal').modal('hide');
-	        	}
-	        }
-	    });
-	    e.preventDefault();
-	});
+   //Envia para o servidor os dados alterados de um destino requisitado
+ $('#destination-edit-form').submit(function(e) {
+     e.preventDefault();
+     var departure = $('#edit-input-departure').val();
+     var arrive = $('#edit-input-arrive').val();
+     var price = $('#edit-input-price').val();
+     var saleType = $('#edit-combo-saleType').val();
+     var destinationId = $('#edit-destination-passenger-list').val();
+     var observations = $('#edit-destination-observations').val();
+     var ckb = $('#edit-ckb-requested').val();
+
+     var url = window.location.href.toString().split(window.location.host)[1];
+     var customerServiceID = url.split('cs=');
+
+     //Apenas para o update
+     var destinationNegotiatedID = $('#destination-negotiated-id').val();
+     var seeIn = $('#edit-see-in').val();
+
+     var url = "${pageContext.request.contextPath}/auth/saveOrUpdateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
+
+     $.ajax({
+         type: 'POST',
+         data: {
+             customerServiceId: customerServiceID[1],
+             arrive: arrive,
+             departure: departure,
+             price: price,
+             saletype: saleType,
+             destinationId: destinationId,
+             observations: observations,
+             ckb: ckb,
+             destinationNegotiatedID: destinationNegotiatedID,
+             seeIn: seeIn
+         },
+         url: url,
+         dataType: "json",
+         statusCode: {
+             200: function() {
+                 $('#EditDestinationModal').modal('hide');
+             },
+             500: function(){
+            	 alert("Erro: Tente Novamente preenchendo todos os campos, ou entre em contato com o administrador do sistema.");
+             }
+         }
+     });
+ });
 
 </script>

@@ -25,6 +25,10 @@ import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 /**
  * The persistent class for the destination database table.
  * 
@@ -243,5 +247,28 @@ public class Destination implements Serializable {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final Destination other = (Destination) obj;
+	        return Objects.equal(this.dtName, other.dtName)
+	            && Objects.equal(this.dtDescription, other.dtDescription)
+	            && Objects.equal(this.serviceItem, other.serviceItem)
+	            && Objects.equal(this.categories, other.categories);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(ServiceItem.class)
+				.add("Id", getIdDestination())
+				.add("Nome", dtName).toString();
 	}
 }

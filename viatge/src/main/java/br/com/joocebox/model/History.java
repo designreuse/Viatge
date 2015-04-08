@@ -14,6 +14,10 @@ import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 @Entity
 @Table(name="history")
 @Multitenant
@@ -61,6 +65,25 @@ public class History implements Serializable{
 
 	public void setRegister(String register) {
 		this.register = register;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final History other = (History) obj;
+	        return Objects.equal(this.register, other.register)
+	            && Objects.equal(this.id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(History.class).add("Registro", getRegister()).toString();
 	}
 	
 }

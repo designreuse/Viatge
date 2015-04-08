@@ -1,0 +1,14 @@
+package br.com.joocebox.repositories;
+
+import java.util.List;
+
+import br.com.joocebox.model.SaleType;
+import br.com.joocebox.model.ServiceItem;
+
+public interface ServiceItemRepository extends BaseRepository<ServiceItem, Long>{
+	
+	List<ServiceItem> findAll();
+	
+	List<ServiceItem> findBySaleTypeAndCustomerService(SaleType saleType, String id);
+
+}

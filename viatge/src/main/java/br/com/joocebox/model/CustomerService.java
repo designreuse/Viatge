@@ -56,7 +56,7 @@ public class CustomerService implements Serializable {
 	@Column(name = "service_situation")
 	private boolean situation;
 
-	@OneToMany(mappedBy="customerService",fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="customerService",fetch=FetchType.EAGER, cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<ServiceItem> serviceItem;
 
 	@OneToMany(cascade = CascadeType.PERSIST)

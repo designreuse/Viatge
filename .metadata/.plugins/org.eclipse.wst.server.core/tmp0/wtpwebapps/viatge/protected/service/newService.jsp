@@ -50,6 +50,7 @@
 				<f:form id="transition-duration-demo" class="transition-form"
 					modelAttribute="customer" method="post" action="addService">
 
+				<input id="id" type="hidden" name="id" value="${serviceModify.idCustomer}"/>
 					<fieldset class="row-cols margin-bottom fluida"
 						title="Dados do Cliente">
 						<legend>&nbsp;&nbsp;</legend>
@@ -748,15 +749,16 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
-
+                                        
                                         <div class="box02">
-                                            <div class="input-group skin skin-flat">
-                                                <input id="edit-ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
-                                                    id="ckb-label" for="edit-ckb-requested">Destino
-                                                    Solicitado pelo Passageiro?</label>
-
-                                            </div>
-                                        </div>
+											<div class="input-group ">
+												<span id="span-arrive" class="input-group-addon btn-success"><i
+													class="fa fa-calendar"></i></span> <input id="edit-see-in"
+													type="text"
+													name="${customerService.serviceItem.seeIn}"
+													class="form-control" placeholder="Ver em..." />
+											</div>
+										</div>
 
                                         <div class="box01">
                                             <div class="input-group ">
@@ -803,6 +805,15 @@
                                             <textarea id="edit-destination-observations" name="${customerService.serviceItem.negociationObservations}" rows="3" placeholder="Observações..." class="form-control"
                                                 style="min-height: 130px;"></textarea>
                                         </div>
+                                        
+                                         <div class="box02">
+                                            <div class="input-group skin skin-flat">
+                                                <input id="edit-ckb-requested" type="checkbox" name="${customerService.serviceItem.requestedDestination}" /> <label
+                                                    id="ckb-label" for="edit-ckb-requested">Destino
+                                                    Solicitado pelo Passageiro?</label>
+
+                                            </div>
+                                        </div>
 
 
                                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -832,40 +843,47 @@
 
 $(document).ready(function() {
     $(function() {
-            $("#first-name").autocomplete({     
-            source : function(request, response) {
-            $.ajax({
-                    url : "${pageContext.request.contextPath}/auth/getCustomerAJAX",
-                    type : "GET",
-                    data : {
-                    	paramName : request.term
+        $("#first-name").autocomplete({
+            source: function(request, response) {
+                $.ajax({
+                    url: "${pageContext.request.contextPath}/auth/getCustomerAJAX",
+                    type: "GET",
+                    data: {
+                        paramName: request.term
                     },
-                    dataType : "json",
-                    success : function(data) {
-                    	var obj = JSON.parse(data);
-                    	alert(obj);
-                            response(obj.firstName);
+                    dataType: "json",
+                    success: function(data) {
+                        var obj = JSON.parse(data);
+                        alert(obj);
+                        response(obj.firstName);
                     }
-            });
-    }
-});
-});
+                });
+            }
+        });
+    });
 });
 
-/*$("#first-name").on('focus', function () {
-    $.ajax({
-        type: 'GET',
-        url: '${pageContext.request.contextPath}/auth/getCustomerAJAX',
-        dataType: 'json',
-        success: function (resposta) {
-            console.log(resposta)
-            var json = [resposta];
-            $("#first-name").autocomplete({
-                source: json
-            });
-        }
-    });
-});*/
+$("#combo-saleType").change(function () {
+    var selectedSaleType = this.value;
+    
+    if(selectedSaleType === "MAYBE_FUTURE" || selectedSaleType === "SUBMITTED_BUDGET" || selectedSaleType === "NOT_WANTED"){
+    	$('#input-arrive').attr('readonly', true);
+    	$('#input-departure').attr('readonly', true);
+    	$('#input-price').attr('readonly', true);
+    }else{
+    	$('#input-arrive').attr('readonly', false);
+    	$('#input-departure').attr('readonly', false);
+    	$('#input-price').attr('readonly', false);
+    }
+    
+});
+
+$(document).ready(function() {
+	   $("#input-price").maskMoney(); 
+	   $('#input-arrive').mask('99/99/9999');
+	   $('#input-departure').mask('99/99/9999');
+	   $('#see-in').mask('99/99/9999');
+});
 
 
 
@@ -873,6 +891,7 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   $("#input-price").maskMoney(); 
 	   $('#input-arrive').mask('99/99/9999');
 	   $('#input-departure').mask('99/99/9999');
+	   $('#see-in').mask('99/99/9999');
 });
 
    $("#cep").change(function(){
@@ -958,6 +977,7 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   
 	   //Apenas para o update
 	   var destinationNegotiatedID =null;
+	   var seeIn = $('#see-in').val();
 	   
 	   var url = "${pageContext.request.contextPath}/auth/saveOrUpdateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
 	   
@@ -971,7 +991,8 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 			destinationId: destinationId,
 			observations: observations,
 			ckb: ckb,
-			destinationNegotiatedID: destinationNegotiatedID
+			destinationNegotiatedID: destinationNegotiatedID,
+			seeIn: seeIn
 		},
 		url: url,
 		dataType: "json",
@@ -998,6 +1019,7 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	        		//$('#destination-passenger-list').val('');
 	        		$('#destination-observations').val('');
 	        		$('#ckb-requested').val('');
+	        		$('#see-in').val('');
 				});	
 			} 
 		}, 
@@ -1063,23 +1085,27 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	    	var saleType = jsonData.saleType; 
 	    	var observations = jsonData.negociationObservations;
 	    	var ckb = jsonData.requestedDestination;
+	    	var seeIn = jsonData.seeIn;
 	    	
 	    	var arriveFormated = $.format.date(arrive, "dd/MM/yyyy");
 	    	var departureFormated = $.format.date(departure, "dd/MM/yyyy");
+	    	var seeInFormated = $.format.date(seeIn, "dd/MM/yyyy");
 	    	
 	    	$('#destination-negotiated-id').remove();
 	    	
 	    	$('#destination-edit-form').prepend('<input id="destination-negotiated-id" type="hidden" value="'+idServiceItem+'"/>');
 	    	
-	 	    $("#edit-input-price").maskMoney(); 
+	 	    $("#edit-input-price").maskMoney('mask', price); 
 		    $('#edit-input-arrive').mask('99/99/9999');
 		    $('#edit-input-departure').mask('99/99/9999');
+		   	$('#edit-see-in').mask("99/99/9999");
 	    	
 		    $('#destinationid-hidden').val(destinationName);
 		    
     		$('#edit-input-departure').val(departureFormated);
     		$('#edit-input-arrive').val(arriveFormated);
     		$('#edit-input-price').val(price);
+    		$('#edit-see-in').val(seeInFormated);
     		$('#edit-combo-saleType').val(saleType);
     		
     		$('#edit-destination-passenger-list').val(destinationName);
@@ -1104,6 +1130,7 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 	   
 	   //Apenas para o update
 	   var destinationNegotiatedID = $('#destination-negotiated-id').val();
+	   var seeIn = $('#edit-see-in').val();
 	   
 	   var url = "${pageContext.request.contextPath}/auth/saveOrUpdateDestinationRequested?${_csrf.parameterName}=${_csrf.token}";
 	   
@@ -1117,7 +1144,9 @@ $('#div-modal-input-body-destination').on('click', '#input-departure', function 
 			destinationId: destinationId,
 			observations: observations,
 			ckb: ckb,
-			destinationNegotiatedID: destinationNegotiatedID
+			destinationNegotiatedID: destinationNegotiatedID,
+			seeIn: seeIn
+			
 		},
 		url: url,
 		dataType: "json",

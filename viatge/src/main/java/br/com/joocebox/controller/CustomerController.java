@@ -53,7 +53,7 @@ import br.com.joocebox.service.CustomerServiceFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.ServiceFacade;
 import br.com.joocebox.service.ServiceItemFacade;
-import br.com.joocebox.utils.FormatObjects;
+import static br.com.joocebox.utils.FormatObjects.*;
 
 import com.google.common.base.Strings;
 
@@ -80,13 +80,15 @@ public class CustomerController{
 	@Autowired
 	private DashboardFacade dashboardFacade;
 
-	private Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
+	private Set<CustomerService> customerServiceList;
 	
 	private Set<Passenger> passengerList = new HashSet<Passenger>();
 	
 	ConcurrentHashMap<String, ServiceItem> mapOfRequestedDestination = new ConcurrentHashMap<String, ServiceItem>();
 	
 	private List<History> history;
+	
+	private CustomerService cs;
 	
 
 	@RequestMapping("/service")
@@ -101,7 +103,7 @@ public class CustomerController{
 	@RequestMapping("/serviceList")
 	public ModelAndView getMenuServiceList(Model model) {
 
-		List<VwOpenService> openServiceList = serviceFacade.getOpenServiceList();
+		Iterable<VwOpenService> openServiceList = serviceFacade.getOpenServiceList();
 		
 		List<VwOpenService> auxCustomer = new ArrayList<VwOpenService>();
 		
@@ -118,7 +120,7 @@ public class CustomerController{
 		mv.addObject("serviceListRegister", auxCustomer);
 		mv.addObject("ListSize", auxCustomer.size());
 		avgBudgets(model);
-		getCountOfBudgets(model);
+		countOfBudgets(model);
 		
 		return mv;
 
@@ -158,158 +160,127 @@ public class CustomerController{
      * @return ModelAndView
      */
 	@RequestMapping(value = "/addService", method = RequestMethod.POST)
-	public ModelAndView addService(@ModelAttribute("customer") @Valid Customer customer, BindingResult result, Model model) {
-		if (customer.getBirthDate() == null) {
-			customer.setBirthDate(customer.getBirthDate());
-		}
+	public ModelAndView addService(
+			@ModelAttribute("customer") @Valid Customer customer,
+			BindingResult result, Model model, @RequestParam Long id) {
+		if(id==null){
+			if (customer.getBirthDate() == null) {
+	            customer.setBirthDate(customer.getBirthDate());
+	        }
 
-		List<String> error = new ArrayList<String>();
+	        List<String> error = new ArrayList<String>();
 
-		if (result.hasErrors()) {
-			List<ObjectError> allErrors = result.getAllErrors();
+	        if (result.hasErrors()) {
+	            List<ObjectError> allErrors = result.getAllErrors();
 
-			for (ObjectError objectError : allErrors) {
-				String objectName = objectError.getDefaultMessage();
-				error.add(objectName);
+	            for (ObjectError objectError : allErrors) {
+	                String objectName = objectError.getDefaultMessage();
+	                error.add(objectName);
+	            }
+
+	            model.addAttribute("errors", error);
+	            model.addAttribute("validator", true);
+
+	            initializeComponents(model);
+	            return new ModelAndView("service/newService");
+
+	        } else {
+	            
+	        	//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
+	            customer.setPassenger(passengerList);
+	            
+	            //Persiste um novo Cliente
+	            customerFacade.saveCustomer(customer);
+	            
+	            //Inicia um objeto do tipo CustomerService para abrir um atendimento.
+	            CustomerService customerService = new CustomerService();
+	            
+	            //Atualiza a data de abertura do serviço
+	            customerService.setDate(new Date());
+	            
+	            //Verifica se existe algum atendimento marcado como "Orçamento", e marca como aberto e atualiza a data do mesmo
+	            if(isOpenService()){
+	                customerService.setSituation(Boolean.TRUE);         
+	            }else{
+	                customerService.setSituation(Boolean.FALSE);
+	            }
+	            
+	            //Adiciona o atendimento em uma lista
+	            customerServiceList = new HashSet<CustomerService>();
+	            customerServiceList.add(customerService);
+	            
+	            //Seta uma lista de Atendimentos
+	            customer.setCustomerService(customerServiceList);
+	                       
+	            //Cria um objeto com o Historico
+	            history = new ArrayList<History>();
+	            
+	            //Salva um objeto do tipo ServiceItem
+	            for (ServiceItem si : mapOfRequestedDestination.values()) {
+	                 
+	                String formatDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
+	                
+	                String saleType = "";  
+	                if (si.getSaleType() == SaleType.SEND_BUDGET) {
+	                    saleType = SaleType.SEND_BUDGET.getSaleType();
+	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate));
+
+	                }else if(si.getSaleType() == SaleType.SUBMITTED_BUDGET){
+	                    saleType = SaleType.SUBMITTED_BUDGET.getSaleType();
+	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
+	                    
+	                }else if(si.getSaleType() == SaleType.NOT_WANTED){
+	                    saleType = SaleType.NOT_WANTED.getSaleType();
+	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
+	                    
+	                }else if(si.getSaleType() == SaleType.MAYBE_FUTURE){
+	                    saleType = SaleType.MAYBE_FUTURE.getSaleType();
+	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
+	                    
+	                }else if(si.getSaleType() == SaleType.BOUGHT){
+	                    saleType = SaleType.BOUGHT.getSaleType();
+	                    //TODO: Fazer um link que redirecione para a faura da venda.
+	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
+	                    
+	                }
+	                
+	                customerService.setHistory(history);                        
+	                si.setCustomerService(customerService);
+	            }
+	            List<ServiceItem> list = new ArrayList<ServiceItem>(mapOfRequestedDestination.values());
+	            serviceItemFacade.saveServiceItem(list);
+	        }
+		}else{
+			
+			//Setar informações dos clientes.
+			Customer oldCustomer = customerFacade.getCustomerId(id);
+			
+			if(!passengerList.isEmpty()){
+				oldCustomer.setPassenger(passengerList);
+				customerFacade.saveCustomer(oldCustomer);
 			}
 
-			model.addAttribute("errors", error);
-			model.addAttribute("validator", true);
-
-			initializeComponents(model);
-			return new ModelAndView("service/newService");
-
-		} else {
+			//Resgata o customerService por ID
+			CustomerService oldCustomerService = customerServiceFacade.getCustomerServiceById(this.cs.getId());
 			
-			//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
-			customer.setPassenger(passengerList);
-			
-			//Persiste um novo Cliente
-			customerFacade.saveCustomer(customer);
-			
-            //Inicia um objeto do tipo CustomerService para abrir um atendimento.
-            CustomerService customerService = new CustomerService();
-			
-            //Atualiza a data de abertura do serviço
-            customerService.setDate(new Date());
-            
-            //Verifica se existe algum atendimento marcado como "Orçamento", e marca como aberto e atualiza a data do mesmo
-			if(isOpenService()){
-				customerService.setSituation(Boolean.TRUE);			
-			}else{
-				customerService.setSituation(Boolean.FALSE);
-			}
-			
-            //Adiciona o atendimento em uma lista
-            customerServiceList.add(customerService);
-            
-            //Seta uma lista de Atendimentos
-            customer.setCustomerService(customerServiceList);
-                       
-            //Cria um objeto com o Historico
-            history = new ArrayList<History>();
-            
-            //Salva um objeto do tipo ServiceItem
-            for (ServiceItem si : mapOfRequestedDestination.values()) {
-            	 
-            	String formatDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-            	
-            	String saleType = "";  
-				if (si.getSaleType() == SaleType.SEND_BUDGET) {
-					saleType = SaleType.SEND_BUDGET.getSaleType();
-					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate));
-
-				}else if(si.getSaleType() == SaleType.SUBMITTED_BUDGET){
-					saleType = SaleType.SUBMITTED_BUDGET.getSaleType();
-					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
-					
-				}else if(si.getSaleType() == SaleType.NOT_WANTED){
-					saleType = SaleType.NOT_WANTED.getSaleType();
-					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
-					
-				}else if(si.getSaleType() == SaleType.MAYBE_FUTURE){
-					saleType = SaleType.MAYBE_FUTURE.getSaleType();
-					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
-					
-				}else if(si.getSaleType() == SaleType.BOUGHT){
-					saleType = SaleType.BOUGHT.getSaleType();
-					//TODO: Fazer um link que redirecione para a faura da venda.
-					history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
-					
-				}
-            	
-            	customerService.setHistory(history);          	          	
-                si.setCustomerService(customerService);
+            if(isOpenService()){
+                oldCustomerService.setSituation(Boolean.TRUE);         
+            }else{
+                oldCustomerService.setSituation(Boolean.FALSE);
             }
-            List<ServiceItem> list = new ArrayList<ServiceItem>(mapOfRequestedDestination.values());
-            serviceItemFacade.saveServiceItem(list);
-			
-			
-			return new ModelAndView(new RedirectView("serviceList"));
-		}
-
-	}
-	
-	@RequestMapping(value="editService", method = RequestMethod.POST)
-	public ModelAndView editService(@ModelAttribute("serviceModify") @Valid Customer customer, BindingResult result, RedirectAttributes redirectAttributes, Model model, @RequestParam Long id){
-		
-		
-		if (customer.getBirthDate() == null) {
-			customer.setBirthDate(customer.getBirthDate());
-		}
-
-		List<String> error = new ArrayList<String>();
-
-		if (result.hasErrors()) {
-			List<ObjectError> allErrors = result.getAllErrors();
-
-			for (ObjectError objectError : allErrors) {
-				String objectName = objectError.getDefaultMessage();
-				error.add(objectName);
-			}
-
-			model.addAttribute("errors", error);
-			model.addAttribute("validator", true);
-
-			initializeComponents(model);
-			return new ModelAndView("service/newService");
-
-		} else {
-			
-			//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
-			Customer customerId = customerFacade.getCustomerId(id);
-			customerId.setPassenger(customer.getPassenger());
-			
-			//Persiste um novo Cliente
-			//customerFacade.saveCustomer(customerId);
-			
-            //Inicia um objeto do tipo CustomerService para abrir um atendimento.
-            customerId.setCustomerService(customer.getCustomerService());
-			
-            //Atualiza a data de abertura do serviço
-            //customerService.setDate(new Date());
             
-            //Verifica se existe algum atendimento marcado como "Orçamento", e marca como aberto e atualiza a data do mesmo
-			if(isOpenService()){
-				
-				//customerService.setSituation(Boolean.TRUE);			
-			}else{
-				//customerService.setSituation(Boolean.FALSE);
-			}
+            if(!mapOfRequestedDestination.isEmpty()){
+                Set<ServiceItem> list = new HashSet<ServiceItem>(mapOfRequestedDestination.values());
+    			oldCustomerService.setServiceItem(list);
+
+            }
+            customerServiceFacade.saveCustomerService(oldCustomerService);
 			
-            //Adiciona o atendimento em uma lista
-            //customerServiceList.add(customerService);
-            
-            //Seta uma lista de Atendimentos
-           // customer.setCustomerService(customerServiceList);
-                       
-            //Cria um objeto com o Historico
-            history = new ArrayList<History>();
+
 		}
-         
-		
 		return new ModelAndView(new RedirectView("serviceList"));
 	}
+
 	
 	
     /**
@@ -323,14 +294,31 @@ public class CustomerController{
     public String editService(@RequestParam Long id, @RequestParam Long cs,Model model) {
     	initializeComponents(model);
     	
+    	this.cs = new CustomerService();
+    	this.cs.setId(cs);
+
     	Customer customerId = customerFacade.getCustomerId(id);
     	getHistoryListCustomerId(model, customerId);
+    	
+    	List<ServiceItem> serviceItemAuxBD = new ArrayList<ServiceItem>();
 
-    	CustomerService customerServiceById = customerServiceFacade.getCustomerServiceById(id);
-    	Set<ServiceItem> serviceItem = customerServiceById.getServiceItem();
-
-
-    	model.addAttribute("destinationNegotiated", serviceItem);
+    	//CustomerService customerServiceById = customerServiceFacade.getCustomerServiceById(cs);
+    	//Set<ServiceItem> serviceItem = customerServiceById.getServiceItem();
+    	for(ServiceItem serviceItemBD : serviceItemFacade.getAllServiceItems()){
+    		if(serviceItemBD.getCustomerService().getId().equals(cs)){
+    			serviceItemAuxBD.add(serviceItemBD);
+    		}
+    	}
+    	
+    	List<ServiceItem> serviceItemAux = new ArrayList<ServiceItem>();
+    	
+    	for(ServiceItem si : serviceItemAuxBD){
+    		if(si.getSaleType() != SaleType.BOUGHT)
+    			serviceItemAux.add(si);
+    	}
+    			
+    			
+    	model.addAttribute("destinationNegotiated", serviceItemAux);
         model.addAttribute("serviceModify", customerId);
         return "service/editService";
     }
@@ -346,7 +334,7 @@ public class CustomerController{
      * Ação responsável pela somatorio de um contador de orçamentos
      * @param model
      */
-	public void getCountOfBudgets(Model model){
+	public void countOfBudgets(Model model){
 		List<ServiceItem> serviceItemList = serviceItemFacade.getAllServiceItems();
 		
 		int send_budget_var = 0;
@@ -369,10 +357,22 @@ public class CustomerController{
      * @return Boolean
      */
 	public Boolean isOpenService() {
-		for (ServiceItem serviceItem : mapOfRequestedDestination.values()) {
-			if(serviceItem.getSaleType() == SaleType.SEND_BUDGET || serviceItem.getSaleType() == SaleType.SUBMITTED_BUDGET){
-				return Boolean.TRUE;
+		//Verificar a lista e o banco
+		if(!mapOfRequestedDestination.isEmpty()){
+			for (ServiceItem serviceItem : mapOfRequestedDestination.values()) {
+				if(serviceItem.getSaleType() == SaleType.SEND_BUDGET || serviceItem.getSaleType() == SaleType.SUBMITTED_BUDGET){
+					return Boolean.TRUE;
+				}
 			}
+		}
+		
+		if(!serviceItemFacade.getAllServiceItems().isEmpty()){
+			for(ServiceItem serviceItem : serviceItemFacade.getAllServiceItems()){
+				if(serviceItem.getSaleType() == SaleType.SEND_BUDGET || serviceItem.getSaleType() == SaleType.SUBMITTED_BUDGET){
+					return Boolean.TRUE;
+				}
+			}
+			
 		}
 		return Boolean.FALSE;
 	}
@@ -387,7 +387,7 @@ public class CustomerController{
 		Double amount = 0.00;
 		
 		for (ServiceItem si : serviceItemList) {
-			if (si.getSaleType() == SaleType.SUBMITTED_BUDGET) {
+			if (si.getSaleType() == SaleType.SEND_BUDGET) {
 				Double price = si.getValueNegotiated();
 				amount += price;
 			}
@@ -446,12 +446,10 @@ public class CustomerController{
 			@RequestParam(value= "deleteType") Long id){
 		if(id == 1){
 			if(mapOfRequestedDestination.containsKey(idServiceItem)){
-				mapOfRequestedDestination.remove(idServiceItem);
-				
-			}
-			
+				mapOfRequestedDestination.remove(idServiceItem);				
+			}		
 		}else{
-			//Recuperar o id da base de dados e apagar!
+			//TODO: Futuramente para realizar a deleção de registros já incluidos em um atendimento
 		}
 	}
 	
@@ -463,6 +461,7 @@ public class CustomerController{
 	 * @return ServiceItem
 	 */
 	@RequestMapping(value = "/editRequestedDestination/{id}/{update}", method = RequestMethod.GET)
+	@ResponseStatus(value = HttpStatus.OK)
 	public @ResponseBody ServiceItem editRequestedDestination(
 			@PathVariable String id, @PathVariable int update, Model model) {
 
@@ -470,10 +469,10 @@ public class CustomerController{
 			ServiceItem serviceItem = mapOfRequestedDestination.get(id);
 			return serviceItem;
 		} else {
-
+			Long value = Long.valueOf(id);
+			ServiceItem serviceItemById = serviceItemFacade.getServiceItemById((long) value);
+			return serviceItemById;
 		}
-
-		return null;
 	}
 
 	/**
@@ -494,22 +493,24 @@ public class CustomerController{
 			@RequestParam(value = "observations", required = false) String observations,
 			@RequestParam(value = "ckb", required = true) Boolean ckb,
 			@RequestParam(value = "destinationNegotiatedID", required = false) String destinationNegotiatedID,
+			@RequestParam(value = "seeIn", required=true) String seeIn,
 			RedirectAttributes redirectAttributes, Model model) {
     		    	
-			Number valueFormated = FormatObjects.formatStringPriceToNumberObject(price, redirectAttributes);
-			Date arriveFormated = FormatObjects.formatStringDateToDateObject(arrive, redirectAttributes);
-			Date departureFormated = FormatObjects.formatStringDateToDateObject(departure, redirectAttributes);
+			Number valueFormated = formatStringPriceToNumberObject(price, redirectAttributes);
+			Date arriveFormated = formatStringDateToDateObject(arrive, redirectAttributes);
+			Date departureFormated = formatStringDateToDateObject(departure, redirectAttributes);
+			Date seeInFormated = formatStringDateToDateObject(seeIn, redirectAttributes);
 			
     		if (customerServiceId == null) {
     	        if (saletype.equals(SaleType.MAYBE_FUTURE) || saletype.equals(SaleType.SUBMITTED_BUDGET) || saletype.equals(SaleType.NOT_WANTED)) {    	        	
-    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString())) {          		
+    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString()) && !Strings.isNullOrEmpty(seeIn)) {          		
     	            		if(!Strings.isNullOrEmpty(destinationNegotiatedID)){
     	            			if(mapOfRequestedDestination.containsKey(destinationNegotiatedID)){
     	            				ServiceItem serviceItem = mapOfRequestedDestination.get(destinationNegotiatedID);
     	            				mapOfRequestedDestination.remove(destinationNegotiatedID);
     	            				
     	            				ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype, destinationId, observations, ckb, valueFormated,
-    	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID);
+    	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID, seeInFormated);
     	            				
 	       	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
 	       							 mapRequestedDestinationAux.put(destinationNegotiatedID, saveOrUpdateRequestedDestination.get(destinationNegotiatedID).getDestination().getDtName());
@@ -525,7 +526,7 @@ public class CustomerController{
     	            			 Map<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
     									destinationId, observations, ckb,
     									valueFormated, arriveFormated,
-    									departureFormated, serviceItem, uniqueID);
+    									departureFormated, serviceItem, uniqueID, seeInFormated);
 
     	            			 	
     	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
@@ -539,14 +540,14 @@ public class CustomerController{
     	        } else {
 
     	            if ((!Strings.isNullOrEmpty(arrive.toString()) && !Strings.isNullOrEmpty(departure.toString()) && !Strings.isNullOrEmpty(price) && !Strings.isNullOrEmpty(saletype.toString()) && !Strings
-    	                        .isNullOrEmpty(destinationId.toString())) && !departureFormated.after(arriveFormated)) {
+    	                        .isNullOrEmpty(destinationId.toString())) && !departureFormated.after(arriveFormated) && !Strings.isNullOrEmpty(seeIn)) {
     	            	if(!Strings.isNullOrEmpty(destinationNegotiatedID)){
 	            			if(mapOfRequestedDestination.containsKey(destinationNegotiatedID)){
 	            				ServiceItem serviceItem = mapOfRequestedDestination.get(destinationNegotiatedID);
 	            				mapOfRequestedDestination.remove(destinationNegotiatedID);
 	            				
 	            				ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype, destinationId, observations, ckb, valueFormated,
-	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID);
+	            						arriveFormated, departureFormated, serviceItem, destinationNegotiatedID, seeInFormated);
 	            				
        	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
        							 mapRequestedDestinationAux.put(destinationNegotiatedID, saveOrUpdateRequestedDestination.get(destinationNegotiatedID).getDestination().getDtName());
@@ -560,7 +561,7 @@ public class CustomerController{
 	            			 Map<String, ServiceItem> saveOrUpdateRequestedDestination = saveOrUpdateRequestedDestination(saletype,
 									destinationId, observations, ckb,
 									valueFormated, arriveFormated,
-									departureFormated, serviceItem, uniqueID);
+									departureFormated, serviceItem, uniqueID, seeInFormated);
 
 	            			 	
 	            			 ConcurrentHashMap<String, String> mapRequestedDestinationAux = new ConcurrentHashMap<String, String>();
@@ -568,19 +569,26 @@ public class CustomerController{
 							
 	            			return mapRequestedDestinationAux;
     	            	}
-    	            	
-
-
-
     	            } else {
     	                redirectAttributes.addFlashAttribute("errUpdateDestinationRequested","Você precisa obrigatoriamente preencher todos os atributos!");
     	            }
     	        }
 			} else {
 				//Recupera do BD e retorna para o ajax
+    	        if (saletype.equals(SaleType.MAYBE_FUTURE) || saletype.equals(SaleType.SUBMITTED_BUDGET) || saletype.equals(SaleType.NOT_WANTED)) {    	        	
+    	            if (!Strings.isNullOrEmpty(saletype.toString()) && !Strings.isNullOrEmpty(destinationId.toString()) && !Strings.isNullOrEmpty(seeIn)) {
+    	            	serviceItemFacade.serviceItemUpdate(arriveFormated, departureFormated, seeInFormated, valueFormated, observations, ckb, saletype, Long.parseLong(destinationNegotiatedID));
+    	            }
+    	            
+    	        }else{
+    	            if ((!Strings.isNullOrEmpty(arrive.toString()) && !Strings.isNullOrEmpty(departure.toString()) && !Strings.isNullOrEmpty(price) && !Strings.isNullOrEmpty(saletype.toString()) && !Strings
+	                        .isNullOrEmpty(destinationId.toString())) && !departureFormated.after(arriveFormated) && !Strings.isNullOrEmpty(seeIn)) {
+    	            	serviceItemFacade.serviceItemUpdate(arriveFormated, departureFormated, seeInFormated, valueFormated, observations, ckb, saletype, Long.parseLong(destinationNegotiatedID));
+    	            }
+    	        }
+
 			}
 			return null;
-
 	}
 
 	/**
@@ -598,7 +606,7 @@ public class CustomerController{
 	private ConcurrentHashMap<String, ServiceItem> saveOrUpdateRequestedDestination(
 			SaleType saletype, Long destinationId, String observations,
 			Boolean ckb, Number valueFormated, Date arriveFormated,
-			Date departureFormated, ServiceItem serviceItem, String uniqueID) {
+			Date departureFormated, ServiceItem serviceItem, String uniqueID, Date seeIn) {
 		
 		serviceItem.setDestination(dashboardFacade.getDestinationId(destinationId));
 		serviceItem.setArrivalDate(arriveFormated);
@@ -607,7 +615,9 @@ public class CustomerController{
 		serviceItem.setSaleType(saletype);
 		serviceItem.setValueNegotiated(valueFormated.doubleValue());
 		serviceItem.setRequestedDestination(ckb);
-			
+		serviceItem.setSeeIn(seeIn);
+		serviceItem.setHashId(uniqueID);
+		
 		mapOfRequestedDestination.put(uniqueID, serviceItem);
 		
 		logger.info("[Novo Atendimento] Destino incluido com sucesso...");

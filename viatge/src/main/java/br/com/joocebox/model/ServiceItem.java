@@ -4,6 +4,7 @@ package br.com.joocebox.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -42,12 +43,15 @@ public class ServiceItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_service_item")
 	private Long id;
+
+	@Column(name="hash_id")
+	private String hashId;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_destination")
     private Destination destination;
 
-	@ManyToOne
+	@ManyToOne(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="fk_customerService")
     private CustomerService customerService;
     
@@ -107,6 +111,14 @@ public class ServiceItem implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getHashId() {
+		return hashId;
+	}
+
+	public void setHashId(String hashId) {
+		this.hashId = hashId;
 	}
 
 	public Destination getDestination() {
@@ -204,7 +216,8 @@ public class ServiceItem implements Serializable{
 	            && Objects.equal(this.seeIn, other.seeIn)
 	            && Objects.equal(this.tenantId, other.tenantId)
 	            && Objects.equal(this.customerService, other.customerService)
-	            && Objects.equal(this.saleType, other.saleType);
+	            && Objects.equal(this.saleType, other.saleType)
+	            && Objects.equal(this.hashId, other.hashId);
 	}
 
 	@Override
