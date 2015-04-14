@@ -12,7 +12,8 @@
 						<div class="photo-gallery style3">
 							<ul class="bxslider">
 								<c:forEach var="image" items="${destinationDetail.images}">
-									<li><img src="${pageContext.request.contextPath}/image/destinationDetail/${image.id}">
+									<li>
+										<img src="${pageContext.request.contextPath}/image/destinationDetail/${image.id}">
 									</li>
 								</c:forEach>
 							</ul>
@@ -20,14 +21,14 @@
 					</div>
 
 					<div data-pws-tab="tab2" data-pws-tab-name="Tour Virtual">
-						<iframe width="840" height="342" frameborder="0" scrolling="no"
+						<iframe frameborder="0" scrolling="no"
 							marginheight="0" marginwidth="0"
 							src="${destinationDetail.streetView.src}"></iframe>
 
 					</div>
 					<div data-pws-tab="tab3" data-pws-tab-name="Video">
 						<iframe title="YouTube video player" class="youtube-player"
-							type="text/html" width="840" height="342"
+							type="text/html"
 							src="${destinationDetail.video.code}" frameborder="0"
 							allowFullScreen></iframe>
 					</div>

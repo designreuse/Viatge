@@ -1,0 +1,49 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<header class="bg-thema">
+	<div class="center">
+		<h1 class="ocultar">Nome da Empresa</h1>
+        <a href="index.php" class="logo"><img src="public/image/logo.png" width="190" height="100" alt="Nome da Empresa"></a>
+        
+        <nav>
+        	<div class="phone"><i></i> <small>(43)</small> <span class="txt-thema">3258-9856</span></div>
+            
+            <!-- MÍDIA SOCIAL -->
+            <ul class="midia-social">
+            	<li class="facebook"><a href="#"></a></li>
+                <li class="twitter"><a href="#"></a></li>
+                <li class="instagram"><a href="#"></a></li>
+                <li class="youtube"><a href="#"></a></li>
+                <li class="plus"><a href="#"></a></li>
+                <li class="linkedin"><a href="#"></a></li>
+            </ul>
+			
+            <!-- MENU PRINCIPAL -->  
+            <span class="gatilho-menu">Menu</span>
+                      
+            <menu>
+            	<li>
+                	<a href="categorias.php">CATEGORIAS</a>
+                    <!-- MENU DE CATEGORIAS -->
+                	<ul>
+                    	<li><a href="destinos-categoria.php">Pacotes Promocionais</a></li>
+                    	<li><a href="destinos-categoria.php">Pacotes Internacionais</a></li>
+                    	<li><a href="destinos-categoria.php">Hotéis</a></li>
+                    	<li><a href="destinos-categoria.php">Cruzeiros</a></li>
+                    	<li><a href="destinos-categoria.php">Passeios Turísticos</a></li>
+                    	<li><a href="destinos-categoria.php">Buscas Populares</a></li>
+                    </ul>
+                </li>
+				<li><a href="destino-perfeito.php">VIAGEM PERFEITA</a></li>
+                <li><a href="blog.php">BLOG</a></li>
+                <li><a href="compra-online.php">COMPRE ONLINE</a></li>
+                <li><a href="agencia.php">QUEM SOMOS</a></li>
+                <li><a href="contato.php">CONTATO</a></li>
+            </menu>
+            <!-- FIM MENU PRINCIPAL -->  
+        </nav> 	
+    </div>
+</header>

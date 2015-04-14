@@ -1,0 +1,41 @@
+package br.com.joocebox.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.eclipse.persistence.annotations.Multitenant;
+import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
+import org.eclipse.persistence.config.PersistenceUnitProperties;
+
+@Entity
+@Table(name = "professional_data")
+@Multitenant
+@TenantDiscriminatorColumn(name = "tenant_id", discriminatorType = DiscriminatorType.INTEGER, contextProperty = PersistenceUnitProperties.MULTITENANT_PROPERTY_DEFAULT)
+public class ProfessionalData implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@Column(name = "tenant_id", insertable = false, updatable = false)
+	private Long tenantId;
+	
+	@Column(name="job_title")
+	private String jobTitle;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name="role")
+	private Role role;
+
+}

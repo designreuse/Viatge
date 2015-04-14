@@ -20,6 +20,7 @@
     up static resources in the ${webappRoot}/assets directory -->
     <resources mapping="/resources/**" location="/assets/" />
     <resources mapping="/site/resources/tp_01/**" location="/site/template/tp_01/assets/" />
+    <resources mapping="/site/resources/tp_02/**" location="/site/template/tp_02/assets/"/>
     <resources mapping="/tenants/**" location="/data/joocebox/tenants/" />
 
     <!-- Configuração do Tiles Framework -->
@@ -35,6 +36,7 @@
                 <beans:value>/protected/template/layouts.xml</beans:value>
                 <beans:value>/public/template/layouts.xml</beans:value>
                 <beans:value>/site/template/tp_01/template/layouts.xml</beans:value>
+                <beans:value>/site/template/tp_02/template/layouts.xml</beans:value>
 				
                 <!-- Scan views directory for Tiles configurations -->
                 <beans:value>/protected/**/views.xml</beans:value>

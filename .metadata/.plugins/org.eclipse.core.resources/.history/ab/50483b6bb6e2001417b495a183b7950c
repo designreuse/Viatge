@@ -1,0 +1,115 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Thema 02</title>
+
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/site/resources/tp_02/image/favicon.png" type="image/x-icon">
+
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/style.css" media="screen" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/thema.css" media="screen" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/jquery-ui.theme.min.css" media="screen" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/tooltipster.css" media="screen" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/owl.carousel.css" media="screen" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath}/site/resources/tp_02/css/fontello.css" media="screen" rel="stylesheet" type="text/css">
+
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.tooltipster.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.cycle.all.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.customSelect.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.maskedinput.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/placeholder.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/application.js"></script>
+
+</head>
+
+<body>
+
+		<tiles:insertAttribute name="header" />
+
+		<tiles:insertAttribute name="body" />
+
+		<tiles:insertAttribute name="footer" />
+
+	
+    <!--
+    	OBS. GERAL: ESTOU USANDO UM PARAMETRO NA URL PARA ATIVAR OS ALERTAS...
+        EXEMPLO URL. "alert=contato" ABRE A RESPOSTA DE CONTATO ENVIADO
+    	ESTOU USANDO O PHP PARA ISSO, ENTÃO PRECISAMOS ADAPITAR PARA O JAVA
+    -->
+    
+	<!-- CADASTRO APÓS FILTRAGEM DE DESTINO PERFEITO 
+    <?php
+		$alert_get = $_GET['alert'];
+    	if($alert_get == 'resposta'){
+	?>
+    
+    <div class="bg-alert"></div>
+    <div class="alert-filtro">
+        <p>Legal, encontramos 3 destinos que são perfeitos para você!</p>
+        <p>Por gentileza informe seu nome e e-mail...</p>
+        
+        <form action="destinos.php" method="post" name="form-cadastro" class="form-cadastro">
+            <div><input type="text" class="input01" name="nome" placeholder="Seu Nome_"></div>
+            <div><input type="email" class="input01" name="email" placeholder="Seu E-mail_"></div>
+            <div><button type="submit" name="cadastrar" class="btn bg-thema submit01">VER DESTINOS</button></div>
+        </form>
+        
+        <a href="#" class="fechar"></a>
+    </div>
+    
+    <? }; ?>
+    <!-- CADASTRO APÓS FILTRAGEM DE DESTINO PERFEITO -->
+    
+    <!-- ALERT DE ORÇAMENTO ENVIADO -->
+    <?php
+		$alert_get = $_GET['alert'];
+    	if($alert_get == 'orcamento'){
+	?>
+    
+    <div class="bg-alert"></div>
+    <div class="alert-orcamento">
+        <h2 class="txt-thema">Legal (nome do usuário), Seu orçamento foi realizado com sucesso!</h2>
+        <p>Você pode realizar outro orçamento de maneira rápida.</p>
+        <p><a href="orcamento.php" class="btn fechar hover-txt-thema">Orçamento Rápido</a></p>
+        <p>ou</p>
+        <a href="index.php" class="btn continuar bg-thema">Continue Navegando</a>
+    </div>
+    
+    <? }; ?>
+	<!-- FIM ALERT DE ORÇAMENTO ENVIADO -->
+    
+    <!-- ALERT DE CONTATO ENVIADO -->
+	<?php
+		$alert_get = $_GET['alert'];
+    	if($alert_get == 'contato'){
+	?>
+    
+    <div class="bg-alert"></div>
+    <div class="alert-contato">
+        <h2 class="txt-thema">Legal (nome do usuário), Seu contato foi realizado com sucesso!</h2>
+        <p>Se nós permitir, podemos encontrar o destino perfeito para você.</p>
+        <p><a href="destino-perfeito.php" class="btn fechar hover-txt-thema">Destino Perfeito</a></p>
+        <p>ou</p>
+        <a href="index.php" class="btn continuar bg-thema">Continue Navegando</a>
+    </div>
+    
+    <? }; ?>
+    <!-- FIM ALERT DE CONTATO ENVIADO -->
+    -->
+</body>
+</html>

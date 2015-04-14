@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Map to list of staff .jsp view -->
+	<definition extends="default" name="staff/listOfStaff">
+		<put-attribute name="body" value="/protected/staff/listOfStaff.jsp"/>
+	</definition>
+</tiles-definitions>

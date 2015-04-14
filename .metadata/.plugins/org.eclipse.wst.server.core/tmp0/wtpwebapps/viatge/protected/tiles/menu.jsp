@@ -38,8 +38,8 @@
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Equipe"><i class="entypo-users"></i><span>Equipe</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="#" title="Submenu 01"><i class="entypo-doc-text"></i><span>Submenu 01</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="#" title="Submenu 02"><i class="entypo-newspaper"></i><span>Submenu 02</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="/staff"/>" title="Gerenciar Equipe"><i class="entypo-doc-text"></i><span>Gerenciar Equipe</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="#" title="Vendas Realizadas"><i class="entypo-newspaper"></i><span>Vendas Realizadas</span></a></li>
                             </ul>
                         </li>
                         

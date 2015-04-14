@@ -226,7 +226,4 @@ public class ServiceItem implements Serializable{
 				.add("Destino negociado", getDestination().getDtName())
 				.add("Tipo de Negociação", getSaleType()).toString();
 	}
-
-	
-
 }

@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="847" key="dialogWidth"/>
-		<item value="474" key="dialogHeight"/>
+		<item value="823" key="dialogWidth"/>
+		<item value="450" key="dialogHeight"/>
 		<list key="orderedProviders">
+			<item value="org.eclipse.ui.commands"/>
+			<item value="org.eclipse.ui.commands"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
 		<list key="textArray">
+			<item value="ggas"/>
+			<item value="gc"/>
 			<item value="expre"/>
 			<item value="ex"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.jdt.ui.edit.text.java.create.getter.setter"/>
+			<item value="org.eclipse.jdt.ui.edit.text.java.generate.constructor.using.fields"/>
 			<item value="org.eclipse.debug.ui.ExpressionView"/>
 		</list>
 		<list key="textEntries">
+			<item value="1"/>
+			<item value="1"/>
 			<item value="2"/>
 		</list>
 	</section>

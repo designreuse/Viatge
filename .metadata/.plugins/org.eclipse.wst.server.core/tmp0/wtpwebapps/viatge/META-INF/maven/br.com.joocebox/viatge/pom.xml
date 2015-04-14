@@ -48,12 +48,6 @@
 			<artifactId>spring-test</artifactId>
 			<version>4.0.5.RELEASE</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<version>4.0.5.RELEASE</version>
-		</dependency>
 
 		<!-- Spring Data -->
 		<dependency>
@@ -149,13 +143,6 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>3.2.4.RELEASE</version>
-		</dependency>
-
-		<!-- Dozer Copy java bean's -->
-		<dependency>
-			<groupId>net.sf.dozer</groupId>
-			<artifactId>dozer</artifactId>
-			<version>5.3.2</version>
 		</dependency>
 		
 		<!-- MySql -->

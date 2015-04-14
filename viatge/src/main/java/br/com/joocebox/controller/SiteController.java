@@ -51,13 +51,19 @@ public class SiteController {
 		Agency agency = dashboardFacade.getAgency();
 		String agencyLogo = agency.getAgencyLogo();
 		
-		String fileName = agencyLogo.replace("/app/joocebox-img/xpto/logo/", "");
+		String fileName = agencyLogo.replace("/app/joocebox-img/"+agency.getSubdomain()+"/logo/", "");
 		agency.setAgencyLogo(fileName);
 		model.addAttribute("tenant", agency);
 		getAllCategories(model);
 		getDestinationsForWebSite(model);
 		logger.info("Buscando agência e adicionando seus atributos");
-		return "site/index";	
+		
+		
+		if (agency.getSiteTemplate() == 1) {
+			return "site/index";
+		} else {
+			return "site/index02";
+		}
 	}
 	
 	/**
@@ -93,18 +99,31 @@ public class SiteController {
 	
 	@RequestMapping("/destinationDetail/{destinationId}")
 	public String getDestinationDetail(@PathVariable Long destinationId,  Model model){
+		Agency agency = dashboardFacade.getAgency();
+		
 		model.addAttribute("destinationDetail",dashboardFacade.getDestinationId(destinationId));
-		model.addAttribute("agencyDetail", dashboardFacade.getAgency());
-		return "site/destinationDetail";
+		model.addAttribute("agencyDetail", agency);
+		
+		if(agency.getSiteTemplate() == 1){
+			return "site/destinationDetail";
+		}else{
+			return "site/destinationDetail02";
+		}
 		
 	}
 	
 	@RequestMapping("/categoryList/{id}")
 	public String getCategoryList(@PathVariable Long id, Model model){
+		Agency agency = dashboardFacade.getAgency();
+		
 		Category categoryId = dashboardFacade.getCategoryId(id);
 		model.addAttribute("listOfDestinationByCategory", categoryId.getDestination());
-		return "site/categoryList";
+		
+		if(agency.getSiteTemplate() == 1){
+			return "site/categoryList";
+		}else{
+			return "site/categoryList02";
+		}
 	}
-	
-    
+
 }

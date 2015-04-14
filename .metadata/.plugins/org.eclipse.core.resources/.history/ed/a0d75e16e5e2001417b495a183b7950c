@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Mapeamento para o index -->
+	<definition extends="default_tp_02" name="site/index02">
+		<put-attribute name="body" value="/site/template/tp_02/index.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para os detalhes do destino -->
+	<definition extends="default_tp_02" name="site/destinationDetail02">
+		<put-attribute name="body" value="/site/template/tp_02/destinationDetail.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para os os destinos vinculados a uma categoria -->
+	<definition extends="default_tp_02" name="site/categoryList02">
+		<put-attribute name="body" value="/site/template/tp_02/categoryList.jsp"/>
+	</definition>
+	
+</tiles-definitions>
