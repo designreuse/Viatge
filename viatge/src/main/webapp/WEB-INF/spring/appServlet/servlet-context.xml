@@ -45,6 +45,7 @@
 				
             </beans:list>
         </beans:property>
+        
     </beans:bean>
 
     <beans:bean id="filterMultipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/> 

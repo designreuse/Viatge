@@ -16,4 +16,30 @@
 	<definition extends="default_tp_02" name="site/categoryList02">
 		<put-attribute name="body" value="/site/template/tp_02/categoryList.jsp"/>
 	</definition>
+	
+	<!-- Mapeamento para a pagina de contato -->
+	<definition extends="default_tp_02" name="site/contact02">
+		<put-attribute name="body" value="/site/template/tp_02/contact.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para a pagina de blog -->
+	<definition extends="default_tp_02" name="site/blog02">
+		<put-attribute name="body" value="/site/template/tp_02/blog.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para a pagina de Destino Perfeito -->
+	<definition extends="default_tp_02" name="site/perfectTravel02">
+		<put-attribute name="body" value="/site/template/tp_02/perfectTravel.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para a pagina de compra on-line -->
+	<definition extends="default_tp_02" name="site/onlineShop02">
+		<put-attribute name="body" value="/site/template/tp_02/onlineShop.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para a pagina de blog -->
+	<definition extends="default_tp_02" name="site/aboutUs02">
+		<put-attribute name="body" value="/site/template/tp_02/aboutUs.jsp"/>
+	</definition>
+
 </tiles-definitions>

@@ -34,6 +34,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/placeholder.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/application.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/changeThemeColor.js"></script>
 
 </head>
 

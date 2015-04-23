@@ -26,7 +26,7 @@
                       
             <menu>
             	<li>
-                	<a href="categorias.php">CATEGORIAS</a>
+                	<a href="#">CATEGORIAS</a>
                     <!-- MENU DE CATEGORIAS -->
                 	<ul>
 					<c:forEach var="category" items="${categoryList}">
@@ -36,11 +36,11 @@
 					</c:forEach>
                     </ul>
                 </li>
-				<li><a href="destino-perfeito.php">VIAGEM PERFEITA</a></li>
-                <li><a href="blog.php">BLOG</a></li>
-                <li><a href="compra-online.php">COMPRE ONLINE</a></li>
-                <li><a href="agencia.php">QUEM SOMOS</a></li>
-                <li><a href="contato.php">CONTATO</a></li>
+				<li><a href="${pageContext.request.contextPath}/perfectTravel">VIAGEM PERFEITA</a></li>
+                <li><a href="${pageContext.request.contextPath}/blog">BLOG</a></li>
+                <li><a href="${pageContext.request.contextPath}/onlineShop">COMPRE ONLINE</a></li>
+                <li><a href="${pageContext.request.contextPath}/aboutUs">QUEM SOMOS</a></li>
+                <li><a href="${pageContext.request.contextPath}/contact">CONTATO</a></li>
             </menu>
             <!-- FIM MENU PRINCIPAL -->  
         </nav> 	

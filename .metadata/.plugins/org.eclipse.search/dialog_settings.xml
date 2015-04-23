@@ -3,8 +3,8 @@
 	<section name="DialogBounds_SearchDialog">
 		<item value="854" key="DIALOG_WIDTH"/>
 		<item value="110" key="DIALOG_Y_ORIGIN"/>
-		<item value="533" key="DIALOG_HEIGHT"/>
 		<item value="383" key="DIALOG_X_ORIGIN"/>
+		<item value="561" key="DIALOG_HEIGHT"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="Search">
@@ -28,7 +28,17 @@
 		</list>
 	</section>
 	<section name="SearchDialog">
-		<item value="org.eclipse.jdt.ui.JavaSearchPage" key="PREVIOUS_PAGE"/>
+		<item value="org.eclipse.search.internal.ui.text.TextSearchPage" key="PREVIOUS_PAGE"/>
+	</section>
+	<section name="TextSearchPage">
+		<item value="false" key="CASE_SENSITIVE"/>
+		<item value="false" key="REG_EX_SEARCH"/>
+		<item value="false" key="SEARCH_DERIVED"/>
+		<item value="false" key="WHOLE_WORD"/>
+		<item value="0" key="HISTORY_SIZE"/>
+		<section name="EXTENSIONS">
+			<item value="*" key="0"/>
+		</section>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item value="0" key="scope"/>

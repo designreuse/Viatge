@@ -2,7 +2,8 @@ package br.com.joocebox.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,14 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.joocebox.model.Agency;
 import br.com.joocebox.model.Category;
 import br.com.joocebox.model.Destination;
-import br.com.joocebox.model.Image;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
-import br.com.joocebox.service.CategoryFacade;
 import br.com.joocebox.service.DashboardFacade;
 
 @Controller
@@ -41,21 +40,23 @@ public class SiteController {
 	 * @return String
 	 */
 	@RequestMapping("/site")
-	public String siteTemplate(Model model){
+	public String siteTemplate(Model model, HttpSession session){
 		
 		if (tenantResolver.isMasterTenant() || !tenantResolver.isSubDomainExist()) {
 			model.addAttribute("tenant", new Agency());
 			return "landing/register";		
 		}
-		
+		Agency agencySession =(Agency) session.getAttribute("user");
+		System.out.println(agencySession);
 		Agency agency = dashboardFacade.getAgency();
 		String agencyLogo = agency.getAgencyLogo();
 		
 		String fileName = agencyLogo.replace("/app/joocebox-img/"+agency.getSubdomain()+"/logo/", "");
 		agency.setAgencyLogo(fileName);
-		model.addAttribute("tenant", agency);
+		//model.addAttribute("tenant", agency);
 		getAllCategories(model);
 		getDestinationsForWebSite(model);
+		session.setAttribute("tenant", agency);
 		logger.info("Buscando agência e adicionando seus atributos");
 		
 		
@@ -124,6 +125,47 @@ public class SiteController {
 		}else{
 			return "site/categoryList02";
 		}
+	}
+	
+	@RequestMapping("/contact")
+	public String getContactPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/contact02";
+	}
+	
+	@RequestMapping("/blog")
+	public String getBlogPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/blog02";
+	}
+	
+	@RequestMapping("/aboutUs")
+	public String getAboutUsPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/aboutUs02";
+	}
+	
+	@RequestMapping("/onlineShop")
+	public String getonlineShopPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/onlineShop02";
+	}
+	
+	@RequestMapping("/perfectTravel")
+	public String getPerfectTravelPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/perfectTravel02";
+	}
+	
+	@RequestMapping("/templateColorCodHex")
+	@ResponseBody
+	public String getCodHex(){
+		return dashboardFacade.getAgency().getTemplateColor();
 	}
 
 }
