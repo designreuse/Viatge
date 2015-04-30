@@ -30,11 +30,6 @@ public class Address implements Serializable {
 
 	private String street;
 
-	//bi-directional many-to-one association to Template
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="fk_template")
-	private Template template;
-
 	//bi-directional many-to-one association to Contact
 	@OneToMany(mappedBy="address")
 	private Set<Contact> contacts;
@@ -92,14 +87,6 @@ public class Address implements Serializable {
 
 	public void setStreet(String street) {
 		this.street = street;
-	}
-
-	public Template getTemplate() {
-		return this.template;
-	}
-
-	public void setTemplate(Template template) {
-		this.template = template;
 	}
 
 	public Set<Contact> getContacts() {

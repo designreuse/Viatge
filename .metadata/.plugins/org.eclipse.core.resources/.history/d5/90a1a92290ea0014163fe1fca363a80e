@@ -1,0 +1,5 @@
+package br.com.joocebox.repositories;
+
+public class StaffRepository {
+
+}

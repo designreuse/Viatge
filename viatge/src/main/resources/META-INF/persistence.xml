@@ -4,8 +4,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="viatge-pu" transaction-type="RESOURCE_LOCAL">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-
-	    <!-- Mapeamento -->
 		<class>br.com.joocebox.model.Address</class>
 		<class>br.com.joocebox.model.Agency</class>
 		<class>br.com.joocebox.model.Category</class>
@@ -14,30 +12,33 @@
 		<class>br.com.joocebox.model.Customer</class>
 		<class>br.com.joocebox.model.CustomerAddress</class>
 		<class>br.com.joocebox.model.CustomerPhone</class>
-		<class>br.com.joocebox.model.Department</class>
+		<class>br.com.joocebox.model.CustomerService</class>
 		<class>br.com.joocebox.model.Destination</class>
-		<class>br.com.joocebox.model.Document</class>	
-		<class>br.com.joocebox.model.DocumentPassenger</class>	
-		<class>br.com.joocebox.model.EconomicProfile</class>	
-		<class>br.com.joocebox.model.Employee</class>
-		<class>br.com.joocebox.model.EmployeesPhone</class>
+		<class>br.com.joocebox.model.Document</class>
+		<class>br.com.joocebox.model.DocumentPassenger</class>
+		<class>br.com.joocebox.model.EconomicProfile</class>
 		<class>br.com.joocebox.model.GeneralProfile</class>
-		<class>br.com.joocebox.model.History</class>		
+		<class>br.com.joocebox.model.Goals</class>
+		<class>br.com.joocebox.model.History</class>
 		<class>br.com.joocebox.model.Image</class>
-		<class>br.com.joocebox.model.Logo</class>
+		<class>br.com.joocebox.model.ImageJson</class>
+		<class>br.com.joocebox.model.Login</class>
 		<class>br.com.joocebox.model.Month</class>
 		<class>br.com.joocebox.model.Passenger</class>
-		<class>br.com.joocebox.model.Presentation</class>
-		<class>br.com.joocebox.model.SalesTarget</class>
+		<class>br.com.joocebox.model.ProfessionalData</class>
+		<class>br.com.joocebox.model.ServiceItem</class>
 		<class>br.com.joocebox.model.SocialProfile</class>
+		<class>br.com.joocebox.model.Staff</class>
+		<class>br.com.joocebox.model.StaffContact</class>
 		<class>br.com.joocebox.model.StreetView</class>
-		<class>br.com.joocebox.model.Template</class>
-		<class>br.com.joocebox.model.TemplateColor</class>
 		<class>br.com.joocebox.model.TripProfile</class>
 		<class>br.com.joocebox.model.Video</class>
 		<class>br.com.joocebox.model.WeatherProfile</class>
-		<class>br.com.joocebox.model.Year</class>
-		<class>br.com.joocebox.model.TemplateSite</class>
+
+
+	    <!-- Mapeamento -->
+
+
 		
 		<properties>
 		<!-- Tipos de Geraçãp DDL no banco -->

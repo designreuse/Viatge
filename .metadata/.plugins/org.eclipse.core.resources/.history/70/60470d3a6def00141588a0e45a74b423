@@ -1,0 +1,37 @@
+package br.com.joocebox.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+
+/**
+ * The persistent class for the month database table.
+ * 
+ */
+@Entity
+@Table(name="month")
+public class Month implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="id_month")
+	private Long id;
+
+
+	//bi-directional many-to-one association to Year
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="fk_year")
+	private Goals goals;
+
+
+}

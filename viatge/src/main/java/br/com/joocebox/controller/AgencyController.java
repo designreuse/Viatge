@@ -66,7 +66,7 @@ public class AgencyController {
 	public String addAgency(@ModelAttribute("tenant") Agency agency, Model model) {
 		agency.setActive(true);
 		agency.setCreationDate(new Date());
-		agency.setRole(Role.ROLE_ADMIN);
+		agency.setRole(Role.ROLE_MASTER);
 		agency = dashboardFacade.addAgency(agency);
 		
 		if(agency != null){
@@ -268,8 +268,8 @@ public class AgencyController {
 	 * @return url
 	 */
 	protected String getAgencyRegisterWizardFullUrl(Agency agency) {
-		//String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/register/wizard";
-		String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/register/wizard";
+		String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/register/wizard";
+		//String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/register/wizard";
 		
 		return url;
 	}
@@ -281,8 +281,8 @@ public class AgencyController {
 	 * @return url
 	 */
 	protected String getAgencyFullUrl(Agency agency) {
-		//String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/login";
-		String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/login";
+		String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/login";
+		//String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/login";
 		
 		return url;
 	}

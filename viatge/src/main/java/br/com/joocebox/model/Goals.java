@@ -1,6 +1,7 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.eclipse.persistence.annotations.Multitenant;
@@ -35,60 +37,35 @@ public class Goals implements Serializable{
 	
 	private String year;
 	
-	private String january;
-	
-	private String february;
-	
-	private String march;
-	
-	private String april;
-	
-	private String may;
-	
-	private String june;
-	
-	private String july;
-	
-	private String august;
-	
-	private String september;
-	
-	private String october;
-	
-	private String november;
-	
-	private String december;
-	
-	public Goals(){
-		
+	@OneToMany(mappedBy="goals")
+	private Set<Month> months;
+
+	public Goals() {
+
 	}
 
-	public Goals(String year, String january, String february, String march,
-			String april, String may, String june, String july, String august,
-			String september, String october, String november, String december) {
+	public Goals(String year, Set<Month> months) {
+		super();
 		this.year = year;
-		this.january = january;
-		this.february = february;
-		this.march = march;
-		this.april = april;
-		this.may = may;
-		this.june = june;
-		this.july = july;
-		this.august = august;
-		this.september = september;
-		this.october = october;
-		this.november = november;
-		this.december = december;
+		this.months = months;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Long getTenantId() {
 		return tenantId;
 	}
-	
+
+	public void setTenantId(Long tenantId) {
+		this.tenantId = tenantId;
+	}
+
 	public String getYear() {
 		return year;
 	}
@@ -97,100 +74,12 @@ public class Goals implements Serializable{
 		this.year = year;
 	}
 
-	public String getJanuary() {
-		return january;
+	public Set<Month> getMonths() {
+		return months;
 	}
 
-	public void setJanuary(String january) {
-		this.january = january;
-	}
-
-	public String getFebruary() {
-		return february;
-	}
-
-	public void setFebruary(String february) {
-		this.february = february;
-	}
-
-	public String getMarch() {
-		return march;
-	}
-
-	public void setMarch(String march) {
-		this.march = march;
-	}
-
-	public String getApril() {
-		return april;
-	}
-
-	public void setApril(String april) {
-		this.april = april;
-	}
-
-	public String getMay() {
-		return may;
-	}
-
-	public void setMay(String may) {
-		this.may = may;
-	}
-
-	public String getJune() {
-		return june;
-	}
-
-	public void setJune(String june) {
-		this.june = june;
-	}
-
-	public String getJuly() {
-		return july;
-	}
-
-	public void setJuly(String july) {
-		this.july = july;
-	}
-
-	public String getAugust() {
-		return august;
-	}
-
-	public void setAugust(String august) {
-		this.august = august;
-	}
-
-	public String getSeptember() {
-		return september;
-	}
-
-	public void setSeptember(String september) {
-		this.september = september;
-	}
-
-	public String getOctober() {
-		return october;
-	}
-
-	public void setOctober(String october) {
-		this.october = october;
-	}
-
-	public String getNovember() {
-		return november;
-	}
-
-	public void setNovember(String november) {
-		this.november = november;
-	}
-
-	public String getDecember() {
-		return december;
-	}
-
-	public void setDecember(String december) {
-		this.december = december;
+	public void setMonths(Set<Month> months) {
+		this.months = months;
 	}
 	
 	@Override
@@ -204,23 +93,13 @@ public class Goals implements Serializable{
 	        if (getClass() != obj.getClass()) return false;
 	        final Goals other = (Goals) obj;
 	        return Objects.equal(this.year, other.year)
-	            && Objects.equal(this.january, other.january)
-	            && Objects.equal(this.february, other.february)
-	            && Objects.equal(this.march, other.march)
-	            && Objects.equal(this.april, other.april)
-	            && Objects.equal(this.may, other.may)
-	            && Objects.equal(this.june, other.june)
-	            && Objects.equal(this.august, other.august)
-	            && Objects.equal(this.september, other.september)
-	            && Objects.equal(this.october, other.october)
-	            && Objects.equal(this.november, other.november)
-	            && Objects.equal(this.december, other.december);
+	            && Objects.equal(this.months, other.months);
 	}
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(ServiceItem.class)
-				.add("Metas no Ano de", getYear()).toString();
+		return MoreObjects.toStringHelper(Staff.class)
+				.add("Ano", getYear()).toString();
 	}
-
+	
 }

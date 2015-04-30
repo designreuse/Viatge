@@ -11,10 +11,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -36,8 +39,11 @@ public class ProfessionalData implements Serializable{
 	private Long tenantId;
 	
 	@Column(name="job_title")
+	@NotEmpty(message="Informe a função do colaborador.")
+	@NotNull
 	private String jobTitle;
 	
+	@Valid
 	@Enumerated(EnumType.STRING)
 	@Column(name="role")
 	private Role role;

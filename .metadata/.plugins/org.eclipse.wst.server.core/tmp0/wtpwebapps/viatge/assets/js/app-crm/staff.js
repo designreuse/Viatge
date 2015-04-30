@@ -1,0 +1,28 @@
+/**
+ * Comportamento JS da pagina da funcionalidade de Staff
+ */
+(function($) {
+	$(function() {
+
+		$("#employee-goal-jan").maskMoney();
+		$('#employee-goal-feb').maskMoney();
+		$('#employee-goal-mar').maskMoney();
+		$('#employee-goal-abr').maskMoney();
+		$('#employee-goal-maio').maskMoney();
+		$('#employee-goal-jun').maskMoney();
+		$('#employee-goal-jul').maskMoney();
+		$('#employee-goal-ago').maskMoney();
+		$('#employee-goal-set').maskMoney();
+		$('#employee-goal-out').maskMoney();
+		$('#employee-goal-nov').maskMoney();
+		$('#employee-goal-dec').maskMoney();
+		
+		$("#employee-workPhone").mask("(99) 9999-9999");
+		$("#employee-celPhone").mask("(99) 9999-9999");
+		$("#employee-homePhone").mask("(99) 9999-9999");
+		
+		$("#employee-birthDate").mask("99/99/9999");
+		
+
+	});
+})(jQuery);

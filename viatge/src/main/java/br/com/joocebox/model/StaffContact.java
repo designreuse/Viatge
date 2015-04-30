@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.hibernate.validator.constraints.Email;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -31,6 +32,7 @@ public class StaffContact implements Serializable{
 	
 	private Long tenantId;
 	
+	@Email(message="Informe um e-mail válido")
 	private String email;
 	
 	private String homePhone;

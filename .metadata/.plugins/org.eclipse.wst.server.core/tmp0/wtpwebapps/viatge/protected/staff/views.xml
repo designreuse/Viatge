@@ -6,4 +6,14 @@
 	<definition extends="default" name="staff/listOfStaff">
 		<put-attribute name="body" value="/protected/staff/listOfStaff.jsp"/>
 	</definition>
+	
+	<!-- Map to new or edit employee.jsp view -->
+	<definition extends="default" name="staff/employee">
+		<put-attribute name="body" value="/protected/staff/employee.jsp"/>
+	</definition>
+	
+	<!-- Map to employeeDetails.jsp view -->
+	<definition extends="default" name="staff/employeeDetails">
+		<put-attribute name="body" value="/protected/staff/employeeDetails.jsp"/>
+	</definition>
 </tiles-definitions>

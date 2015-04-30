@@ -23,7 +23,7 @@
 			
             <!-- MENU PRINCIPAL -->  
             <span class="gatilho-menu">Menu</span>
-                      
+                       
             <menu>
             	<li>
                 	<a href="#">CATEGORIAS</a>

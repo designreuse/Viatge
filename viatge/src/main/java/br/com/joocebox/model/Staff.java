@@ -15,10 +15,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.common.base.MoreObjects;
@@ -40,46 +44,59 @@ public class Staff implements Serializable{
 	@Column(name = "tenant_id", insertable = false, updatable = false)
 	private Long tenantId;
 	
+	@NotNull
+	@NotEmpty(message="O Nome não pode estar em branco.")
 	@Column(name="first_name")
 	private String firstName;
 	
+	@NotNull
+	@NotEmpty(message="O Sobrenome não pode estar em branco.")
 	@Column(name="last_name")
-	private String lastname;
+	private String lastName;
 	
 	@OneToOne(cascade=CascadeType.PERSIST)
 	@JoinColumn(name = "fk_staffContact")
+	@Valid
 	private StaffContact contact;
 	
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
+	@NotNull(message="A data de nascimento não pode estar em branco.")
 	private Date birthDate;
 	
 	@Column(name="gernder")
-	private char gender;
+	@NotNull
+	@Pattern(regexp = "^[M|F]{1}$", message ="Selecione o sexo do colaborador.")
+	private String gender;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_professionalData")
+	@Valid
 	private ProfessionalData professionalData;
 	
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_goal")
 	private Goals goal;
+	
+	@Column(name="active")
+	private Boolean active;
 
 	public Staff() {
 
 	}
 
-	public Staff(String firstName, String lastname, String email,
-			StaffContact contact, Date birthDate, char gender,
-			ProfessionalData professionalData, Goals goal) {
+	public Staff(String firstName, String lastName, String email,
+			StaffContact contact, Date birthDate, String gender,
+			ProfessionalData professionalData, Goals goal, Boolean active) {
 		this.firstName = firstName;
-		this.lastname = lastname;
+		this.lastName = lastName;
 		this.contact = contact;
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.professionalData = professionalData;
 		this.goal = goal;
+		this.active = active;
 	}
 
 	public String getFirstName() {
@@ -90,12 +107,12 @@ public class Staff implements Serializable{
 		this.firstName = firstName;
 	}
 
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public StaffContact getContact() {
@@ -114,11 +131,11 @@ public class Staff implements Serializable{
 		this.birthDate = birthDate;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -136,6 +153,14 @@ public class Staff implements Serializable{
 
 	public void setGoal(Goals goal) {
 		this.goal = goal;
+	}
+
+	public Boolean getActive() {
+		return active;
+	}
+
+	public void setActive(Boolean active) {
+		this.active = active;
 	}
 
 	public Long getId() {
@@ -158,18 +183,20 @@ public class Staff implements Serializable{
 	        final Staff other = (Staff) obj;
 	        return Objects.equal(this.birthDate, other.birthDate)
 	            && Objects.equal(this.firstName, other.firstName)
-	            && Objects.equal(this.lastname, other.lastname)
+	            && Objects.equal(this.lastName, other.lastName)
 	            && Objects.equal(this.gender, other.gender)
 	            && Objects.equal(this.contact, other.contact)
 	            && Objects.equal(this.goal, other.goal)
-	            && Objects.equal(this.professionalData, other.professionalData);
+	            && Objects.equal(this.professionalData, other.professionalData)
+	            && Objects.equal(this.active, other.active);
 	}
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(ServiceItem.class)
+		return MoreObjects.toStringHelper(Staff.class)
 				.add("Nome do Funcionario", getFirstName())
-				.add("Sobrenome", getLastname()).toString();
+				.add("Sobrenome", getLastName())
+				.add("Ativo?", Boolean.TRUE.equals(this.active) ? "Sim" : "Não") .toString();
 	}
 
 }

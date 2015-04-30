@@ -1,0 +1,107 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!-- CONTENT -->
+<!--TITLE -->
+<div class="row">
+	<div id="paper-top">
+		<div class="col-sm-12">
+			<!-- TITULO DA PÁGINA -->
+			<h2 class="tittle-content-header">
+				<i class="icon-menu"></i> <span>Gerenciar Equipe</span>
+			</h2>
+		</div>
+	</div>
+</div>
+<!--/ TITLE -->
+
+<!-- BREADCRUMB -->
+<ul id="breadcrumb">
+	<li><span class="entypo-home"></span></li>
+	<li><i class="fa fa-lg fa-angle-right"></i></li>
+	<li><a href="<c:url value="/home"/>" title="Sample page 1">Página Inicial</a></li>
+	<li><i class="fa fa-lg fa-angle-right"></i></li>
+	<li><a href="#" title="Sample page 1">Gerenciar Equipe</a></li>
+</ul>
+<!-- FIM BREADCRUMB -->
+
+
+<div class="content-wrap margin-bottom">
+	<div class="row">
+
+
+		<div class="nest text">
+			<div class="title-alt">
+				<h6>Equipe</h6>
+			</div>
+
+			<form action="#" method="post" class="form-filtro">
+
+				<div class="col-sm-4">
+					<input class="form-control" id="filter" placeholder="Procurar"
+						type="text" />
+				</div>
+				<div class="col-sm-2">
+					<select class="filter-status form-control">
+						<option value="active">Active</option>
+						<option value="disabled">Disabled</option>
+						<option value="suspended">Suspended</option>
+					</select>
+				</div>
+				<div class="col-sm-6">
+					<a href="#clear" style="margin-left: 10px;"
+						class="pull-right btn btn-info clear-filter" title="clear filter">Limpar</a>
+
+				</div>
+
+			</form>
+					<a href="#api" class="pull-right btn btn-info filter-api"
+						title="Filter using the Filter API">Novo Cadastro</a>
+			<div class="col-sm-12">
+				<c:choose>
+					<c:when test="${!empty listOfStaff}">
+						<table id="footable-res2" class="demo margin-bottom"
+							data-filter="#filter" data-filter-text-only="true">
+							<thead>
+								<tr>
+									<th>Funcionário</th>
+									<th>Cargo</th>
+									<th>Ativo</th>
+								</tr>
+							</thead>
+							<tbody>
+								<!-- CONTEUDO DE TABLE -->
+								<c:forEach items="${listOfStaff}" var="l">
+									<tr>
+										<td><a href="editStaff/id/${l.id}">${l.firstName}${l.lastname}</a></td>
+										<td>${l.professionalData.jobTitle}</td>
+										<c:choose>
+											<c:when test="${c.ctActive=='1'}">
+												<td><span class="label label-success">Ativo</span></td>
+											</c:when>
+											<c:otherwise>
+												<td><span class="label label-warning">Desativo</span></td>
+											</c:otherwise>
+										</c:choose>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:when>
+					<c:otherwise>
+						<div class="alert alert-info">
+							<span class="entypo-info-circled"></span> <strong>Hummm!</strong>&nbsp;&nbsp;Parece
+							que você ainda não possui nenhum colaborador cadastrado, clique
+							no botão <b>"Novo Cadastro"</b>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
