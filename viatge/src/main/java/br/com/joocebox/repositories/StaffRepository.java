@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import br.com.joocebox.model.Staff;
+import br.com.joocebox.model.Employee;
 
 @Repository
-public interface StaffRepository extends BaseRepository<Staff, Long>{
+public interface StaffRepository extends BaseRepository<Employee, Long>{
 	
-	List<Staff> findAll();
+	List<Employee> findAll();
 
 }

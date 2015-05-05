@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.google.common.hash.Hashing"/>
 <fullyQualifiedTypeName name="br.com.joocebox.model.views.VwOpenService"/>
 <fullyQualifiedTypeName name="com.google.javascript.jscomp.parsing.parser.trees.ThisExpressionTree"/>
 <fullyQualifiedTypeName name="com.google.common.base.Strings"/>
@@ -29,7 +28,6 @@
 <fullyQualifiedTypeName name="java.lang.Character"/>
 <fullyQualifiedTypeName name="java.io.Serializable"/>
 <fullyQualifiedTypeName name="javax.persistence.Enumerated"/>
-<fullyQualifiedTypeName name="br.com.joocebox.model.Goals"/>
 <fullyQualifiedTypeName name="br.com.joocebox.model.ProfessionalData"/>
 <fullyQualifiedTypeName name="javax.persistence.OneToOne"/>
 <fullyQualifiedTypeName name="javax.persistence.CascadeType"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
 <fullyQualifiedTypeName name="org.springframework.ui.Model"/>
 <fullyQualifiedTypeName name="br.com.joocebox.repositories.ServiceRepository"/>
+<fullyQualifiedTypeName name="br.com.joocebox.model.Goals"/>
+<fullyQualifiedTypeName name="br.com.joocebox.model.Month"/>
 </qualifiedTypeNameHistroy>

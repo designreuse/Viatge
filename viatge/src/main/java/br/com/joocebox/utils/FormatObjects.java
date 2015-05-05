@@ -10,7 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public class FormatObjects {
 	
-    public static Number formatStringPriceToNumberObject(String price, RedirectAttributes redirectAttributes){
+    public static Number formatStringPriceToNumberObject(String price){
     	Locale locBrazil = new Locale("pt", "BR");
     	NumberFormat nf = NumberFormat.getInstance(locBrazil);
     	Number value = 0;

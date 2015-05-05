@@ -7,7 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.joocebox.model.Staff;
+import br.com.joocebox.model.Goals;
+import br.com.joocebox.model.Employee;
 import br.com.joocebox.repositories.StaffRepository;
 
 @Service
@@ -18,20 +19,21 @@ public class StaffFacade {
 	private StaffRepository staffRepository;
 	
 	
-	public List<Staff> getListOfStaff() {
+	public List<Employee> getListOfStaff() {
 		return staffRepository.findAll();
 	}
 
 
-	public Staff save(Staff staff) {
+	public Employee save(Employee staff) {
 		return staffRepository.save(staff);
 		
 	}
 
 
-	public Staff findEmployeeById(Long id) {
+	public Employee findEmployeeById(Long id) {
 		return staffRepository.findOne(id);
 		
 	}
+
 
 }

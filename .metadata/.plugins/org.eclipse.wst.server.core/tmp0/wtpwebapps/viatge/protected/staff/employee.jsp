@@ -182,18 +182,17 @@
 							<div class="col-sm-8 margin-bottom">
 								<f:select id="employee-goal-year" cssClass="form-control" style="width: 200px" path="goal.year">
 									<option>Ano</option>
-									<option value="2014">2014</option>
 									<option value="2015">2015</option>
 									<option value="2016">2016</option>
 									<option value="2017">2017</option>
 								</f:select>
 							</div>
-
+	
 							<div class="col-sm-4 txt-right margin-bottom">
 								<button type="button" class="btn btn-info pull-right">Cadastrar</button>
 							</div>
 						</div>
-
+						
 						<div class="row-cols meses-meta">
 							<div class="col-sm-3">
 								<f:input id="employee-goal-jan" data-thousands="." data-decimal=","
@@ -262,7 +261,7 @@
 							</div>
 
 							<div class="col-sm-3">
-								<f:input id="employee-goal-dez" data-thousands="." data-decimal=","
+								<f:input id="employee-goal-dec" data-thousands="." data-decimal=","
 								type="text" cssClass="form-control" placeholder="Dezembro" path="goal.december"/>
 								<br/>
 							</div>

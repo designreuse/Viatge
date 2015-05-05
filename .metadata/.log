@@ -50,3 +50,821 @@ Binding(CTRL+D,
 		,,true),null),
 	org.eclipse.ui.defaultAcceleratorConfiguration,
 	org.eclipse.ui.textEditorScope,,,system)
+!SESSION 2015-05-04 11:44:54.513 -----------------------------------------------
+eclipse.buildId=4.4.1.M20140925-0400
+java.version=1.7.0_80
+java.vendor=Oracle Corporation
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=pt_BR
+Framework arguments:  -eclipse.password /home/manolo/.eclipse/master -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -eclipse.password /home/manolo/.eclipse/master -product org.eclipse.epp.package.jee.product
+
+!ENTRY org.eclipse.m2e.logback.configuration 2 0 2015-05-04 11:45:00.935
+!MESSAGE Exception while setting up logging:org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+!STACK 0
+java.lang.ClassCastException: org.eclipse.osgi.internal.framework.EquinoxConfiguration$1 cannot be cast to java.lang.String
+	at org.eclipse.m2e.logback.configuration.LogHelper.logJavaProperties(LogHelper.java:26)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.loadConfiguration(LogPlugin.java:189)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.configureLogback(LogPlugin.java:144)
+	at org.eclipse.m2e.logback.configuration.LogPlugin.access$2(LogPlugin.java:107)
+	at org.eclipse.m2e.logback.configuration.LogPlugin$1.run(LogPlugin.java:62)
+	at java.util.TimerThread.mainLoop(Timer.java:555)
+	at java.util.TimerThread.run(Timer.java:505)
+
+!ENTRY org.eclipse.jface 2 0 2015-05-04 11:45:11.421
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:45:11.421
+!MESSAGE A conflict occurred for ALT+CTRL+P:
+Binding(ALT+CTRL+P,
+	ParameterizedCommand(Command(org.eclipse.m2e.profiles.ui.commands.selectMavenProfileCommand,Select Maven Profiles,
+		,
+		Category(org.eclipse.ui.category.window,Window,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@29525b5f,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+CTRL+P,
+	ParameterizedCommand(Command(org.eclipse.team.svn.ui.command.CreatePatchCommand,Create Patch...,
+		,
+		Category(org.eclipse.team.svn.ui.command.category,SVN,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5deccf2a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+
+!ENTRY org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+I:
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.indent,Correct Indentation,
+		Corrects the indentation of the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@46919683,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+I,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.active.elements,Format Active Elements,
+		Format active elements,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@51878916,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+F:
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.format,Format,
+		Format the selected text,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3096a7,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+F,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.format.document,Format,
+		Format selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@33b61388,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_UP:
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@75f2ae09,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.enclosing,Select Enclosing Element,
+		Expand selection to include enclosing element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@50b22fa4,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+/:
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.add.block.comment,Add Block Comment,
+		Enclose the selection with a block comment,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@f800d5e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+/,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.add.block.comment,Add Block Comment,
+		Add Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5e31edb1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+O:
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.show.outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1fed9e45,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+O,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.quick_outline,Quick Outline,
+		Show the quick outline for the editor input,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2931d463,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+P:
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.matching.bracket,Go to Matching Bracket,
+		Moves the cursor to the matching bracket,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@66ec4b6,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.m2e.core.ui.command.addPlugin,Add Maven Plugin,
+		Add Maven Plugin,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@52348c06,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.core.runtime.xml,,,system)
+Binding(CTRL+SHIFT+P,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.goto.matching.bracket,Matching Character,
+		Go to Matching Character,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6d3f1b4a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+M:
+Binding(CTRL+SHIFT+M,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.add.import,Add Import,
+		Create import statement on selection,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@77d50813,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+M,
+	ParameterizedCommand(Command(org.eclipse.jst.jsp.ui.add.imports,Add Im&port,
+		Create import declaration for selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1322b0b8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jst.jsp.ui.structured.text.editor.jsp.scope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_UP:
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.previous.member,Go to Previous Member,
+		Move the caret to the previous member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@430554db,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_UP,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.previousSibling,Previous Sibling,
+		Go to Previous Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6dd499a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_DOWN:
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1306183d,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.last,Restore Last Selection,
+		Restore last selection,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@73ac34e2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.298
+!MESSAGE A conflict occurred for CTRL+SHIFT+C:
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.toggle.comment,Toggle Comment,
+		Toggle comment the selected lines,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7521568c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+C,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.toggle.comment,Toggle Comment,
+		Toggle Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@314a7ed7,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.299
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_RIGHT:
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5fb93d67,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_RIGHT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.next,Select Next Element,
+		Expand selection to include next sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1ad3f3a2,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.299
+!MESSAGE A conflict occurred for CTRL+SHIFT+\:
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.remove.block.comment,Remove Block Comment,
+		Remove the block comment enclosing the selection,
+		Category(org.eclipse.jdt.ui.category.source,Source,Java Source Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@7a6e6649,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+\,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.remove.block.comment,Remove Block Comment,
+		Remove Block Comment,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@12a605b,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.299
+!MESSAGE A conflict occurred for CTRL+SHIFT+ARROW_DOWN:
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.goto.next.member,Go to Next Member,
+		Move the caret to the next member of the compilation unit,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@65fd816a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(CTRL+SHIFT+ARROW_DOWN,
+	ParameterizedCommand(Command(org.eclipse.wst.xml.ui.nextSibling,Next Sibling,
+		Go to Next Sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@14effa45,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 11:50:16.299
+!MESSAGE A conflict occurred for ALT+SHIFT+ARROW_LEFT:
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@663b8a75,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jdt.ui.javaEditorScope,,,system)
+Binding(ALT+SHIFT+ARROW_LEFT,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.structure.select.previous,Select Previous Element,
+		Expand selection to include previous sibling,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5c6a3cb1,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+
+!ENTRY org.eclipse.jst.server.tomcat.core 4 0 2015-05-04 11:56:43.212
+!MESSAGE Several ports (8005, 8080) required by Tomcat v7.0 Server at localhost are already in use. The server may already be running in another process, or a system process may be using the port. To start this server you will need to stop the other process or change the port number(s).
+
+!ENTRY org.eclipse.jface 2 0 2015-05-04 13:27:13.997
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 13:27:13.997
+!MESSAGE A conflict occurred for CTRL+D:
+Binding(CTRL+D,
+	ParameterizedCommand(Command(org.eclipse.debug.ui.commands.eof,EOF,
+		Send end of file,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6958ab48,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.debug.ui.console,,,system)
+Binding(CTRL+D,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.delete.line,Delete Line,
+		Delete a line of text,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3c553a00,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+
+!ENTRY org.eclipse.ui 4 4 2015-05-04 15:30:29.006
+!MESSAGE Unable to create part
+
+!ENTRY org.eclipse.jdt.ui 4 996 2015-05-04 15:30:29.006
+!MESSAGE The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+!STACK 1
+org.eclipse.core.runtime.CoreException: The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+	at org.eclipse.jdt.internal.ui.javaeditor.ClassFileEditor.doSetInput(ClassFileEditor.java:656)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$19.run(AbstractTextEditor.java:3220)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:466)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:374)
+	at org.eclipse.ui.internal.WorkbenchWindow$13.run(WorkbenchWindow.java:2157)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+	at org.eclipse.ui.internal.WorkbenchWindow.run(WorkbenchWindow.java:2153)
+	at org.eclipse.ui.texteditor.AbstractTextEditor.internalInit(AbstractTextEditor.java:3238)
+	at org.eclipse.ui.texteditor.AbstractTextEditor.init(AbstractTextEditor.java:3265)
+	at org.eclipse.ui.internal.EditorReference.initialize(EditorReference.java:390)
+	at org.eclipse.ui.internal.e4.compatibility.CompatibilityPart.create(CompatibilityPart.java:305)
+	at sun.reflect.GeneratedMethodAccessor59.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:55)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.processAnnotated(InjectorImpl.java:888)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.processAnnotated(InjectorImpl.java:869)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:120)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.internalMake(InjectorImpl.java:337)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.make(InjectorImpl.java:258)
+	at org.eclipse.e4.core.contexts.ContextInjectionFactory.make(ContextInjectionFactory.java:162)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.createFromBundle(ReflectionContributionFactory.java:104)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.doCreate(ReflectionContributionFactory.java:73)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.create(ReflectionContributionFactory.java:55)
+	at org.eclipse.e4.ui.workbench.renderers.swt.ContributedPartRenderer.createWidget(ContributedPartRenderer.java:127)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.createWidget(PartRenderingEngine.java:983)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeCreateGui(PartRenderingEngine.java:662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeCreateGui(PartRenderingEngine.java:766)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.access$2(PartRenderingEngine.java:737)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$7.run(PartRenderingEngine.java:731)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.createGui(PartRenderingEngine.java:715)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl$1.handleEvent(PartServiceImpl.java:94)
+	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:187)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:156)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4590)
+	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:218)
+	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
+	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:197)
+	at org.eclipse.equinox.internal.event.EventHandlerTracker.dispatchEvent(EventHandlerTracker.java:197)
+	at org.eclipse.equinox.internal.event.EventHandlerTracker.dispatchEvent(EventHandlerTracker.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.ListenerQueue.dispatchEventSynchronous(ListenerQueue.java:148)
+	at org.eclipse.equinox.internal.event.EventAdminImpl.dispatchEvent(EventAdminImpl.java:135)
+	at org.eclipse.equinox.internal.event.EventAdminImpl.sendEvent(EventAdminImpl.java:78)
+	at org.eclipse.equinox.internal.event.EventComponent.sendEvent(EventComponent.java:39)
+	at org.eclipse.e4.ui.services.internal.events.EventBroker.send(EventBroker.java:81)
+	at org.eclipse.e4.ui.internal.workbench.UIEventPublisher.notifyChanged(UIEventPublisher.java:59)
+	at org.eclipse.emf.common.notify.impl.BasicNotifierImpl.eNotify(BasicNotifierImpl.java:374)
+	at org.eclipse.e4.ui.model.application.ui.impl.ElementContainerImpl.setSelectedElement(ElementContainerImpl.java:171)
+	at org.eclipse.e4.ui.internal.workbench.ModelServiceImpl.showElementInWindow(ModelServiceImpl.java:488)
+	at org.eclipse.e4.ui.internal.workbench.ModelServiceImpl.bringToTop(ModelServiceImpl.java:454)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl.delegateBringToTop(PartServiceImpl.java:694)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl.showPart(PartServiceImpl.java:1131)
+	at org.eclipse.ui.internal.WorkbenchPage.busyOpenEditor(WorkbenchPage.java:3210)
+	at org.eclipse.ui.internal.WorkbenchPage.access$23(WorkbenchPage.java:3125)
+	at org.eclipse.ui.internal.WorkbenchPage$9.run(WorkbenchPage.java:3107)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3102)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3066)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3056)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:112)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:98)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:64)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.openInEditor(CommitFileDiffViewer.java:485)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.openThisVersionInEditor(CommitFileDiffViewer.java:468)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.access$1(CommitFileDiffViewer.java:465)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer$1.open(CommitFileDiffViewer.java:180)
+	at org.eclipse.jface.viewers.StructuredViewer$2.run(StructuredViewer.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.JFaceUtil$1.run(JFaceUtil.java:50)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:178)
+	at org.eclipse.jface.viewers.StructuredViewer.fireOpen(StructuredViewer.java:850)
+	at org.eclipse.jface.viewers.StructuredViewer.handleOpen(StructuredViewer.java:1142)
+	at org.eclipse.jface.viewers.StructuredViewer$6.handleOpen(StructuredViewer.java:1249)
+	at org.eclipse.jface.util.OpenStrategy.fireOpenEvent(OpenStrategy.java:278)
+	at org.eclipse.jface.util.OpenStrategy.access$2(OpenStrategy.java:272)
+	at org.eclipse.jface.util.OpenStrategy$1.handleEvent(OpenStrategy.java:313)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4454)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1388)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3799)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3409)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+!SUBENTRY 1 org.eclipse.jdt.ui 4 996 2015-05-04 15:30:29.007
+!MESSAGE The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2015-05-04 15:30:29.074
+!MESSAGE Could not schedule source download
+
+!ENTRY org.eclipse.ui 4 4 2015-05-04 15:30:33.998
+!MESSAGE Unable to create part
+
+!ENTRY org.eclipse.jdt.ui 4 996 2015-05-04 15:30:33.998
+!MESSAGE The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+!STACK 1
+org.eclipse.core.runtime.CoreException: The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+	at org.eclipse.jdt.internal.ui.javaeditor.ClassFileEditor.doSetInput(ClassFileEditor.java:656)
+	at org.eclipse.ui.texteditor.AbstractTextEditor$19.run(AbstractTextEditor.java:3220)
+	at org.eclipse.jface.operation.ModalContext.runInCurrentThread(ModalContext.java:466)
+	at org.eclipse.jface.operation.ModalContext.run(ModalContext.java:374)
+	at org.eclipse.ui.internal.WorkbenchWindow$13.run(WorkbenchWindow.java:2157)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+	at org.eclipse.ui.internal.WorkbenchWindow.run(WorkbenchWindow.java:2153)
+	at org.eclipse.ui.texteditor.AbstractTextEditor.internalInit(AbstractTextEditor.java:3238)
+	at org.eclipse.ui.texteditor.AbstractTextEditor.init(AbstractTextEditor.java:3265)
+	at org.eclipse.ui.internal.EditorReference.initialize(EditorReference.java:390)
+	at org.eclipse.ui.internal.e4.compatibility.CompatibilityPart.create(CompatibilityPart.java:305)
+	at sun.reflect.GeneratedMethodAccessor59.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.e4.core.internal.di.MethodRequestor.execute(MethodRequestor.java:55)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.processAnnotated(InjectorImpl.java:888)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.processAnnotated(InjectorImpl.java:869)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.inject(InjectorImpl.java:120)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.internalMake(InjectorImpl.java:337)
+	at org.eclipse.e4.core.internal.di.InjectorImpl.make(InjectorImpl.java:258)
+	at org.eclipse.e4.core.contexts.ContextInjectionFactory.make(ContextInjectionFactory.java:162)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.createFromBundle(ReflectionContributionFactory.java:104)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.doCreate(ReflectionContributionFactory.java:73)
+	at org.eclipse.e4.ui.internal.workbench.ReflectionContributionFactory.create(ReflectionContributionFactory.java:55)
+	at org.eclipse.e4.ui.workbench.renderers.swt.ContributedPartRenderer.createWidget(ContributedPartRenderer.java:127)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.createWidget(PartRenderingEngine.java:983)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeCreateGui(PartRenderingEngine.java:662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.safeCreateGui(PartRenderingEngine.java:766)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.access$2(PartRenderingEngine.java:737)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$7.run(PartRenderingEngine.java:731)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.createGui(PartRenderingEngine.java:715)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl$1.handleEvent(PartServiceImpl.java:94)
+	at org.eclipse.e4.ui.services.internal.events.UIEventHandler$1.run(UIEventHandler.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.syncExec(Synchronizer.java:187)
+	at org.eclipse.ui.internal.UISynchronizer.syncExec(UISynchronizer.java:156)
+	at org.eclipse.swt.widgets.Display.syncExec(Display.java:4590)
+	at org.eclipse.e4.ui.internal.workbench.swt.E4Application$1.syncExec(E4Application.java:218)
+	at org.eclipse.e4.ui.services.internal.events.UIEventHandler.handleEvent(UIEventHandler.java:36)
+	at org.eclipse.equinox.internal.event.EventHandlerWrapper.handleEvent(EventHandlerWrapper.java:197)
+	at org.eclipse.equinox.internal.event.EventHandlerTracker.dispatchEvent(EventHandlerTracker.java:197)
+	at org.eclipse.equinox.internal.event.EventHandlerTracker.dispatchEvent(EventHandlerTracker.java:1)
+	at org.eclipse.osgi.framework.eventmgr.EventManager.dispatchEvent(EventManager.java:230)
+	at org.eclipse.osgi.framework.eventmgr.ListenerQueue.dispatchEventSynchronous(ListenerQueue.java:148)
+	at org.eclipse.equinox.internal.event.EventAdminImpl.dispatchEvent(EventAdminImpl.java:135)
+	at org.eclipse.equinox.internal.event.EventAdminImpl.sendEvent(EventAdminImpl.java:78)
+	at org.eclipse.equinox.internal.event.EventComponent.sendEvent(EventComponent.java:39)
+	at org.eclipse.e4.ui.services.internal.events.EventBroker.send(EventBroker.java:81)
+	at org.eclipse.e4.ui.internal.workbench.UIEventPublisher.notifyChanged(UIEventPublisher.java:59)
+	at org.eclipse.emf.common.notify.impl.BasicNotifierImpl.eNotify(BasicNotifierImpl.java:374)
+	at org.eclipse.e4.ui.model.application.ui.impl.ElementContainerImpl.setSelectedElement(ElementContainerImpl.java:171)
+	at org.eclipse.e4.ui.internal.workbench.ModelServiceImpl.showElementInWindow(ModelServiceImpl.java:488)
+	at org.eclipse.e4.ui.internal.workbench.ModelServiceImpl.bringToTop(ModelServiceImpl.java:454)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl.delegateBringToTop(PartServiceImpl.java:694)
+	at org.eclipse.e4.ui.internal.workbench.PartServiceImpl.showPart(PartServiceImpl.java:1131)
+	at org.eclipse.ui.internal.WorkbenchPage.busyOpenEditor(WorkbenchPage.java:3210)
+	at org.eclipse.ui.internal.WorkbenchPage.access$23(WorkbenchPage.java:3125)
+	at org.eclipse.ui.internal.WorkbenchPage$9.run(WorkbenchPage.java:3107)
+	at org.eclipse.swt.custom.BusyIndicator.showWhile(BusyIndicator.java:70)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3102)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3066)
+	at org.eclipse.ui.internal.WorkbenchPage.openEditor(WorkbenchPage.java:3056)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:112)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:98)
+	at org.eclipse.egit.ui.internal.EgitUiEditorUtils.openEditor(EgitUiEditorUtils.java:64)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.openInEditor(CommitFileDiffViewer.java:485)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.openThisVersionInEditor(CommitFileDiffViewer.java:468)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer.access$1(CommitFileDiffViewer.java:465)
+	at org.eclipse.egit.ui.internal.history.CommitFileDiffViewer$1.open(CommitFileDiffViewer.java:180)
+	at org.eclipse.jface.viewers.StructuredViewer$2.run(StructuredViewer.java:853)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.JFaceUtil$1.run(JFaceUtil.java:50)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:178)
+	at org.eclipse.jface.viewers.StructuredViewer.fireOpen(StructuredViewer.java:850)
+	at org.eclipse.jface.viewers.StructuredViewer.handleOpen(StructuredViewer.java:1142)
+	at org.eclipse.jface.viewers.StructuredViewer$6.handleOpen(StructuredViewer.java:1249)
+	at org.eclipse.jface.util.OpenStrategy.fireOpenEvent(OpenStrategy.java:278)
+	at org.eclipse.jface.util.OpenStrategy.access$2(OpenStrategy.java:272)
+	at org.eclipse.jface.util.OpenStrategy$1.handleEvent(OpenStrategy.java:313)
+	at org.eclipse.swt.widgets.EventTable.sendEvent(EventTable.java:84)
+	at org.eclipse.swt.widgets.Display.sendEvent(Display.java:4454)
+	at org.eclipse.swt.widgets.Widget.sendEvent(Widget.java:1388)
+	at org.eclipse.swt.widgets.Display.runDeferredEvents(Display.java:3799)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3409)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+!SUBENTRY 1 org.eclipse.jdt.ui 4 996 2015-05-04 15:30:33.999
+!MESSAGE The Class File Viewer cannot handle the given input ('org.eclipse.egit.ui.internal.FileRevisionEditorInput').
+
+!ENTRY org.eclipse.m2e.logback.appender 4 0 2015-05-04 15:30:34.124
+!MESSAGE Could not schedule source download
+
+!ENTRY org.eclipse.jdt.core 4 4 2015-05-04 19:19:10.675
+!MESSAGE File not found: '/viatge/src/main/java/br/com/joocebox/model/Staff.java'
+!STACK 1
+org.eclipse.core.internal.resources.ResourceException: Resource '/viatge/src/main/java/br/com/joocebox/model/Staff.java' does not exist.
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:341)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:215)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:288)
+	at org.eclipse.jdt.internal.core.util.Util.getResourceContentsAsCharArray(Util.java:1188)
+	at org.eclipse.jdt.internal.core.CompilationUnit.getContents(CompilationUnit.java:649)
+	at org.eclipse.jdt.core.dom.ASTParser.internalCreateAST(ASTParser.java:1118)
+	at org.eclipse.jdt.core.dom.ASTParser.createAST(ASTParser.java:809)
+	at org.eclipse.jpt.common.core.internal.utility.jdt.ASTTools.buildASTRoot(ASTTools.java:57)
+	at org.eclipse.jpt.common.core.internal.resource.java.source.SourceCompilationUnit.buildASTRoot(SourceCompilationUnit.java:135)
+	at org.eclipse.jpt.common.core.internal.resource.java.source.SourceCompilationUnit.synchronizeWithJavaSource(SourceCompilationUnit.java:153)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaCompilationUnitDelta(AbstractJpaProject.java:1392)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDelta(AbstractJpaProject.java:1225)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDeltaChildren(AbstractJpaProject.java:1234)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaPackageFragmentDelta(AbstractJpaProject.java:1376)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDelta(AbstractJpaProject.java:1222)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDeltaChildren(AbstractJpaProject.java:1234)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaPackageFragmentRootDelta(AbstractJpaProject.java:1348)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDelta(AbstractJpaProject.java:1219)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDeltaChildren(AbstractJpaProject.java:1234)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaProjectDelta(AbstractJpaProject.java:1262)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDelta(AbstractJpaProject.java:1216)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDeltaChildren(AbstractJpaProject.java:1234)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaModelDelta(AbstractJpaProject.java:1256)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.processJavaDelta(AbstractJpaProject.java:1213)
+	at org.eclipse.jpt.jpa.core.internal.AbstractJpaProject.javaElementChanged(AbstractJpaProject.java:1198)
+	at org.eclipse.jpt.jpa.core.internal.InternalJpaProjectManager.javaElementChanged_(InternalJpaProjectManager.java:895)
+	at org.eclipse.jpt.jpa.core.internal.InternalJpaProjectManager$JavaChangeEventHandlerCommand.execute(InternalJpaProjectManager.java:878)
+	at org.eclipse.jpt.common.core.internal.utility.command.JobCommandJob.run(JobCommandJob.java:42)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:54)
+!SUBENTRY 1 org.eclipse.core.resources 4 368 2015-05-04 19:19:10.675
+!MESSAGE Resource '/viatge/src/main/java/br/com/joocebox/model/Staff.java' does not exist.
+
+!ENTRY org.eclipse.jface 2 0 2015-05-04 22:05:47.395
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 22:05:47.395
+!MESSAGE A conflict occurred for F3:
+Binding(F3,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.open.editor,Open Declaration,
+		Open an editor on the selected element,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@440ba34a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(F3,
+	ParameterizedCommand(Command(org.eclipse.wst.jsdt.ui.edit.text.java.open.editor,Open Declaration,
+		Open an editor on the selected element,
+		Category(org.eclipse.ui.category.navigate,Navigate,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@580d722c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.jsdt.ui.javascriptViewScope,,,system)
+Binding(F3,
+	ParameterizedCommand(Command(org.eclipse.wst.sse.ui.open.file.from.source,Open Selection,
+		Open an editor on the selected link,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@260c4b39,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.sse.ui.structuredTextEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 22:05:47.395
+!MESSAGE A conflict occurred for ALT+SHIFT+V:
+Binding(ALT+SHIFT+V,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.move.element,Move - Refactoring ,
+		Move the selected element to a new location,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@5ac2d3dd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+SHIFT+V,
+	ParameterizedCommand(Command(org.eclipse.jst.jsp.ui.refactor.move,Move,
+		Move a Java Element to another package,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@60af472c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jst.jsp.ui.structured.text.editor.jsp.scope,,,system)
+Binding(ALT+SHIFT+V,
+	ParameterizedCommand(Command(org.eclipse.wst.jsdt.ui.edit.text.java.move.element,Move - Refactoring ,
+		Move the selected element to a new location,
+		Category(org.eclipse.wst.jsdt.ui.category.refactoring,Refactor - JavaScript,JavaScript Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@2ce380b8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.jsdt.ui.javascriptViewScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2015-05-04 22:05:47.395
+!MESSAGE A conflict occurred for ALT+SHIFT+R:
+Binding(ALT+SHIFT+R,
+	ParameterizedCommand(Command(org.eclipse.jdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.jdt.ui.category.refactoring,Refactor - Java,Java Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@c17c70e,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.contexts.window,,,system)
+Binding(ALT+SHIFT+R,
+	ParameterizedCommand(Command(org.eclipse.jst.jsp.ui.refactor.rename,Rename,
+		Rename a Java Element,
+		Category(org.eclipse.ui.category.edit,Edit,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@16c61a,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.jst.jsp.ui.structured.text.editor.jsp.scope,,,system)
+Binding(ALT+SHIFT+R,
+	ParameterizedCommand(Command(org.eclipse.wst.jsdt.ui.edit.text.java.rename.element,Rename - Refactoring ,
+		Rename the selected element,
+		Category(org.eclipse.wst.jsdt.ui.category.refactoring,Refactor - JavaScript,JavaScript Refactoring Actions,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@6d0d6e55,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.wst.jsdt.ui.javascriptViewScope,,,system)
+
+!ENTRY org.eclipse.e4.ui.workbench 4 2 2015-05-05 00:16:19.637
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.e4.ui.workbench".
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.jpt.common.ui.internal.jface.AbstractItemStructuredStateProviderManager.getImage(AbstractItemStructuredStateProviderManager.java:158)
+	at org.eclipse.jpt.common.ui.internal.navigator.NavigatorLabelProvider.getImage(NavigatorLabelProvider.java:65)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.findImage(NavigatorContentServiceLabelProvider.java:197)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.getColumnImage(NavigatorContentServiceLabelProvider.java:105)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.getImage(NavigatorContentServiceLabelProvider.java:98)
+	at org.eclipse.ui.internal.navigator.resources.workbench.TabbedPropertySheetTitleProvider.getImage(TabbedPropertySheetTitleProvider.java:65)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.refreshTitleBar(TabbedPropertySheetPage.java:850)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.setInput(TabbedPropertySheetPage.java:754)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.selectionChanged(TabbedPropertySheetPage.java:556)
+	at org.eclipse.ui.views.properties.PropertySheet.selectionChanged(PropertySheet.java:365)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.notifyListeners(SelectionService.java:218)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.handlePostSelectionChanged(SelectionService.java:122)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.access$1(SelectionService.java:112)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService$3.selectionChanged(SelectionService.java:80)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$4.run(SelectionAggregator.java:166)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.notifyPostListeners(SelectionAggregator.java:163)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.access$8(SelectionAggregator.java:160)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$8$1.run(SelectionAggregator.java:272)
+	at org.eclipse.e4.core.contexts.RunAndTrack.runExternalCode(RunAndTrack.java:56)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$8.changed(SelectionAggregator.java:269)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:110)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:338)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:352)
+	at org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl.setPostSelection(SelectionServiceImpl.java:36)
+	at org.eclipse.ui.internal.e4.compatibility.CompatibilityPart$3.selectionChanged(CompatibilityPart.java:127)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:876)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.JFaceUtil$1.run(JFaceUtil.java:50)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:178)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:873)
+	at org.eclipse.jface.viewers.StructuredViewer.handlePostSelect(StructuredViewer.java:1217)
+	at org.eclipse.ui.navigator.CommonViewer.handlePostSelect(CommonViewer.java:470)
+	at org.eclipse.jface.viewers.StructuredViewer$5.widgetSelected(StructuredViewer.java:1243)
+	at org.eclipse.jface.util.OpenStrategy.firePostSelectionEvent(OpenStrategy.java:265)
+	at org.eclipse.jface.util.OpenStrategy.access$5(OpenStrategy.java:259)
+	at org.eclipse.jface.util.OpenStrategy$1$2.run(OpenStrategy.java:440)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:136)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3774)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3412)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)
+
+!ENTRY org.eclipse.e4.ui.workbench 4 0 2015-05-05 00:16:19.678
+!MESSAGE 
+!STACK 0
+java.lang.NullPointerException
+	at org.eclipse.jpt.common.ui.internal.jface.AbstractItemStructuredStateProviderManager.getImage(AbstractItemStructuredStateProviderManager.java:158)
+	at org.eclipse.jpt.common.ui.internal.navigator.NavigatorLabelProvider.getImage(NavigatorLabelProvider.java:65)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.findImage(NavigatorContentServiceLabelProvider.java:197)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.getColumnImage(NavigatorContentServiceLabelProvider.java:105)
+	at org.eclipse.ui.internal.navigator.NavigatorContentServiceLabelProvider.getImage(NavigatorContentServiceLabelProvider.java:98)
+	at org.eclipse.ui.internal.navigator.resources.workbench.TabbedPropertySheetTitleProvider.getImage(TabbedPropertySheetTitleProvider.java:65)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.refreshTitleBar(TabbedPropertySheetPage.java:850)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.setInput(TabbedPropertySheetPage.java:754)
+	at org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage.selectionChanged(TabbedPropertySheetPage.java:556)
+	at org.eclipse.ui.views.properties.PropertySheet.selectionChanged(PropertySheet.java:365)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.notifyListeners(SelectionService.java:218)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.handlePostSelectionChanged(SelectionService.java:122)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService.access$1(SelectionService.java:112)
+	at org.eclipse.ui.internal.e4.compatibility.SelectionService$3.selectionChanged(SelectionService.java:80)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$4.run(SelectionAggregator.java:166)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.notifyPostListeners(SelectionAggregator.java:163)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator.access$8(SelectionAggregator.java:160)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$8$1.run(SelectionAggregator.java:272)
+	at org.eclipse.e4.core.contexts.RunAndTrack.runExternalCode(RunAndTrack.java:56)
+	at org.eclipse.e4.ui.internal.workbench.SelectionAggregator$8.changed(SelectionAggregator.java:269)
+	at org.eclipse.e4.core.internal.contexts.TrackableComputationExt.update(TrackableComputationExt.java:110)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.processScheduled(EclipseContext.java:338)
+	at org.eclipse.e4.core.internal.contexts.EclipseContext.set(EclipseContext.java:352)
+	at org.eclipse.e4.ui.internal.workbench.SelectionServiceImpl.setPostSelection(SelectionServiceImpl.java:36)
+	at org.eclipse.ui.internal.e4.compatibility.CompatibilityPart$3.selectionChanged(CompatibilityPart.java:127)
+	at org.eclipse.jface.viewers.StructuredViewer$3.run(StructuredViewer.java:876)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.ui.internal.JFaceUtil$1.run(JFaceUtil.java:50)
+	at org.eclipse.jface.util.SafeRunnable.run(SafeRunnable.java:178)
+	at org.eclipse.jface.viewers.StructuredViewer.firePostSelectionChanged(StructuredViewer.java:873)
+	at org.eclipse.jface.viewers.StructuredViewer.handlePostSelect(StructuredViewer.java:1217)
+	at org.eclipse.ui.navigator.CommonViewer.handlePostSelect(CommonViewer.java:470)
+	at org.eclipse.jface.viewers.StructuredViewer$5.widgetSelected(StructuredViewer.java:1243)
+	at org.eclipse.jface.util.OpenStrategy.firePostSelectionEvent(OpenStrategy.java:265)
+	at org.eclipse.jface.util.OpenStrategy.access$5(OpenStrategy.java:259)
+	at org.eclipse.jface.util.OpenStrategy$1$2.run(OpenStrategy.java:440)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:35)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:136)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:3774)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3412)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$9.run(PartRenderingEngine.java:1151)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1032)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:148)
+	at org.eclipse.ui.internal.Workbench$5.run(Workbench.java:636)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:332)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:579)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:150)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:135)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:196)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:134)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:380)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:235)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:648)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:603)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1465)
+	at org.eclipse.equinox.launcher.Main.main(Main.java:1438)

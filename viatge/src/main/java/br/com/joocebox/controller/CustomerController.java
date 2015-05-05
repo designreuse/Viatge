@@ -496,7 +496,7 @@ public class CustomerController{
 			@RequestParam(value = "seeIn", required=true) String seeIn,
 			RedirectAttributes redirectAttributes, Model model) {
     		    	
-			Number valueFormated = formatStringPriceToNumberObject(price, redirectAttributes);
+			Number valueFormated = formatStringPriceToNumberObject(price);
 			Date arriveFormated = formatStringDateToDateObject(arrive, redirectAttributes);
 			Date departureFormated = formatStringDateToDateObject(departure, redirectAttributes);
 			Date seeInFormated = formatStringDateToDateObject(seeIn, redirectAttributes);

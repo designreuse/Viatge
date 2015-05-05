@@ -23,12 +23,11 @@
 		<class>br.com.joocebox.model.Image</class>
 		<class>br.com.joocebox.model.ImageJson</class>
 		<class>br.com.joocebox.model.Login</class>
-		<class>br.com.joocebox.model.Month</class>
 		<class>br.com.joocebox.model.Passenger</class>
 		<class>br.com.joocebox.model.ProfessionalData</class>
 		<class>br.com.joocebox.model.ServiceItem</class>
 		<class>br.com.joocebox.model.SocialProfile</class>
-		<class>br.com.joocebox.model.Staff</class>
+		<class>br.com.joocebox.model.Employee</class>
 		<class>br.com.joocebox.model.StaffContact</class>
 		<class>br.com.joocebox.model.StreetView</class>
 		<class>br.com.joocebox.model.TripProfile</class>
