@@ -46,8 +46,7 @@ public class SiteController {
 			model.addAttribute("tenant", new Agency());
 			return "landing/register";		
 		}
-		Agency agencySession =(Agency) session.getAttribute("user");
-		System.out.println(agencySession);
+
 		Agency agency = dashboardFacade.getAgency();
 		String agencyLogo = agency.getAgencyLogo();
 		

@@ -31,17 +31,11 @@ public class LoginController {
 	private CurrentTenantResolver<Long> tenantResolver;
 
 	// Entra no DashBoard do Tenant(Agência)
-	@RequestMapping(value = {"/login"}, method = { RequestMethod.GET,
-			RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT })
+	@RequestMapping(value = {"/login"}, method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT })
 	public String switchRequest(Model model) {
-		if (tenantResolver.isMasterTenant()) {
+		if (tenantResolver.isMasterTenant() || tenantResolver.isSubDomainExist()) {
 			//model.addAttribute("tenant", tenant);
 			return "landing/login";
-
-		} else if (tenantResolver.isSubDomainExist()) {
-			return "landing/login";
-			
-
 		}
 		throw new ResourceNotFoundException();
 	}

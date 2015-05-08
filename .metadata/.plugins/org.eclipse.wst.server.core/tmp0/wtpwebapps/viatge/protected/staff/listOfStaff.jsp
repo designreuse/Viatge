@@ -90,7 +90,7 @@
 							<tbody>
 								<c:forEach items="${listOfStaff}" var="ls">
 									<tr>
-										<td><a href="viewEmployee/id/${ls.id}">${ls.firstName} ${ls.lastName}</a>
+										<td><a href="employee/view/${ls.id}">${ls.firstName} ${ls.lastName}</a>
 										<td>${ls.professionalData.jobTitle}</td>
 										<td>
 											<div class="make-switch" data-on="primary" data-off="info">

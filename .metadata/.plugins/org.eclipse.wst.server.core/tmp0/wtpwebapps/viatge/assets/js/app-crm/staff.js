@@ -23,6 +23,28 @@
 		
 		$("#employee-birthDate").mask("99/99/9999");
 		
+		
+		$('#fileupload').fileupload({
+			url: $('#ajax-url').val(),
+			add: function(e, data) {
+		        var uploadErrors = [];
+		        var acceptFileTypes = /^image\/(jpe?g)$/i;
+		        if(data.originalFiles[0]['type'].length && !acceptFileTypes.test(data.originalFiles[0]['type'])) {
+		            uploadErrors.push('Arquivo não suportado! Selecione uma imagem do tipo *.jpg');
+		        }
+		        if(data.originalFiles[0]['size'].length && data.originalFiles[0]['size'] > 5000000) {
+		            uploadErrors.push('Arquivo muito grande!');
+		        }
+		        if(uploadErrors.length > 0) {
+		            alert(uploadErrors.join("\n"));
+		        } else {
+		            data.submit();
+		        }
+			},
+			done: function (e, data){			
+				$('#avatar-img').attr('src', data._response.result);
+			}
+		});
 
 	});
 })(jQuery);

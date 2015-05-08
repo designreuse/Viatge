@@ -137,7 +137,7 @@
 						<figure>
 							<a
 								href="${pageContext.request.contextPath}/destinationDetail/${d.idDestination}"><img
-								src="${pageContext.request.contextPath}/image/destination/${d.dtName}"
+								src="${pageContext.request.contextPath}/image/destination/thumbnail/${d.dtName}"
 								alt="${d.dtName}"></a>
 						</figure>
 						<!-- IMAGEM 252PX POR 190PX -->

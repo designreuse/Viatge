@@ -28,4 +28,8 @@ public class JooceBoxProperties {
 		return this.pathTenants+domain+"/destination/resizedImages/";
 	}
 	
+	public String getPathHighlightImage(String domain){
+		return this.pathTenants+domain+"/destination/highlightImages/";
+	}
+	
 }

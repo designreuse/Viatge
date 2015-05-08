@@ -2,3 +2,6 @@
 1430777881332	Rename type 'StaffController'
 1430777949887	Rename type 'Staff'
 1430785398998	Delete element
+1430871430236	Delete element
+1431026985008	Rename type 'FileUtils'
+1431038749433	Encapsulate field 'avatar'

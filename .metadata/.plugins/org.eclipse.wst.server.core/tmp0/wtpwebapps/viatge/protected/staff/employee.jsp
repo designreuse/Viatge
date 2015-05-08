@@ -36,11 +36,11 @@
 			<a href="#" class="btn btn-primary">Dados</a>&nbsp; &nbsp; <a
 				href="#" class="btn btn-primary">Metas de Vendas</a>
 		</div>
+		<c:url var="saveEmployee" value="/auth/employee/add" ></c:url>
 
-
-		<f:form action="saveEmployee" method="post" modelAttribute="staff">
+		<f:form action="${saveEmployee}" method="post" modelAttribute="staff">
 		
-			<input id="employeeID" type="hidden" name="id" value="${id}"/>
+			<f:hidden id="id" path="id"/>
 			
 			<div class="col-sm-12">
 
@@ -181,7 +181,7 @@
 						<div class="row-cols">
 							<div class="col-sm-8 margin-bottom">
 								<f:select id="employee-goal-year" cssClass="form-control" style="width: 200px" path="goal.year">
-									<option>Ano</option>
+									<option value="">Ano</option>
 									<option value="2015">2015</option>
 									<option value="2016">2016</option>
 									<option value="2017">2017</option>

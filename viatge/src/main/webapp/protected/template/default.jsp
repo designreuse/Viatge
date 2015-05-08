@@ -107,7 +107,6 @@
     <script src="${pageContext.request.contextPath}/resources/js/footable/js/footable.sort.js?v=2-0-1" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/resources/js/footable/js/footable.filter.js?v=2-0-1" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/resources/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/footable/js/footable.paginate.js?v=2-0-1" type="text/javascript"></script>	
     
     <!-- INICIO FORMULARIO -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/iCheck/jquery.icheck.js"></script>
@@ -124,6 +123,9 @@
     <!-- INICIO MÍDIA -->
     <script src="${pageContext.request.contextPath}/resources/js/flatvideo/jquery.fitvids.js"></script>
     <script src="${pageContext.request.contextPath}/resources/js/dropZone/lib/dropzone.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/fileUpload/js/jquery.fileupload.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/fileUpload/js/jquery.iframe-transport.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/fileUpload/js/jquery.fileupload-jquery-ui.js"></script>
     
     <!-- Inicio do Wizard -->
 	<script src="${pageContext.request.contextPath}/resources/js/wizard/lib/jquery.cookie-1.3.1.js"></script>
@@ -132,10 +134,6 @@
     <!-- Fim do Wizard -->
     
     <script src="${pageContext.request.contextPath}/resources/js/ckeditor/ckeditor.js"  type="text/javascript"></script>
-    
-    <!-- Inicio Multi-Select -->
-    <script src="${pageContext.request.contextPath}/resources/js/multi-select/js/jquery.multi-select.js" type="text/javascript"></script>
-    <!-- Fim -->
     
     <!-- Inicio Currency Plug-in -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery.maskMoney.js" type="text/javascript"></script>
@@ -150,9 +148,6 @@
 $(function() {
 	var winWrap = $(window).height() - 75;
 	$('.paper-wrap').css('min-height', winWrap);
-	
-	//Inicia o componente de multi-select
-	$('.multiple-select').multiSelect();
 	
 	//Mascaras da funcionalidade de Novo Atendimento
 	$("#birthday").mask("99/99/9999");

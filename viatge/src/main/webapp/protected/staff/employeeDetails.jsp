@@ -42,18 +42,32 @@
 			<div class="nest text margin-bottom">
 				<div class="title-alt">
 					<h6>Dados Do Funcionário</h6>
-
+					<input id="ajax-url" type="hidden" value="${pageContext.request.contextPath}/auth/employee/upload/${staff.id}"/>
 					<div class="pull-right title-btn">
-						<a href='<c:url value="/auth/editEmployee/id/${staff.id}"></c:url>' class="btn btn-info"><span
-							class="fontawesome-edit"></span> Editar Dados</a>
+						<a href='<c:url value="/auth/employee/edit/${staff.id}"></c:url>' class="btn btn-info">
+							<span class="fontawesome-edit"></span>
+							 Editar Dados
+						</a>
 					</div>
 				</div>
 
 				<div class="col-sm-2">
-					<figure class="foto-user">
-						<img src="http://api.randomuser.me/portraits/thumb/women/1.jpg">
-						<span class="entypo-pencil"><input type="file" name=""></span>
-					</figure>
+					<form id="avatar-form" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+						<figure class="foto-user">			
+							<c:choose>
+								<c:when test="${staff.avatar}">
+									<img id="avatar-img" src="${pageContext.request.contextPath}/image/avatar/${staff.id}/avatar-${staff.id}.jpg">
+								</c:when>
+								<c:otherwise>
+									<img id="avatar-img" src="https://s3-sa-east-1.amazonaws.com/joocebox-media/static-images/user-128.jpg">
+								</c:otherwise>	
+							</c:choose>
+							<span class="entypo-pencil">
+								<input id="fileupload" type="file" name="file[]">
+							</span>
+						</figure>
+					</form>
 				</div>
 
 				<div class="col-sm-10 dados-funcionario">
@@ -109,13 +123,13 @@
 					</h3>
 				</div>
 				<div class="value">
-					<span><i class="entypo-book-open"></i></span>192<b>Clientes</b>
+					<span><i class="entypo-book-open"></i></span>0<b>Clientes</b>
 				</div>
 				<div class="progress-tinny">
 					<div style="width: 50%" class="bar"></div>
 				</div>
 				<div class="profit-line">Valor de Carteira (Estimado): R$
-					880.000,00 / Ano</div>
+					0,00 / Ano</div>
 			</div>
 		</div>
 		<!-- fim meta -->
@@ -130,13 +144,13 @@
 					</h3>
 				</div>
 				<div class="value">
-					<span><i class="entypo-gauge"></i></span>27<b>Em Negociação</b>
+					<span><i class="entypo-gauge"></i></span>0<b>Em Negociação</b>
 				</div>
 				<div class="progress-tinny">
 					<div style="width: 50%" class="bar"></div>
 				</div>
 				<div class="profit-line">Valor Estimado de Négócios: R$
-					39,000.00</div>
+					0,00</div>
 			</div>
 		</div>
 		<!-- fim meta atingidas -->

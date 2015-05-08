@@ -81,6 +81,9 @@ public class Employee implements Serializable {
 
 	@Column(name = "active")
 	private Boolean active;
+	
+	@Column(name = "avatar")
+	private Boolean avatar;
 
 	public Employee() {
 
@@ -88,7 +91,7 @@ public class Employee implements Serializable {
 
 	public Employee(String firstName, String lastName, String email,
 			StaffContact contact, Date birthDate, String gender,
-			ProfessionalData professionalData, Goals goal, Boolean active) {
+			ProfessionalData professionalData, Goals goal, Boolean active, Boolean avatar) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.contact = contact;
@@ -97,6 +100,7 @@ public class Employee implements Serializable {
 		this.professionalData = professionalData;
 		this.goal = goal;
 		this.active = active;
+		this.avatar = avatar;
 	}
 
 	public String getFirstName() {
@@ -163,6 +167,14 @@ public class Employee implements Serializable {
 		this.active = active;
 	}
 
+	public Boolean getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Boolean avatar) {
+		this.avatar = avatar;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -190,7 +202,8 @@ public class Employee implements Serializable {
 				&& Objects.equal(this.contact, other.contact)
 				&& Objects.equal(this.goal, other.goal)
 				&& Objects.equal(this.professionalData, other.professionalData)
-				&& Objects.equal(this.active, other.active);
+				&& Objects.equal(this.active, other.active)
+				&& Objects.equal(this.avatar, other.avatar);
 	}
 
 	@Override

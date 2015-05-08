@@ -43,4 +43,3 @@
 		value="${_csrf.token}" />
 </form>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/pages/login.js"></script>
-<script src="//fast.eager.io/6PyMYDDUrx.js"></script>

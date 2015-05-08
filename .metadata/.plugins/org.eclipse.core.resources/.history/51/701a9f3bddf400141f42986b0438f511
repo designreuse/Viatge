@@ -1,0 +1,167 @@
+package br.com.joocebox.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+
+import br.com.joocebox.model.Employee;
+import br.com.joocebox.model.FileMeta;
+import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.service.StaffFacade;
+import br.com.joocebox.utils.ImageUtils;
+import br.com.joocebox.utils.JooceBoxUtils;
+
+@Controller
+@Transactional(propagation=Propagation.REQUIRED)
+@RequestMapping("/auth")
+public class EmployeeController{
+	
+	final static Logger logger = LoggerFactory.getLogger(EmployeeController.class);
+	
+	@Autowired
+	private StaffFacade staffFacade;
+	
+	@Autowired
+	private DashboardFacade dashboardFacade;
+	
+	JooceBoxUtils jbUtils = new JooceBoxUtils();
+	
+	LinkedList<FileMeta> files = new LinkedList<FileMeta>();
+    FileMeta fileMeta = null;
+	
+	@RequestMapping("staff")
+	public ModelAndView staffScreen(){
+		ModelAndView mv = new ModelAndView("staff/listOfStaff");
+		mv.addObject("listOfStaff", staffFacade.getListOfStaff());		
+		return mv;
+	}
+	
+	@RequestMapping("employee")
+	public ModelAndView employeeSreen(){
+		ModelAndView mv = new ModelAndView("staff/employee");
+		mv.addObject("staff", new Employee());
+		mv.addObject("systemRoles", jbUtils.getListOfSytemRoles());
+		mv.addObject("action", "saveEmployee");
+		return mv;
+	}
+	
+	/**
+	 * @param result
+	 * @param model
+	 * @param error
+	 */
+	private void validForm(BindingResult result, ModelMap model) {
+		List<String> error = new ArrayList<>();
+		List<ObjectError> allErrors = result.getAllErrors();
+		for (ObjectError objectError : allErrors) {
+			String objectName = objectError.getDefaultMessage();
+			error.add(objectName);
+		}
+		model.put("systemRoles", jbUtils.getListOfSytemRoles());
+		model.put("errors", error);
+		model.put("validator", true);
+	}
+	
+	@RequestMapping(value = "/employee/add", method ={RequestMethod.POST, RequestMethod.PUT})
+	public ModelAndView saveEmployee(@ModelAttribute("staff") @Valid Employee staff, BindingResult result, ModelMap model, HttpServletRequest request) {
+		
+		String parameter = request.getParameter("id");
+        
+		if (result.hasErrors()) {
+			validForm(result, model);	
+			return new ModelAndView("staff/employee", "staff", staff);
+		}else if(parameter == null){
+			staff.setActive(Boolean.TRUE);
+			staffFacade.save(staff);
+			return staffScreen();
+		}else{
+			staffFacade.update(staff, Long.parseLong(parameter));
+			return staffScreen();
+		}
+
+	}
+	
+	@RequestMapping(value = "employee/view/{id}", method = RequestMethod.GET)
+	public String viewEmployee(@PathVariable Long id, Model model) {
+		model.addAttribute("staff", staffFacade.findEmployeeById(id));   
+		return "staff/employeeDetails";
+	}
+	
+	@RequestMapping(value = "employee/edit/{id}", method = RequestMethod.GET)
+	public String editEmployee(@PathVariable Long id, Model model) {
+		model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
+		model.addAttribute("staff", staffFacade.findEmployeeById(id));   
+		return "staff/employee";
+	}
+	
+	@RequestMapping(value = "/employee/upload", method = RequestMethod.POST)
+	public ResponseEntity<byte[]> uploadAvatar(
+			MultipartHttpServletRequest request, HttpServletResponse response) {
+
+		String subdomain = dashboardFacade.getAgency().getSubdomain();
+		File base = new File("/app/joocebox-img/" + subdomain + "/avatar");
+
+		Iterator<String> itr = request.getFileNames();
+		MultipartFile mpf = null;
+		ImageUtils imageUtils = new ImageUtils();
+
+		mpf = request.getFile(itr.next());
+		logger.info(mpf.getOriginalFilename() + " uploaded! " + files.size());
+
+		try {
+
+			if (!base.exists()) {
+				base.mkdirs();
+				byte[] resizeImage = imageUtils.resizeImageToJpg(
+						mpf.getBytes(), 150, 150);
+				FileCopyUtils.copy(resizeImage,
+						new FileOutputStream(base+"/"+ mpf.getOriginalFilename()));
+
+			} else {
+				byte[] resizeImage = imageUtils.resizeImageToPng(
+						mpf.getBytes(), 150, 150);
+				FileCopyUtils.copy(resizeImage,
+						new FileOutputStream(base+"/"+ mpf.getOriginalFilename()));
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new ImageController().viewAvatar(base+"/"+mpf.getOriginalFilename());
+	}
+}

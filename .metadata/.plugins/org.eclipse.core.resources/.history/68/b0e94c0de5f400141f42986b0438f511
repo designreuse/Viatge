@@ -1,0 +1,185 @@
+package br.com.joocebox.controller;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.google.gson.Gson;
+
+import br.com.joocebox.model.FileMeta;
+import br.com.joocebox.model.Image;
+import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.service.ImageFacade;
+import br.com.joocebox.utils.JooceBoxProperties;
+
+@Controller
+@Transactional(propagation=Propagation.REQUIRED)
+public class ImageController {
+    final static Logger logger = LoggerFactory.getLogger(ImageController.class);
+	
+    @Autowired
+    private DashboardFacade dashboardFacade;
+    
+    @Autowired
+    private ImageFacade imageFacade;
+    
+	@RequestMapping(value = "/image/avatar/{fileName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewAvatar(@PathVariable String fileName) {
+		
+		InputStream in;
+				
+		try {
+			
+			in = new FileInputStream(new File(pathWithTenant()+"/avatar/"+fileName));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+    
+	@RequestMapping(value = "/image/logo/{pathname}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewLogo(@PathVariable String pathname) {
+		
+		InputStream in;
+				
+		try {
+			
+			in = new FileInputStream(new File(pathWithTenant()+"/logo/"+pathname+".png"));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_PNG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+    
+	@RequestMapping(value = "/image/destination/{destinationName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewDestination(@PathVariable String destinationName) {
+		
+		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+destinationName;
+
+		File imagesFile = new File(pathDestination);
+		File[] listFiles = imagesFile.listFiles();
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(listFiles[0]);
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	@RequestMapping(value = "/image/destination/thubnail/{destinationName}/{id}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewThubnailCRM(@PathVariable String destinationName, @PathVariable Long id) {
+		
+		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+dashboardFacade.getDestinationId(id).getDtName()+'/'+destinationName;
+
+		File imagesFile = new File(pathDestination);
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(imagesFile);
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	@RequestMapping(value = "/image/destinationDetail/{imageId}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewDestinationDetail(@PathVariable Long imageId) {
+		
+		Image image = imageFacade.getImageId(imageId);
+
+		FileMeta loadImageFromJSONGson = loadImageFromJSONGson(image.getJson());
+		
+		new File(loadImageFromJSONGson.getFileTmpPath());
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(new File(loadImageFromJSONGson.getFileTmpPath().replace("original", "resizedImages")));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	
+	public FileMeta loadImageFromJSONGson(String jsonString) {
+	    Gson gson = new Gson();
+	    FileMeta image = gson.fromJson(jsonString, FileMeta.class);
+	    return image;
+	}
+	
+	
+	/**
+	 * Método utilizado para retorndo do caminho de imagens, assim como o caminho corrente do tenant.
+	 *  
+	 * @return String
+	 */
+	public String pathWithTenant(){
+		String tenantName = dashboardFacade.getAgency().getSubdomain();		
+		String absolutePath = new JooceBoxProperties().getPathTenants()+tenantName;		
+		return absolutePath;
+	}
+	
+}

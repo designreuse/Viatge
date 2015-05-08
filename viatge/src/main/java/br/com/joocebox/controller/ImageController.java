@@ -38,6 +38,27 @@ public class ImageController {
     
     @Autowired
     private ImageFacade imageFacade;
+    
+	@RequestMapping(value = "/image/avatar/{id}/{fileName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewAvatar(@PathVariable Long id, @PathVariable String fileName) {
+		
+		InputStream in;
+				
+		try {
+			
+			in = new FileInputStream(new File(pathWithTenant()+"/avatar/"+id+"/"+fileName+".jpg"));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
     
 	@RequestMapping(value = "/image/logo/{pathname}", method = RequestMethod.GET)
@@ -63,6 +84,33 @@ public class ImageController {
     
 	@RequestMapping(value = "/image/destination/{destinationName}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> viewDestination(@PathVariable String destinationName) {
+		
+		String pathDestination = pathWithTenant()+"/destination/highlight/"+destinationName;
+
+		File imagesFile = new File(pathDestination);
+		File[] listFiles = imagesFile.listFiles();
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(listFiles[0]);
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+		
+	}
+	
+	@RequestMapping(value = "/image/destination/thumbnail/{destinationName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewDestinationThubnail(@PathVariable String destinationName) {
 		
 		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+destinationName;
 

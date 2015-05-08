@@ -22,7 +22,6 @@
 		<class>br.com.joocebox.model.History</class>
 		<class>br.com.joocebox.model.Image</class>
 		<class>br.com.joocebox.model.ImageJson</class>
-		<class>br.com.joocebox.model.Login</class>
 		<class>br.com.joocebox.model.Passenger</class>
 		<class>br.com.joocebox.model.ProfessionalData</class>
 		<class>br.com.joocebox.model.ServiceItem</class>

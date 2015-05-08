@@ -52,7 +52,7 @@ public class ProfessionalData implements Serializable{
 		
 	}
 	
-	public ProfessionalData(Long id, Long tenantId, String jobTitle, Role role) {
+	public ProfessionalData(String jobTitle, Role role) {
 		this.jobTitle = jobTitle;
 		this.role = role;
 	}

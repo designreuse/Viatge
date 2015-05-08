@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.joocebox.model.Goals;
 import br.com.joocebox.model.Employee;
+import br.com.joocebox.model.Goals;
+import br.com.joocebox.model.ProfessionalData;
+import br.com.joocebox.model.StaffContact;
 import br.com.joocebox.repositories.StaffRepository;
 
 @Service
@@ -33,6 +35,40 @@ public class StaffFacade {
 	public Employee findEmployeeById(Long id) {
 		return staffRepository.findOne(id);
 		
+	}
+
+
+	public void update(Employee newEmployee, Long id) {
+		Employee oldEmployee = findEmployeeById(id);
+
+		oldEmployee.setFirstName(newEmployee.getFirstName());
+		oldEmployee.setLastName(newEmployee.getLastName());
+		oldEmployee.setBirthDate(newEmployee.getBirthDate());
+		oldEmployee.setGender(newEmployee.getGender());
+		oldEmployee.setAvatar(newEmployee.getAvatar());
+
+		StaffContact staffContact = new StaffContact(newEmployee.getContact()
+				.getEmail(), newEmployee.getContact().getHomePhone(),
+				newEmployee.getContact().getCelPhone(), newEmployee
+						.getContact().getWorkPhone());
+		oldEmployee.setContact(staffContact);
+
+		Goals goal = new Goals(newEmployee.getGoal().getYear(), newEmployee
+				.getGoal().getJanuary(), newEmployee.getGoal().getFebruary(),
+				newEmployee.getGoal().getMarch(), newEmployee.getGoal()
+						.getApril(), newEmployee.getGoal().getMay(),
+				newEmployee.getGoal().getJune(), newEmployee.getGoal()
+						.getJuly(), newEmployee.getGoal().getAugust(),
+				newEmployee.getGoal().getSeptember(), newEmployee.getGoal()
+						.getOctober(), newEmployee.getGoal().getNovember(),
+				newEmployee.getGoal().getDecember());
+		oldEmployee.setGoal(goal);
+		
+		ProfessionalData professionalData = new ProfessionalData(newEmployee.getProfessionalData().getJobTitle(), newEmployee.getProfessionalData().getRole());
+		oldEmployee.setProfessionalData(professionalData);
+
+		save(oldEmployee);
+
 	}
 
 

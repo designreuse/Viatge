@@ -54,13 +54,6 @@ public class FileController{
 	LinkedList<FileMeta> files = new LinkedList<FileMeta>();
     FileMeta fileMeta = null;
     ImageJson pathJson = null;
-    /***************************************************
-     * URL: /file/upload  
-     * upload(): receives files
-     * @param request : MultipartHttpServletRequest auto passed
-     * @param response : HttpServletResponse auto passed
-     * @return Set<Image>
-     ****************************************************/
     
     @RequestMapping(value="/upload", method = RequestMethod.POST)
     @ResponseStatus(value=HttpStatus.OK)
@@ -158,9 +151,8 @@ public class FileController{
 		resizedImageToDelete.delete();
 		File thumbnailImageToDelete = new File(new JooceBoxProperties().getPathThumbnailImage(dashboardFacade.getAgency().getSubdomain())+"/"+destinationName);
 		thumbnailImageToDelete.delete();
-		
-		
-
+		File highlightImageToDelete = new File(new JooceBoxProperties().getPathHighlightImage(dashboardFacade.getAgency().getSubdomain())+"/"+destinationName);
+		highlightImageToDelete.delete();
 	}
 	
 	@RequestMapping(value="/imageDelete/{idImage}/{imageName}", method=RequestMethod.GET)
@@ -196,12 +188,14 @@ public class FileController{
 					File originalImageToDelete = new File(fromJson.getFileTmpPath());
 					File resizedImageToDelete = new File(new JooceBoxProperties().getPathResizedImage(dashboardFacade.getAgency().getSubdomain())+destinationId.getDtName()+"/"+fromJson.getFileName());
 					File thumbnailImageToDelete = new File(new JooceBoxProperties().getPathThumbnailImage(dashboardFacade.getAgency().getSubdomain())+destinationId.getDtName()+"/"+fromJson.getFileName());
-					if (!originalImageToDelete.exists() && !resizedImageToDelete.exists() && !thumbnailImageToDelete.exists()) {
+					File highlightImageToDelete = new File(new JooceBoxProperties().getPathHighlightImage(dashboardFacade.getAgency().getSubdomain())+destinationId.getDtName()+"/"+fromJson.getFileName());
+					if (!originalImageToDelete.exists() && !resizedImageToDelete.exists() && !thumbnailImageToDelete.exists() && !highlightImageToDelete.exists()) {
 						logger.info("Arquivo inexistente!");
 					}else{
 					originalImageToDelete.delete();		
 					resizedImageToDelete.delete();
 					thumbnailImageToDelete.delete();
+					highlightImageToDelete.delete();
 					dashboardFacade.deleteImageId(imagenPathList.getId());
 					}
 				}
@@ -241,10 +235,6 @@ public class FileController{
 		
 	    return jsonObj;
 	}
-	
-	
-	
-
 
 	public Set<Image> imageReplication(Destination destination) {
 		Gson gson = null;
@@ -274,6 +264,7 @@ public class FileController{
 					copyOriginalFilesToServerList.add(copyOriginalFilesToServer);
 					copyThumbnailFilesToServer(subdomain, oldPath, destination.getDtName(), imgTmp.getFileName());
 					copyResizedFilesToServer(subdomain, oldPath, destination.getDtName(), imgTmp.getFileName());
+					copyHighlightFilesToServer(subdomain, oldPath, destination.getDtName(), imgTmp.getFileName());
 					
 				}
 
@@ -335,6 +326,17 @@ public class FileController{
 			FileCopyUtils.copy(resizeDestinationImage(oldPath), new File(new JooceBoxProperties().getPathResizedImage(subdomain)+destinationName+"/"+fileName));		
 	}
 	
+	public void copyHighlightFilesToServer(String subdomain, String oldPath, String destinationName, String fileName) throws FileNotFoundException, IOException{
+		
+		File folder = new File(new JooceBoxProperties().getPathHighlightImage(subdomain)+destinationName);
+		FileUtils.touch(new File(new JooceBoxProperties().getPathHighlightImage(subdomain)+destinationName+"/"+fileName));
+		
+		if (!folder.exists())
+			folder.mkdirs();
+		
+			FileCopyUtils.copy(resizeDestinationImageToHighlight(oldPath), new File(new JooceBoxProperties().getPathHighlightImage(subdomain)+destinationName+"/"+fileName));		
+	}
+	
 	public byte[] resizeDestinationImage(String path) throws FileNotFoundException, IOException {
 		
 		File arq = new File(path);
@@ -342,7 +344,7 @@ public class FileController{
 		
 		ImageUtils imageUtils = new ImageUtils();
 		
-		return imageUtils.resizeImageToJpg(byteArray, 870, 342);
+		return imageUtils.resizeImageToJpg(byteArray, 749, 421);
 }
 
 	public byte[] resizeDestinationImageToThumb(String path) throws FileNotFoundException, IOException {
@@ -352,7 +354,17 @@ public class FileController{
 						
 		ImageUtils imageUtils = new ImageUtils();
 
-		return imageUtils.resizeImageToJpg(byteArray, 270, 160);
+		return imageUtils.resizeImageToJpg(byteArray, 252, 190);
+	}
+	
+	public byte[] resizeDestinationImageToHighlight(String path) throws FileNotFoundException, IOException {
+		
+		File arq = new File(path);
+		byte[] byteArray = IOUtils.toByteArray(FileUtils.openInputStream(arq));
+						
+		ImageUtils imageUtils = new ImageUtils();
+
+		return imageUtils.resizeImageToJpg(byteArray, 500, 250);
 	}
 	
 }
