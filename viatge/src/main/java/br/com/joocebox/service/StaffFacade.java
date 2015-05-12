@@ -1,42 +1,45 @@
 package br.com.joocebox.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Employee;
 import br.com.joocebox.model.Goals;
+import br.com.joocebox.model.Login;
 import br.com.joocebox.model.ProfessionalData;
 import br.com.joocebox.model.StaffContact;
+import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.StaffRepository;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
 public class StaffFacade {
-	
+
 	@Autowired
 	private StaffRepository staffRepository;
-	
-	
+
+	@Autowired
+	private CurrentTenantResolver<Long> tenantResolver;
+
 	public List<Employee> getListOfStaff() {
 		return staffRepository.findAll();
 	}
 
-
 	public Employee save(Employee staff) {
 		return staffRepository.save(staff);
-		
-	}
 
+	}
 
 	public Employee findEmployeeById(Long id) {
 		return staffRepository.findOne(id);
-		
-	}
 
+	}
 
 	public void update(Employee newEmployee, Long id) {
 		Employee oldEmployee = findEmployeeById(id);
@@ -48,9 +51,8 @@ public class StaffFacade {
 		oldEmployee.setAvatar(newEmployee.getAvatar());
 
 		StaffContact staffContact = new StaffContact(newEmployee.getContact()
-				.getEmail(), newEmployee.getContact().getHomePhone(),
-				newEmployee.getContact().getCelPhone(), newEmployee
-						.getContact().getWorkPhone());
+				.getHomePhone(), newEmployee.getContact().getCelPhone(),
+				newEmployee.getContact().getWorkPhone());
 		oldEmployee.setContact(staffContact);
 
 		Goals goal = new Goals(newEmployee.getGoal().getYear(), newEmployee
@@ -63,13 +65,20 @@ public class StaffFacade {
 						.getOctober(), newEmployee.getGoal().getNovember(),
 				newEmployee.getGoal().getDecember());
 		oldEmployee.setGoal(goal);
-		
-		ProfessionalData professionalData = new ProfessionalData(newEmployee.getProfessionalData().getJobTitle(), newEmployee.getProfessionalData().getRole());
+
+		ProfessionalData professionalData = new ProfessionalData(newEmployee
+				.getProfessionalData().getJobTitle(), newEmployee
+				.getProfessionalData().getRole());
 		oldEmployee.setProfessionalData(professionalData);
+		BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();
+		Login login = new Login(newEmployee.getLogin().getEmail(),
+				passEnconder.encode(newEmployee.getLogin().getPassword()),
+				new Date(), newEmployee.getLogin().getRole(), Boolean.TRUE,
+				tenantResolver.getCurrentTenantId());
+		oldEmployee.setLogin(login);
 
 		save(oldEmployee);
 
 	}
-
 
 }

@@ -13,12 +13,13 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import br.com.joocebox.model.Agency;
 import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.service.LoginFacade;
 
 @Transactional(propagation = Propagation.REQUIRED)
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
-    @Autowired
-    private DashboardFacade dashboardFacade;
+	@Autowired 
+	private DashboardFacade dashboardFacade;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -27,9 +28,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         Agency user = (Agency) session.getAttribute("user");
         if(user == null){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            String email = auth.getName();
-            user = dashboardFacade.findByEmail(email);
-            session.setAttribute("user", user);
+            Agency agency = dashboardFacade.getAgency();
+            //String email = auth.getName();
+            //user = dashboardFacade.findByEmail(email);
+            session.setAttribute("user", agency);
         }
 
         return super.preHandle(request, response, handler);

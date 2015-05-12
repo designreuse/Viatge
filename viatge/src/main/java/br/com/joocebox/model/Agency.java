@@ -4,22 +4,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
 
-/**
- * The persistent class for the agency database table.
- * 
- */
 @Entity
-@Table(name="login")
-@NamedQuery(name="Agency.findAll", query="SELECT a FROM Agency a")
+@Table(name="agency")
 public class Agency implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_agency")
-	private Long idAgency;
+	@Column(name="id")
+	private Long id;
 
 	@Column(name="agency_name")
 	private String agencyName;
@@ -45,11 +44,10 @@ public class Agency implements Serializable {
 	@Column(name="subdomain")
 	private String subdomain;
 	
-	@Column(name="email")
-	private String email;
-	
-	@Column(name="password")
-	private String password;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "fk_login")
+	@Valid
+	private Login login;
 	
 	@Column(name="active")
 	private Boolean active;
@@ -57,10 +55,7 @@ public class Agency implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="creation_date")
 	private Date creationDate;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name="role")
-	private Role role;
+
 	
 	@Column(name="site_template")
 	private int siteTemplate;
@@ -68,17 +63,36 @@ public class Agency implements Serializable {
 	public Agency() {
 	}
 	
-	public Long getIdLogin(){
-		return idAgency;
+
+	public Agency(String agencyName, String agencyCNPJ, String agencyPhone,
+			String agencyLogo, String templateColor, String firstName,
+			String lastName, String subdomain, Login login, Boolean active,
+			Date creationDate, int siteTemplate) {
+		this.agencyName = agencyName;
+		this.agencyCNPJ = agencyCNPJ;
+		this.agencyPhone = agencyPhone;
+		this.agencyLogo = agencyLogo;
+		this.templateColor = templateColor;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.subdomain = subdomain;
+		this.login = login;
+		this.active = active;
+		this.creationDate = creationDate;
+		this.siteTemplate = siteTemplate;
+	}
+	
+	public Long getId(){
+		return id;
 	}
 
-	public void setIdLogin(Long idLogin) {
-		this.idAgency = idLogin;
+	public void setId(Long id) {
+		this.id = id;
 	}
 	
 	@Transient
 	public Long getTenantId() {
-		return this.idAgency;
+		return this.id;
 	}
 
 	public String getFirstName() {
@@ -105,28 +119,12 @@ public class Agency implements Serializable {
 		this.subdomain = subdomain;
 	}
 
-	public String getEmail() {
-		return email;
+	public Login getLogin() {
+		return login;
 	}
 
-	public void setEmail(String login) {
-		this.email = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
+	public void setLogin(Login login) {
+		this.login = login;
 	}
 
 	public Boolean getActive() {
@@ -194,7 +192,35 @@ public class Agency implements Serializable {
 	}
 
 	@Override
-	public String toString() {
-		return "ID=" + idAgency + ", Sub-Dominio=" + subdomain;
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		final Agency other = (Agency) obj;
+		return Objects.equal(this.agencyName, other.agencyName)
+				&& Objects.equal(this.agencyCNPJ, other.agencyCNPJ)
+				&& Objects.equal(this.active, other.active)
+				&& Objects.equal(this.agencyPhone, other.agencyPhone)
+				&& Objects.equal(this.firstName, other.firstName)
+				&& Objects.equal(this.subdomain, other.subdomain);
+
+	}
+	
+	@Override
+	public String toString() {
+		return MoreObjects
+				.toStringHelper(Agency.class)
+				.add("id", getId())
+				.add("Nome", getFirstName())
+				.add("Ativo?", getActive() ? "Ativo" : "Desativo")
+				.add("SubDominio", getSubdomain())
+				.toString();
+	}
+
 }

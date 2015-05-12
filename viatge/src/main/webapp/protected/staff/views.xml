@@ -16,4 +16,9 @@
 	<definition extends="default" name="staff/employeeDetails">
 		<put-attribute name="body" value="/protected/staff/employeeDetails.jsp"/>
 	</definition>
+	
+		<!-- Map to goals.jsp view -->
+	<definition extends="default" name="staff/goals">
+		<put-attribute name="body" value="/protected/staff/goals.jsp"/>
+	</definition>
 </tiles-definitions>

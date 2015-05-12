@@ -65,7 +65,7 @@ public class Employee implements Serializable {
 	@NotNull(message = "A data de nascimento não pode estar em branco.")
 	private Date birthDate;
 
-	@Column(name = "gernder")
+	@Column(name = "gender")
 	@NotNull
 	@Pattern(regexp = "^[M|F]{1}$", message = "Selecione o sexo do colaborador.")
 	private String gender;
@@ -74,6 +74,11 @@ public class Employee implements Serializable {
 	@JoinColumn(name = "fk_professionalData")
 	@Valid
 	private ProfessionalData professionalData;
+	
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "fk_login")
+	@Valid
+	private Login login;
 
 	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_goal")
@@ -91,13 +96,14 @@ public class Employee implements Serializable {
 
 	public Employee(String firstName, String lastName, String email,
 			StaffContact contact, Date birthDate, String gender,
-			ProfessionalData professionalData, Goals goal, Boolean active, Boolean avatar) {
+			ProfessionalData professionalData, Login login, Goals goal, Boolean active, Boolean avatar) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.contact = contact;
 		this.birthDate = birthDate;
 		this.gender = gender;
 		this.professionalData = professionalData;
+		this.login = login;
 		this.goal = goal;
 		this.active = active;
 		this.avatar = avatar;
@@ -151,6 +157,14 @@ public class Employee implements Serializable {
 		this.professionalData = professionalData;
 	}
 
+	public Login getLogin() {
+		return login;
+	}
+
+	public void setLogin(Login login) {
+		this.login = login;
+	}
+
 	public Goals getGoal() {
 		return goal;
 	}
@@ -202,6 +216,7 @@ public class Employee implements Serializable {
 				&& Objects.equal(this.contact, other.contact)
 				&& Objects.equal(this.goal, other.goal)
 				&& Objects.equal(this.professionalData, other.professionalData)
+				&& Objects.equal(this.login, other.login)
 				&& Objects.equal(this.active, other.active)
 				&& Objects.equal(this.avatar, other.avatar);
 	}

@@ -21,6 +21,7 @@ import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Destination;
 import br.com.joocebox.model.Image;
 import br.com.joocebox.model.ImageJson;
+import br.com.joocebox.model.Login;
 import br.com.joocebox.model.Role;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.AgencyRepository;
@@ -55,6 +56,9 @@ public class DashboardFacade {
 	
 	@Autowired
 	private CountryRepository countryRepository;
+	
+//	@Autowired
+//	private LoginRepository loginRepository;
 	
 	@Autowired  
 	private DataSource dataSource;
@@ -143,9 +147,9 @@ public class DashboardFacade {
 	//Finish Category
 	
 	//Authentication
-	public Agency findByEmail(String email) {	
-		return agencyRepository.findByEmail(email);
-	}
+//	public Login findByEmail(String email) {	
+//		return loginRepository.findByEmail(email);
+//	}
 	//final
 	
 	public Agency addAgency(Agency agency) {
@@ -178,12 +182,11 @@ public class DashboardFacade {
 			agency.setFirstName("JooceBox");
 			agency.setLastName("Viatge");
 			agency.setSubdomain("www");
-			agency.setEmail("contato@joocebox.com");
-			agency.setPassword("ViaTge");
 			agency.setActive(true);
 			agency.setCreationDate(new Date());
-			agency.setRole(Role.ROLE_ADMIN);
-			
+			Login login = new Login("contato@joocebox.com", "ViaTge", new Date(), Role.ROLE_MASTER, Boolean.TRUE, Long.valueOf(1));
+			agency.setLogin(login);
+
 			agencyRepository.save(agency);
 		}
 	}

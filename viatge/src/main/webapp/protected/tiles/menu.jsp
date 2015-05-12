@@ -39,6 +39,7 @@
                             <a class="tooltip-tip ajax-load" href="#" title="Equipe"><i class="entypo-users"></i><span>Equipe</span></a>
                             <ul>
                                 <li><a class="tooltip-tip2 ajax-load" href="<c:url value="staff"/>" title="Gerenciar Equipe"><i class="entypo-doc-text"></i><span>Gerenciar Equipe</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="goals"/>" title="Gerenciar Equipe"><i class="entypo-doc-text"></i><span>Gerenciar Metas</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Vendas Realizadas"><i class="entypo-newspaper"></i><span>Vendas Realizadas</span></a></li>
                             </ul>
                         </li>

@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.joocebox.model.Agency;
 import br.com.joocebox.model.FileMeta;
+import br.com.joocebox.model.Login;
 import br.com.joocebox.model.Role;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.utils.AjaxMessageReturn;
@@ -43,7 +44,6 @@ public class AgencyController {
 	
 	private ImageUtils imageUtils;
 	private AjaxMessageReturn ajaxMessageReturn; 
-	private JooceBoxProperties properties; 
 	private FileMeta fileMeta;
 	private JsonUtils jsonUtils;
 	
@@ -66,7 +66,7 @@ public class AgencyController {
 	public String addAgency(@ModelAttribute("tenant") Agency agency, Model model) {
 		agency.setActive(true);
 		agency.setCreationDate(new Date());
-		agency.setRole(Role.ROLE_MASTER);
+//		agency.setRole(Role.ROLE_MASTER);
 		agency = dashboardFacade.addAgency(agency);
 		
 		if(agency != null){
@@ -187,8 +187,7 @@ public class AgencyController {
 			populatedAgency.setAgencyPhone(agency.getAgencyPhone());
 			populatedAgency.setFirstName(agency.getFirstName());
 			populatedAgency.setLastName(agency.getLastName());
-			populatedAgency.setEmail(agency.getEmail());
-			populatedAgency.setPassword(agency.getPassword());
+			populatedAgency.setLogin(new Login(agency.getLogin().getEmail(), agency.getLogin().getPassword(), new Date(), Role.ROLE_MASTER, Boolean.TRUE, dashboardFacade.getAgency().getId()));
 			populatedAgency.setTemplateColor(agency.getTemplateColor());
 			populatedAgency.setSiteTemplate(agency.getSiteTemplate());
 			dashboardFacade.updateAgency(populatedAgency);
@@ -205,12 +204,6 @@ public class AgencyController {
 	public void destinationImageReplication() {
 		  String source = "/app/joocebox-img/www/destination";
 		    File srcDir = new File(source);
-
-		    //
-		    // The destination directory to copy to. This directory
-		    // doesn't exists and will be created during the copy
-		    // directory process.
-		    //
 		    String destination = "/app/joocebox-img/"+dashboardFacade.getAgency().getSubdomain()+"/destination";
 		    File destDir = new File(destination);
 
@@ -219,13 +212,6 @@ public class AgencyController {
 		    	if(!destDir.exists()){
 		    		destDir.mkdirs();
 		    	}
-		        //
-		        // Copy source directory into destination directory
-		        // including its child directories and files. When
-		        // the destination directory is not exists it will
-		        // be created. This copy process also preserve the
-		        // date information of the file.
-		        //
 		        FileUtils.copyDirectory(srcDir, destDir);
 		    } catch (IOException e) {
 		        e.printStackTrace();

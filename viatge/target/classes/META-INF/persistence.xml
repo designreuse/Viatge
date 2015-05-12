@@ -32,6 +32,7 @@
 		<class>br.com.joocebox.model.TripProfile</class>
 		<class>br.com.joocebox.model.Video</class>
 		<class>br.com.joocebox.model.WeatherProfile</class>
+		<class>br.com.joocebox.model.Login</class>
 
 
 	    <!-- Mapeamento -->

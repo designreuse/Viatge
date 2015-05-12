@@ -13,9 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import br.com.joocebox.model.Agency;
+import br.com.joocebox.model.Login;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
-import br.com.joocebox.service.DashboardFacade;
 
 @Controller
 @Transactional(propagation = Propagation.REQUIRED)
@@ -23,18 +22,13 @@ public class LoginController {
 
 	final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-	// Injeção de dependências
-	@Autowired
-	private DashboardFacade dashboardFacade;
-
 	@Autowired
 	private CurrentTenantResolver<Long> tenantResolver;
 
 	// Entra no DashBoard do Tenant(Agência)
-	@RequestMapping(value = {"/login"}, method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.DELETE, RequestMethod.PUT })
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String switchRequest(Model model) {
 		if (tenantResolver.isMasterTenant() || tenantResolver.isSubDomainExist()) {
-			//model.addAttribute("tenant", tenant);
 			return "landing/login";
 		}
 		throw new ResourceNotFoundException();
@@ -42,8 +36,8 @@ public class LoginController {
 
 	// Adiona o objeto na tenant do Tipo agencia na view
 	@ModelAttribute("tenant")
-	public Agency getAgencyObject() {
-		return new Agency();
+	public Login getAgencyObject() {
+		return new Login();
 	}
 	
     @ExceptionHandler(ResourceNotFoundException.class)

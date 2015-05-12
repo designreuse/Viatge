@@ -1,5 +1,8 @@
 package br.com.joocebox.controller;
 
+import static br.com.joocebox.utils.FormatObjects.formatStringDateToDateObject;
+import static br.com.joocebox.utils.FormatObjects.formatStringPriceToNumberObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -53,7 +56,6 @@ import br.com.joocebox.service.CustomerServiceFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.ServiceFacade;
 import br.com.joocebox.service.ServiceItemFacade;
-import static br.com.joocebox.utils.FormatObjects.*;
 
 import com.google.common.base.Strings;
 
@@ -628,7 +630,7 @@ public class CustomerController{
 	@RequestMapping(value="/getCustomerAJAX", method=RequestMethod.GET)
 	public @ResponseBody List<Customer> getCustomerAJAX(@RequestParam String paramName){
 		
-		List<Customer> customerByFirstName = customerFacade.getCustomerByFirstName(paramName, dashboardFacade.getAgency().getTenantId());
+		List<Customer> customerByFirstName = customerFacade.getCustomerByFirstName(paramName, dashboardFacade.getAgency().getId());
 		List<Customer> customerList = new ArrayList<Customer>();
 		for (Customer customer : customerByFirstName) {
 			Customer c = new Customer();

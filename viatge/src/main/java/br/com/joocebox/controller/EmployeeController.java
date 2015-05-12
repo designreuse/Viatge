@@ -34,6 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import br.com.joocebox.model.Employee;
 import br.com.joocebox.model.FileMeta;
+import br.com.joocebox.model.Goals;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.StaffFacade;
 import br.com.joocebox.utils.ImageUtils;
@@ -62,6 +63,14 @@ public class EmployeeController{
 	public ModelAndView staffScreen(){
 		ModelAndView mv = new ModelAndView("staff/listOfStaff");
 		mv.addObject("listOfStaff", staffFacade.getListOfStaff());
+		return mv;
+	}
+	
+	@RequestMapping("goals")
+	public ModelAndView goalsScreen(){
+		ModelAndView mv = new ModelAndView("staff/goals");
+		mv.addObject("goal", new Goals());
+		mv.addObject("staff", staffFacade.getListOfStaff());
 		return mv;
 	}
 	
@@ -99,7 +108,7 @@ public class EmployeeController{
 		if (result.hasErrors()) {
 			validForm(result, model);	
 			return new ModelAndView("staff/employee", "staff", staff);
-		}else if(parameter == null){
+		}else if(parameter == null || "".equals(parameter)){
 			staff.setActive(Boolean.TRUE);
 			staffFacade.save(staff);
 			return staffScreen();

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
-import org.hibernate.validator.constraints.Email;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -32,9 +31,6 @@ public class StaffContact implements Serializable{
 	
 	private Long tenantId;
 	
-	@Email(message="Informe um e-mail válido")
-	private String email;
-	
 	private String homePhone;
 	
 	private String celPhone;
@@ -45,22 +41,11 @@ public class StaffContact implements Serializable{
 
 	}
 
-	public StaffContact(String email, String homePhone, String celPhone,
+	public StaffContact(String homePhone, String celPhone,
 			String workPhone) {
-		this.email = email;
 		this.homePhone = homePhone;
 		this.celPhone = celPhone;
 		this.workPhone = workPhone;
-	}
-
-
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getHomePhone() {
@@ -106,7 +91,6 @@ public class StaffContact implements Serializable{
 	        if (getClass() != obj.getClass()) return false;
 	        final StaffContact other = (StaffContact) obj;
 	        return Objects.equal(this.celPhone, other.celPhone)
-	            && Objects.equal(this.email, other.email)
 	            && Objects.equal(this.homePhone, other.homePhone)
 	            && Objects.equal(this.workPhone, other.workPhone);
 	}
@@ -114,7 +98,6 @@ public class StaffContact implements Serializable{
 	@Override
 	public String toString() {
 		return MoreObjects.toStringHelper(ServiceItem.class)
-				.add("E-mail", getEmail())
 				.add("Telefone Celular", getCelPhone()).toString();
 	}
 	

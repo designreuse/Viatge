@@ -36,12 +36,12 @@
 			<a href="#" class="btn btn-primary">Dados</a>&nbsp; &nbsp; <a
 				href="#" class="btn btn-primary">Metas de Vendas</a>
 		</div>
-		<c:url var="saveEmployee" value="/auth/employee/add" ></c:url>
+		<c:url var="saveEmployee" value="/auth/employee/add"></c:url>
 
 		<f:form action="${saveEmployee}" method="post" modelAttribute="staff">
-		
-			<f:hidden id="id" path="id"/>
-			
+
+			<f:hidden id="id" path="id" />
+
 			<div class="col-sm-12">
 
 				<div class="nest text margin-bottom">
@@ -66,57 +66,68 @@
 						<div class="aling-form">
 
 							<div class="box01">
-								<f:input id="employee-firstName" placeholder="Primeiro Nome" type="text"
-								 cssClass="form-control" path="firstName"/>
-							</div>
-
-							<div class="box02">
-								<f:input id="employee-lastName" placeholder="Sobrenome" type="text"
-								 cssClass="form-control" path="lastName"/>
-							</div>
-
-							<div class="box01">
 								<div class="input-group ">
-									<span class="input-group-addon btn-success"><i
-										class="fa fa-phone-square"></i></span> <f:input id="employee-email" type="email"
-										cssClass="form-control" placeholder="E-mail" path="contact.email"/>
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-user"></i>
+									</span>
+									<f:input id="employee-firstName" placeholder="Primeiro Nome"
+										type="text" cssClass="form-control" path="firstName" />
 								</div>
 							</div>
 
 							<div class="box02">
 								<div class="input-group ">
-									<span class="input-group-addon btn-success"><i
-										class="fa fa-phone-square"></i></span> <f:input id="employee-homePhone" type="text"
-										class="form-control" placeholder="Telefone Residencial" path="contact.homePhone"/>
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-user"></i>
+									</span>
+									<f:input id="employee-lastName" placeholder="Sobrenome"
+										type="text" cssClass="form-control" path="lastName" />
 								</div>
 							</div>
 
 							<div class="box01">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"><i
-										class="fa entypo-mobile"></i></span> <f:input id="employee-celPhone" type="text"
-										cssClass="form-control" placeholder="Telefone Celular" path="contact.celPhone"/>
+										class="fa fa-phone-square"></i></span>
+									<f:input id="employee-homePhone" type="text"
+										class="form-control" placeholder="Telefone Residencial"
+										path="contact.homePhone" />
 								</div>
 							</div>
 
 							<div class="box02">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"><i
-										class="fa fa-phone-square"></i></span> <f:input id="employee-workPhone" type="text"
-										cssClass="form-control" placeholder="Telefone comercial" path="contact.workPhone"/>
+										class="fa entypo-mobile"></i></span>
+									<f:input id="employee-celPhone" type="text"
+										cssClass="form-control" placeholder="Telefone Celular"
+										path="contact.celPhone" />
 								</div>
 							</div>
 
 							<div class="box01">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"><i
-										class="fa fa-calendar"></i></span> <f:input id="employee-birthDate" type="date"
-										cssClass="form-control" placeholder="Data de Nascimento" path="birthDate"/>
+										class="fa fa-phone-square"></i></span>
+									<f:input id="employee-workPhone" type="text"
+										cssClass="form-control" placeholder="Telefone comercial"
+										path="contact.workPhone" />
 								</div>
 							</div>
 
 							<div class="box02">
-								<f:select id="employee-gender" cssClass="form-control" path="gender">
+								<div class="input-group ">
+									<span class="input-group-addon btn-success"><i
+										class="fa fa-calendar"></i></span>
+									<f:input id="employee-birthDate" type="text"
+										cssClass="form-control" placeholder="Data de Nascimento"
+										path="birthDate" />
+								</div>
+							</div>
+
+							<div class="box01">
+								<f:select id="employee-gender" cssClass="form-control"
+									path="gender">
 									<option value=''>Sexo</option>
 									<option value='M'>Masculino</option>
 									<option value='F'>Feminino</option>
@@ -146,12 +157,18 @@
 						<div class="aling-form">
 
 							<div class="box01">
-								<f:input id="employee-jobTitle" placeholder="Função" type="text" cssClass="form-control"
-								 path="professionalData.jobTitle"/>
+								<div class="input-group ">
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-cogs"></i>
+									</span>
+									<f:input id="employee-jobTitle" placeholder="Cargo" type="text"
+										cssClass="form-control" path="professionalData.jobTitle" />
+								</div>
 							</div>
 
 							<div class="box02">
-								<f:select id="employee-role" cssClass="form-control" path="professionalData.role">
+								<f:select id="employee-role" cssClass="form-control"
+									path="professionalData.role">
 									<option value="">Permissão de Acesso ao Sistema</option>
 									<c:forEach items="${systemRoles}" var="role">
 										<option value="${role.key}">${role.value}</option>
@@ -161,7 +178,6 @@
 
 						</div>
 
-
 					</div>
 
 				</div>
@@ -170,114 +186,65 @@
 
 					<div class="title-alt">
 						<h6>
-							<a href="#" rel="definicao-metas" class="toggle-box">Definição
-								de Metas</a>
+							<a href="#" rel="dados-acesso" class="toggle-box">Acesso ao
+								sistema</a>
 						</h6>
-						<a href="#" rel="definicao-metas"
+						<a href="#" rel="dados-acesso"
 							class="icon-chevron-down toggle-box"></a>
 					</div>
 
-					<div class="body-nest" id="definicao-metas" style="display: none;">
-						<div class="row-cols">
-							<div class="col-sm-8 margin-bottom">
-								<f:select id="employee-goal-year" cssClass="form-control" style="width: 200px" path="goal.year">
-									<option value="">Ano</option>
-									<option value="2015">2015</option>
-									<option value="2016">2016</option>
-									<option value="2017">2017</option>
-								</f:select>
+					<div class="body-nest" id="dados-acesso" style="display: none;">
+
+
+						<div class="aling-form">
+
+							<div class="box01">
+								<div class="input-group ">
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-envelope"></i>
+									</span>
+									<f:input id="employee-email" type="email"
+										cssClass="form-control" placeholder="E-mail"
+										path="contact.email" />
+								</div>
 							</div>
-	
-							<div class="col-sm-4 txt-right margin-bottom">
-								<button type="button" class="btn btn-info pull-right">Cadastrar</button>
+
+							<div class="box02">
+								<div class="input-group ">
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-key"></i>
+									</span>
+									<f:input id="employee-password" type="password"
+										cssClass="form-control" placeholder="Senha" path="" />
+								</div>
 							</div>
+
+							<div class="box01">
+								<div class="input-group ">
+									<span class="input-group-addon btn-success"> <i
+										class="fa fa-key"></i>
+									</span>
+									<f:input id="employee-password-confirm" type="password"
+										cssClass="form-control" placeholder="Confirmar a senha"
+										path="" />
+								</div>
+							</div>
+
 						</div>
-						
-						<div class="row-cols meses-meta">
-							<div class="col-sm-3">
-								<f:input id="employee-goal-jan" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Janeiro" path="goal.january"/>
-								<br/>
-							</div>
 
-							<div class="col-sm-3">
-								<f:input id="employee-goal-feb" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Fevereiro" path="goal.february"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-mar" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Março" path="goal.march"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-abr" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Abril" path="goal.april"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-maio" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Maio" path="goal.may"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-jun" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Junho" path="goal.june"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-jul" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Julho" path="goal.july"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-ago" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Agosto" path="goal.august"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-set" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Setembro" path="goal.september"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-out" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Outubro" path="goal.october"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-nov" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Novembro" path="goal.november"/>
-								<br/>
-							</div>
-
-							<div class="col-sm-3">
-								<f:input id="employee-goal-dec" data-thousands="." data-decimal=","
-								type="text" cssClass="form-control" placeholder="Dezembro" path="goal.december"/>
-								<br/>
-							</div>
-						</div>
 					</div>
 
 				</div>
 
 				<div class="txt-right">
-					<button type="submit" style="margin-left: 15px;" class="btn btn-info pull-right">Concluir</button>
-					
+					<button type="submit" style="margin-left: 15px;"
+						class="btn btn-info pull-right">Concluir</button>
+
 					<a href="<c:url value="staff"/>" class="btn btn-danger pull-right">
 						<span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Cancelar
 					</a>
-					
-					
+
+
 				</div>
 			</div>
 

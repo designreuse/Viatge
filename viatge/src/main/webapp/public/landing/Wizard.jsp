@@ -139,10 +139,10 @@ $(function() {
                 <input id="lastName" name="lastName" type="text" class="required form-control">
                 
                 <label for="email">Email *</label>
-                <input id="email" name="email" type="text" class="required form-control">
+                <input id="email" name="login.email" type="text" class="required form-control">
                  
                 <label for="password">Senha*</label>
-                <input id="password" name="password" type="password" class="required form-control">
+                <input id="password" name="login.password" type="password" class="required form-control">
 
                 <label for="confirm">Confirme a senha *</label>
                 <input id="confirm" name="confirm" type="password" class="required form-control">
@@ -212,7 +212,19 @@ $(function() {
                         <br />
                         Tema Padrão Joocebox 1
                     </label>
-                    <input id="template1" name="siteTemplate" value="1" type="radio">
+                    <input id="template1" name="siteTemplate" value="1" type="radio" checked>
+                </div>
+
+            </div>
+            
+             <div class="container">               
+                <div style="float: left; width: 120px;">
+                    <label for="template2">                      
+                        <a href="javascript:window.open('http://www.freewebsitetemplates.com/preview/tourismsurfing/index.html','_blank');" target="_blank"><img src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb1.png" width="80" height="80" style="margin-right: 25px;"/></a>
+                        <br />
+                        Tema Padrão Joocebox 2
+                    </label>
+                    <input id="template2" name="siteTemplate" value="2" type="radio">
                 </div>
 
             </div>
