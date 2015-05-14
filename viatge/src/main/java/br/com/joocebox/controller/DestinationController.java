@@ -26,18 +26,17 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.google.gson.Gson;
-
 import br.com.joocebox.model.Category;
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Destination;
 import br.com.joocebox.model.FileMeta;
 import br.com.joocebox.model.Image;
-import br.com.joocebox.model.ImageJson;
 import br.com.joocebox.model.StreetView;
 import br.com.joocebox.model.Video;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.utils.JooceBoxProperties;
+
+import com.google.gson.Gson;
 
 @Controller
 @Transactional(propagation = Propagation.REQUIRED)

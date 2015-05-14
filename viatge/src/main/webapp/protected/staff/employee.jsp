@@ -32,13 +32,10 @@
 <div class="content-wrap margin-bottom width-fixid-fluida">
 	<div class="row-cols novo-atendimento">
 
-		<div class="col-sm-12 margin-bottom ">
-			<a href="#" class="btn btn-primary">Dados</a>&nbsp; &nbsp; <a
-				href="#" class="btn btn-primary">Metas de Vendas</a>
-		</div>
 		<c:url var="saveEmployee" value="/auth/employee/add"></c:url>
 
-		<f:form action="${saveEmployee}" method="post" modelAttribute="staff">
+		<f:form id="employeeForm" action="${saveEmployee}" method="post"
+			modelAttribute="staff">
 
 			<f:hidden id="id" path="id" />
 
@@ -105,17 +102,8 @@
 								</div>
 							</div>
 
-							<div class="box01">
-								<div class="input-group ">
-									<span class="input-group-addon btn-success"><i
-										class="fa fa-phone-square"></i></span>
-									<f:input id="employee-workPhone" type="text"
-										cssClass="form-control" placeholder="Telefone comercial"
-										path="contact.workPhone" />
-								</div>
-							</div>
 
-							<div class="box02">
+							<div class="box01">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"><i
 										class="fa fa-calendar"></i></span>
@@ -125,13 +113,11 @@
 								</div>
 							</div>
 
-							<div class="box01">
-								<f:select id="employee-gender" cssClass="form-control"
-									path="gender">
-									<option value=''>Sexo</option>
-									<option value='M'>Masculino</option>
-									<option value='F'>Feminino</option>
-								</f:select>
+							<div class="box02">					
+								<f:radiobutton id="radio-m" path="gender" value="M"/>
+								<label for="radio-m">Masculino</label>
+								<f:radiobutton id="radio-f" path="gender" value="F"/>
+								<label for="radio-f">Feminino</label>
 							</div>
 
 						</div>
@@ -162,17 +148,14 @@
 										class="fa fa-cogs"></i>
 									</span>
 									<f:input id="employee-jobTitle" placeholder="Cargo" type="text"
-										cssClass="form-control" path="professionalData.jobTitle" />
+										cssClass="form-control" path="jobTitle" />
 								</div>
 							</div>
 
 							<div class="box02">
-								<f:select id="employee-role" cssClass="form-control"
-									path="professionalData.role">
-									<option value="">Permissão de Acesso ao Sistema</option>
-									<c:forEach items="${systemRoles}" var="role">
-										<option value="${role.key}">${role.value}</option>
-									</c:forEach>
+								<f:select id="employee-role" cssClass="form-control" path="login.role">
+									<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
+									<f:options items="${systemRoles}"/>
 								</f:select>
 							</div>
 
@@ -205,28 +188,25 @@
 									</span>
 									<f:input id="employee-email" type="email"
 										cssClass="form-control" placeholder="E-mail"
-										path="contact.email" />
+										path="login.email" />
 								</div>
 							</div>
 
 							<div class="box02">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"> <i
-										class="fa fa-key"></i>
-									</span>
-									<f:input id="employee-password" type="password"
-										cssClass="form-control" placeholder="Senha" path="" />
+                                        class="fa fa-key"></i>
+                                    </span>
+                                    <input id="password" name="login.password" placeholder="Senha" type="password" class="required form-control"/>
 								</div>
 							</div>
 
 							<div class="box01">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"> <i
-										class="fa fa-key"></i>
-									</span>
-									<f:input id="employee-password-confirm" type="password"
-										cssClass="form-control" placeholder="Confirmar a senha"
-										path="" />
+                                        class="fa fa-key"></i>
+                                    </span>
+									<input id="confirm" name="confirm" placeholder="Confirme a Senha" type="password" class="required form-control"/>
 								</div>
 							</div>
 

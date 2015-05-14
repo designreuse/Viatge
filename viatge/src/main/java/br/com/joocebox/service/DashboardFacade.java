@@ -57,9 +57,6 @@ public class DashboardFacade {
 	@Autowired
 	private CountryRepository countryRepository;
 	
-//	@Autowired
-//	private LoginRepository loginRepository;
-	
 	@Autowired  
 	private DataSource dataSource;
 	   
@@ -145,12 +142,6 @@ public class DashboardFacade {
 		categoryRepository.save(categoria);
 	}
 	//Finish Category
-	
-	//Authentication
-//	public Login findByEmail(String email) {	
-//		return loginRepository.findByEmail(email);
-//	}
-	//final
 	
 	public Agency addAgency(Agency agency) {
 		return agencyRepository.save(agency);

@@ -11,27 +11,40 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import br.com.joocebox.model.Agency;
-import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.model.Employee;
+import br.com.joocebox.model.Login;
+import br.com.joocebox.service.EmployeeFacade;
 import br.com.joocebox.service.LoginFacade;
 
 @Transactional(propagation = Propagation.REQUIRED)
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
 	@Autowired 
-	private DashboardFacade dashboardFacade;
+	private LoginFacade loginFacade;
+	
+	@Autowired
+	private EmployeeFacade employeeFacade;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
 
-        Agency user = (Agency) session.getAttribute("user");
+        Login user = (Login) session.getAttribute("user");
+        
         if(user == null){
             Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-            Agency agency = dashboardFacade.getAgency();
-            //String email = auth.getName();
-            //user = dashboardFacade.findByEmail(email);
-            session.setAttribute("user", agency);
+            //Agency agency = dashboardFacade.getAgency();
+            String email = auth.getName();
+            user = loginFacade.findByEmail(email);
+            
+            for(Employee employee : employeeFacade.findAllEmployees()){
+            	System.out.println(employee);
+            	if(user.getId().equals(employee.getLogin().getId())){
+                	System.out.println("*** Entrou no usuario =" + user);
+                    session.setAttribute("employee", employee);
+            	}
+            }
+
         }
 
         return super.preHandle(request, response, handler);

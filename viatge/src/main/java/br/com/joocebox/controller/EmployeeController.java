@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -110,6 +112,12 @@ public class EmployeeController{
 			return new ModelAndView("staff/employee", "staff", staff);
 		}else if(parameter == null || "".equals(parameter)){
 			staff.setActive(Boolean.TRUE);
+			staff.getLogin().setActive(Boolean.TRUE);
+			staff.getLogin().setLastAccess(new Date());
+			staff.getLogin().setTenantId(dashboardFacade.getAgency().getId());
+			
+			BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();
+			staff.getLogin().setPassword(passEnconder.encode(staff.getLogin().getPassword()));
 			staffFacade.save(staff);
 			return staffScreen();
 		}else{
@@ -173,9 +181,10 @@ public class EmployeeController{
 		}
 		
 		Employee findEmployeeById = staffFacade.findEmployeeById(id);
-		findEmployeeById.setAvatar(Boolean.TRUE);
-		staffFacade.update(findEmployeeById, id);
-		
+		if(Boolean.FALSE.equals(findEmployeeById.getAvatar())){
+			findEmployeeById.setAvatar(Boolean.TRUE);
+			staffFacade.update(findEmployeeById, id);
+		}
 		return request.getContextPath()+"/image/avatar/"+id+"/avatar-"+id+".jpg";
 	}
 }

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <script>
 
@@ -104,134 +105,150 @@ $(function() {
 </script>
 
 
-<form id="example-form" method="post" action="./populateAgency?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+<form id="example-form" method="post"
+	action="./populateAgency?${_csrf.parameterName}=${_csrf.token}"
+	enctype="multipart/form-data">
 
-    <div>
-        <h3>DADOS</h3>
+	<div>
+		<h3>DADOS</h3>
 
-        <section>
-            <header>
-                <h1>Preencha os campos abaixo:</h1>
-            </header>
-            
-            <div style="float: left;">
+		<section>
+			<header>
+				<h1>Preencha os campos abaixo:</h1>
+			</header>
 
-                <H2>Dados da Agência</H2>
+			<div style="float: left;">
 
-				<label for="agencyName">Nome Fantasia *</label>
-                 <input id="agencyName" name="agencyName" type="text" class="required form-control">
+				<H2>Dados da Agência</H2>
 
-                <label for="agencyCNPJ">CNPJ *</label>
-                <input id="agencyCNPJ" name="agencyCNPJ" type="text" class="required form-control">
-                
-                <label for="agencyPhone">Telefone*</label>
-                <input id="agencyPhone" name="agencyPhone" type="text" class="required form-control" data-mask="(99) 9999-99999">
-            </div>
+				<label for="agencyName">Nome Fantasia *</label> <input
+					id="agencyName" name="agencyName" type="text"
+					class="required form-control"> <label for="agencyCNPJ">CNPJ
+					*</label> <input id="agencyCNPJ" name="agencyCNPJ" type="text"
+					class="required form-control"> <label for="agencyPhone">Telefone*</label>
+				<input id="agencyPhone" name="agencyPhone" type="text"
+					class="required form-control" data-mask="(99) 9999-99999">
+			</div>
 
 
-            <div style="float: right;">
-                <H2>Dados Pessoais</H2>
-                
-                <label for="firstName">Nome *</label>
-                <input id="firstName" name="firstName" type="text" class="required form-control">
-                
-                <label for="lastName">Sobrenome *</label>
-                <input id="lastName" name="lastName" type="text" class="required form-control">
-                
-                <label for="email">Email *</label>
-                <input id="email" name="login.email" type="text" class="required form-control">
-                 
-                <label for="password">Senha*</label>
-                <input id="password" name="login.password" type="password" class="required form-control">
+			<div style="float: right;">
+				<H2>Dados Pessoais</H2>
 
-                <label for="confirm">Confirme a senha *</label>
-                <input id="confirm" name="confirm" type="password" class="required form-control">
-            </div>
+				<label for="firstName">Nome *</label> <input id="firstName"
+					name="firstName" type="text" class="required form-control">
 
-            <br clear="all" />
+				<label for="lastName">Sobrenome *</label> <input id="lastName"
+					name="lastName" type="text" class="required form-control">
 
-            <p><b>(*) Obrigatórios</b></p>
-        </section>
+				<label for="email">Email *</label> <input id="email"
+					name="login.email" type="text" class="required form-control">
 
-        <h3>LOGOMARCA</h3>
-        
-        <section id="wrapper">
-            <header>
-                <h1>Arraste dentro do quadrado abaixo sua logo:</h1>
-            </header>
-            <div class="col-sm-12">
-                <div class="nest" id="DropZoneClose">
-                    <div class="body-nest" id="DropZone">
-                        <div id="myDropZone" class="dropzone"></div>
+				<label for="password">Senha*</label> <input id="password"
+					name="login.password" type="password" class="required form-control">
 
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <h3>COR</h3>
-        
-        <section id="section-color">
-            <header>
-                <h1>Selecione uma cor a partir da sua logo para defini-la como a cor de seu website:</h1>
-            </header>
-            
+				<label for="confirm">Confirme a senha *</label> <input id="confirm"
+					name="confirm" type="password" class="required form-control">
+			</div>
+
+			<br clear="all" />
+
+			<p>
+				<b>(*) Obrigatórios</b>
+			</p>
+		</section>
+
+		<h3>LOGOMARCA</h3>
+
+		<section id="wrapper">
+			<header>
+				<h1>Arraste dentro do quadrado abaixo sua logo:</h1>
+			</header>
+			<div class="col-sm-12">
+				<div class="nest" id="DropZoneClose">
+					<div class="body-nest" id="DropZone">
+						<div id="myDropZone" class="dropzone"></div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<h3>COR</h3>
+
+		<section id="section-color">
+			<header>
+				<h1>Selecione uma cor a partir da sua logo para defini-la como
+					a cor de seu website:</h1>
+			</header>
+
 			<div id="insertcolor">
-				<input style="float: left;" id="uploadImage" type="file" name="myPhoto" onchange="loadImageFile();"/>
-				<button type="button" id="showImage" onclick="myFunction()" class="btn btn-primary" style="margin-left: 144px;">Mostrar Imagem</button>
+				<input style="float: left;" id="uploadImage" type="file"
+					name="myPhoto" onchange="loadImageFile();" />
+				<button type="button" id="showImage" onclick="myFunction()"
+					class="btn btn-primary" style="margin-left: 144px;">Mostrar
+					Imagem</button>
 			</div>
 
-			<div style="width: 622px; height: 302px; position: relative; background-color: #EEE;">
-				<canvas id="myCanvas" width="470" height="300" style="border: 1px solid #d3d3d3; position: absolute; left: 0; top: 0; z-index: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
-				<canvas id="pixCanvas" width="150" height="150" style="border: 1px solid #d3d3d3; position: absolute; left: 470px; top: 0; z-index: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
-				
-				<div id="barvadiv" style="border: 25px solid #d3d3d3; height: 100px; width: 102px; background-color: #d3d3d3; position: absolute; left: 470px; top: 152px; z-index: 0;"></div>
+			<div
+				style="width: 622px; height: 302px; position: relative; background-color: #EEE;">
+				<canvas id="myCanvas" width="470" height="300"
+					style="border: 1px solid #d3d3d3; position: absolute; left: 0; top: 0; z-index: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
+				<canvas id="pixCanvas" width="150" height="150"
+					style="border: 1px solid #d3d3d3; position: absolute; left: 470px; top: 0; z-index: 0;">Your browser does not support the HTML5 canvas tag.</canvas>
+
+				<div id="barvadiv"
+					style="border: 25px solid #d3d3d3; height: 100px; width: 102px; background-color: #d3d3d3; position: absolute; left: 470px; top: 152px; z-index: 0;"></div>
 			</div>
-			
+
 			<div id="insertcolor" style="width: 612px; font-size: 14px;">
-				<b>O Código da cor selecionada é: </b><input type="text" maxlength="7" id="templateColor" name="templateColor" style="font-size: 20px; width: 100px;" readonly class="form-control"/>
+				<b>O Código da cor selecionada é: </b><input type="text"
+					maxlength="7" id="templateColor" name="templateColor"
+					style="font-size: 20px; width: 100px;" readonly
+					class="form-control" />
 			</div>
-			
+
 			<img id="slika"
 				src="data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%3F%3E%0A%3Csvg%20width%3D%22153%22%20height%3D%22153%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%0A%20%3Cg%3E%0A%20%20%3Ctitle%3ENo%20image%3C/title%3E%0A%20%20%3Crect%20id%3D%22externRect%22%20height%3D%22150%22%20width%3D%22150%22%20y%3D%221.5%22%20x%3D%221.500024%22%20stroke-width%3D%223%22%20stroke%3D%22%23666666%22%20fill%3D%22%23e1e1e1%22/%3E%0A%20%20%3Ctext%20transform%3D%22matrix%286.66667%2C%200%2C%200%2C%206.66667%2C%20-960.5%2C%20-1099.33%29%22%20xml%3Aspace%3D%22preserve%22%20text-anchor%3D%22middle%22%20font-family%3D%22Fantasy%22%20font-size%3D%2214%22%20id%3D%22questionMark%22%20y%3D%22181.249569%22%20x%3D%22155.549819%22%20stroke-width%3D%220%22%20stroke%3D%22%23666666%22%20fill%3D%22%23000000%22%3E%3F%3C/text%3E%0A%20%3C/g%3E%0A%3C/svg%3E"
 				alt="Image preview" style="display: none" />
 
 		</section>
-        
-        <h3>MODELO</h3>
-        
-        <section>
-            <header>
-                <h1>Selecione o modelo de seu website a partir das imagens abaixo:</h1>
-            </header>
-            
-            <div class="container">               
-                <div style="float: left; width: 120px;">
-                    <label for="template1">                      
-                        <a href="javascript:window.open('http://www.freewebsitetemplates.com/preview/tourismsurfing/index.html','_blank');" target="_blank"><img src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb2.png" width="80" height="80" style="margin-right: 25px;"/></a>
-                        <br />
-                        Tema Padrão Joocebox 1
-                    </label>
-                    <input id="template1" name="siteTemplate" value="1" type="radio" checked>
-                </div>
 
-            </div>
-            
-             <div class="container">               
-                <div style="float: left; width: 120px;">
-                    <label for="template2">                      
-                        <a href="javascript:window.open('http://www.freewebsitetemplates.com/preview/tourismsurfing/index.html','_blank');" target="_blank"><img src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb1.png" width="80" height="80" style="margin-right: 25px;"/></a>
-                        <br />
-                        Tema Padrão Joocebox 2
-                    </label>
-                    <input id="template2" name="siteTemplate" value="2" type="radio">
-                </div>
+		<h3>MODELO</h3>
 
-            </div>
-            <p>Você poderá alterar o modelo escolhido depois, assim como ter acesso a mais opções.
-                        
-        </section>
-    </div>
+		<section>
+			<header>
+				<h1>Selecione o modelo de seu website a partir das imagens
+					abaixo:</h1>
+			</header>
+
+			<div class="container">
+				<div style="float: left; width: 120px;">
+					<label for="template1"> <a
+						href="javascript:window.open('http://www.freewebsitetemplates.com/preview/tourismsurfing/index.html','_blank');"
+						target="_blank"><img
+							src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb2.png"
+							width="80" height="80" style="margin-right: 25px;" /></a> <br />
+						Tema Padrão Joocebox 1
+					</label> <input id="template1" name="siteTemplate" value="1" type="radio"
+						checked>
+
+					<div style="float: left; width: 120px;">
+						<label for="template2"> <a
+							href="javascript:window.open('http://www.freewebsitetemplates.com/preview/tourismsurfing/index.html','_blank');"
+							target="_blank"><img
+								src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb1.png"
+								width="80" height="80" style="margin-right: 25px;" /></a> <br />
+							Tema Padrão Joocebox 2
+						</label> <input id="template2" name="siteTemplate" value="2" type="radio">
+					</div>
+				</div>
+
+			</div>
+
+			<p>Você poderá alterar o modelo escolhido depois, assim como ter
+				acesso a mais opções.
+		</section>
+	</div>
 </form>
 
 <script>
@@ -373,23 +390,22 @@ $(function() {
 </script>
 
 <style>
-
 .form-control {
-    background-color: #FFFFFF;
-    background-image: none;
-    border: 1px solid !important;
-    border-radius: 4px;
-    box-shadow: none !important;
-    color: #9EA7B3 !important;
-    font-size: 13px !important;
-    height: 37px !important;
-	padding:0px 10px;
+	background-color: #FFFFFF;
+	background-image: none;
+	border: 1px solid !important;
+	border-radius: 4px;
+	box-shadow: none !important;
+	color: #9EA7B3 !important;
+	font-size: 13px !important;
+	height: 37px !important;
+	padding: 0px 10px;
 }
 
 .form-control:focus {
-    border-color:#45B6B0!important;
-    outline: 0;
-    -webkit-box-shadow: none!important;
-    box-shadow: none!important;
+	border-color: #45B6B0 !important;
+	outline: 0;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
 }
 </style>

@@ -33,8 +33,7 @@
 	<div class="row-cols novo-atendimento">
 
 		<div class="col-sm-12 margin-bottom ">
-			<a href="#" class="btn btn-primary">Dados</a>&nbsp; &nbsp; <a
-				href="#" class="btn btn-primary">Metas de Vendas</a>
+		 <a href="#" class="btn btn-primary">Metas de Vendas</a>
 		</div>
 
 		<div class="col-sm-8">
@@ -75,7 +74,7 @@
 						<span class="entypo-vcard"></span> <strong><c:out value="${staff.firstName} ${staff.lastName}"></c:out></strong>
 					</p>
 					<p>
-						<span class="fontawesome-tags"></span> Função: <c:out value="${staff.professionalData.jobTitle}"></c:out>
+						<span class="fontawesome-tags"></span> Função: <c:out value="${staff.jobTitle}"></c:out>
 					</p>
 					<p>
 						<span class="fontawesome-star"></span> Nascimento: <fmt:formatDate value="${staff.birthDate}"/>
@@ -97,14 +96,21 @@
 						<span class="entypo-mobile"></span> Celular: <c:out value="${staff.contact.celPhone}"></c:out>
 					</p>
 					<p>
-						<span class="fontawesome-briefcase"></span> Comercial: <c:out value="${staff.contact.workPhone}"></c:out>
-					</p>
-					<p>
 						<span class="fontawesome-envelope-alt"></span> <a
-							href="mailto:<c:out value="${staff.contact.email}"></c:out>"><c:out value="${staff.contact.email}"></c:out></a>
+							href="mailto:<c:out value="${staff.login.email}"></c:out>"><c:out value="${staff.login.email}"></c:out></a>
 					</p>
 					<p>
-						<span class="entypo-monitor"></span> Acesso ao Sistema: <c:out value="${staff.professionalData.role.role}"></c:out>
+						<c:choose>
+							<c:when test="${staff.login.role eq 'ROLE_MASTER'}">
+								<span class="entypo-monitor"></span> Acesso ao Sistema: Proprietario(a)
+							</c:when>
+							<c:when test="${staff.login.role eq 'ROLE_USER'}">
+								<span class="entypo-monitor"></span> Acesso ao Sistema: Usúario(a)
+							</c:when>
+							<c:when test="${staff.login.role eq 'ROLE_ADMIN'}">
+								<span class="entypo-monitor"></span> Acesso ao Sistema: Administrador(a)
+							</c:when>
+						</c:choose>						
 					</p>
 				</div>
 

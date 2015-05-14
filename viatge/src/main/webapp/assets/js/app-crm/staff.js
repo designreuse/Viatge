@@ -46,5 +46,18 @@
 			}
 		});
 
+		var form = $("#employeeForm");
+	    form.validate({
+	        errorPlacement: function errorPlacement(error, element) { element.before(error); },
+	        rules: {
+	            confirm: {
+	                equalTo: "#password"
+	            }
+	        },
+	        messages: {
+	        	confirm :" Entre com a mesma Senha!"
+	          }
+	    });
+
 	});
 })(jQuery);

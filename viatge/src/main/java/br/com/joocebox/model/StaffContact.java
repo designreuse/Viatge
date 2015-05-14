@@ -2,6 +2,7 @@ package br.com.joocebox.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,23 +30,20 @@ public class StaffContact implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(name = "tenant_id", insertable = false, updatable = false)
 	private Long tenantId;
 	
 	private String homePhone;
 	
 	private String celPhone;
 	
-	private String workPhone;
-
 	public StaffContact() {
 
 	}
 
-	public StaffContact(String homePhone, String celPhone,
-			String workPhone) {
+	public StaffContact(String homePhone, String celPhone) {
 		this.homePhone = homePhone;
 		this.celPhone = celPhone;
-		this.workPhone = workPhone;
 	}
 
 	public String getHomePhone() {
@@ -64,13 +62,6 @@ public class StaffContact implements Serializable{
 		this.celPhone = celPhone;
 	}
 
-	public String getWorkPhone() {
-		return workPhone;
-	}
-
-	public void setWorkPhone(String workPhone) {
-		this.workPhone = workPhone;
-	}
 
 	public Long getId() {
 		return id;
@@ -91,8 +82,7 @@ public class StaffContact implements Serializable{
 	        if (getClass() != obj.getClass()) return false;
 	        final StaffContact other = (StaffContact) obj;
 	        return Objects.equal(this.celPhone, other.celPhone)
-	            && Objects.equal(this.homePhone, other.homePhone)
-	            && Objects.equal(this.workPhone, other.workPhone);
+	            && Objects.equal(this.homePhone, other.homePhone);
 	}
 
 	@Override

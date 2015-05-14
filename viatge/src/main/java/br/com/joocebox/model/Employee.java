@@ -54,7 +54,7 @@ public class Employee implements Serializable {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_staffContact")
 	@Valid
 	private StaffContact contact;
@@ -70,17 +70,17 @@ public class Employee implements Serializable {
 	@Pattern(regexp = "^[M|F]{1}$", message = "Selecione o sexo do colaborador.")
 	private String gender;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "fk_professionalData")
-	@Valid
-	private ProfessionalData professionalData;
+	@Column(name="job_title")
+	@NotEmpty(message="Informe a função do colaborador.")
+	@NotNull
+	private String jobTitle;
 	
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_login")
 	@Valid
 	private Login login;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_goal")
 	private Goals goal;
 
@@ -96,17 +96,25 @@ public class Employee implements Serializable {
 
 	public Employee(String firstName, String lastName, String email,
 			StaffContact contact, Date birthDate, String gender,
-			ProfessionalData professionalData, Login login, Goals goal, Boolean active, Boolean avatar) {
+			String jobTitle, Login login, Goals goal, Boolean active, Boolean avatar) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.contact = contact;
 		this.birthDate = birthDate;
 		this.gender = gender;
-		this.professionalData = professionalData;
+		this.jobTitle = jobTitle;
 		this.login = login;
 		this.goal = goal;
 		this.active = active;
 		this.avatar = avatar;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -149,12 +157,12 @@ public class Employee implements Serializable {
 		this.gender = gender;
 	}
 
-	public ProfessionalData getProfessionalData() {
-		return professionalData;
+	public String getJobTitle() {
+		return jobTitle;
 	}
 
-	public void setProfessionalData(ProfessionalData professionalData) {
-		this.professionalData = professionalData;
+	public void setJobTitle(String jobTitle) {
+		this.jobTitle = jobTitle;
 	}
 
 	public Login getLogin() {
@@ -189,10 +197,6 @@ public class Employee implements Serializable {
 		this.avatar = avatar;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
 	public Long getTenantId() {
 		return tenantId;
 	}
@@ -215,7 +219,7 @@ public class Employee implements Serializable {
 				&& Objects.equal(this.gender, other.gender)
 				&& Objects.equal(this.contact, other.contact)
 				&& Objects.equal(this.goal, other.goal)
-				&& Objects.equal(this.professionalData, other.professionalData)
+				&& Objects.equal(this.jobTitle, other.jobTitle)
 				&& Objects.equal(this.login, other.login)
 				&& Objects.equal(this.active, other.active)
 				&& Objects.equal(this.avatar, other.avatar);

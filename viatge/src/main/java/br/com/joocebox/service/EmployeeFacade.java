@@ -5,18 +5,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.joocebox.model.Login;
-import br.com.joocebox.repositories.LoginRepository;
+import br.com.joocebox.model.Employee;
+import br.com.joocebox.repositories.EmployeeRepository;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
-public class LoginFacade {
+public class EmployeeFacade {
 	
 	@Autowired
-	private LoginRepository loginRepository;
-	
-	public Login findByEmail(String email) {	
-		return loginRepository.findByEmail(email);
+	private EmployeeRepository employeeRepository;
+
+	public Iterable<Employee> findAllEmployees() {
+		return employeeRepository.findAll();
+		
 	}
 
 }

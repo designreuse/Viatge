@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.common.base.MoreObjects;
@@ -36,7 +37,8 @@ public class Login implements Serializable{
 	private Long tenantId;
 	
 	@Column(name = "email")
-	@Email(message="Informe um e-mail válido")
+	@Email(message="Informe um e-mail válido.")
+	@NotEmpty(message = "O E-mail não pode estar vazio")
 	private String email;
 	
 	@Column(name = "password")
@@ -47,11 +49,10 @@ public class Login implements Serializable{
 	@Column(name="role")
 	private Role role;
 	
-	@Column(name = "last_access")
+	@Column(name = "create_date")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@NotNull(message = "A data de nascimento não pode estar em branco.")
-	private Date lastAccess;
+	private Date createDate;
 	
 	@Column(name="active")
 	private Boolean active;
@@ -59,11 +60,11 @@ public class Login implements Serializable{
 	public Login() {
 
 	}
-
+	
 	public Login(String email, String password, Date lastAccess, Role role, Boolean active, Long tenant_id) {
 		this.email = email;
 		this.password = password;
-		this.lastAccess = lastAccess;
+		this.createDate = lastAccess;
 		this.role = role;
 		this.active = active;
 		this.tenantId = tenant_id;
@@ -110,11 +111,11 @@ public class Login implements Serializable{
 	}
 
 	public Date getLastAccess() {
-		return lastAccess;
+		return createDate;
 	}
 
 	public void setLastAccess(Date lastAccess) {
-		this.lastAccess = lastAccess;
+		this.createDate = lastAccess;
 	}
 	
 	public Boolean getActive() {

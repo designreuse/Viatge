@@ -140,6 +140,9 @@
     
     <!-- Inicio Date Format -->
     <script src="${pageContext.request.contextPath}/resources/js/jquery-dateFormat.min.js" type="text/javascript"></script>
+    
+    <!-- Validação via JS -->
+    <script src="${pageContext.request.contextPath}/resources/js/validate/jquery.validate.js"></script>
 
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>

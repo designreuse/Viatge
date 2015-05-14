@@ -49,7 +49,14 @@
 						<ul style="margin-right:0;" class="nav navbar-nav navbar-right">
                     <li>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" class="admin-pic img-circle" src="https://s3-sa-east-1.amazonaws.com/joocebox-media/static-images/user-128.jpg">Olá, ${user.firstName} <b class="caret"></b>
+                        	<c:choose>
+								<c:when test="${employee.avatar}">
+									<img alt="" class="admin-pic img-circle" src="${pageContext.request.contextPath}/image/avatar/${employee.id}/avatar-${employee.id}.jpg">Olá,&nbsp;&nbsp;${employee.firstName} <b class="caret"></b>
+								</c:when>
+								<c:otherwise>
+									<img alt="" class="admin-pic img-circle" src="https://s3-sa-east-1.amazonaws.com/joocebox-media/static-images/user-128.jpg">Olá,&nbsp;&nbsp;${employee.firstName} <b class="caret"></b>
+								</c:otherwise>	
+							</c:choose>
                         </a>
                         <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
                             <li>
