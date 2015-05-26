@@ -38,10 +38,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
             user = loginFacade.findByEmail(email);
             
             for(Employee employee : employeeFacade.findAllEmployees()){
-            	System.out.println(employee);
             	if(user.getId().equals(employee.getLogin().getId())){
-                	System.out.println("*** Entrou no usuario =" + user);
-                    session.setAttribute("employee", employee);
+                    session.setAttribute("employeeAvatar", employee);
             	}
             }
 

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +15,6 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -37,6 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 import br.com.joocebox.model.Employee;
 import br.com.joocebox.model.FileMeta;
 import br.com.joocebox.model.Goals;
+import br.com.joocebox.model.Role;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.StaffFacade;
 import br.com.joocebox.utils.ImageUtils;
@@ -71,7 +71,7 @@ public class EmployeeController{
 	@RequestMapping("goals")
 	public ModelAndView goalsScreen(){
 		ModelAndView mv = new ModelAndView("staff/goals");
-		mv.addObject("goal", new Goals());
+		mv.addObject("goals", new Goals());
 		mv.addObject("staff", staffFacade.getListOfStaff());
 		return mv;
 	}
@@ -81,7 +81,16 @@ public class EmployeeController{
 		ModelAndView mv = new ModelAndView("staff/employee");
 		mv.addObject("staff", new Employee());
 		mv.addObject("systemRoles", jbUtils.getListOfSytemRoles());
-		mv.addObject("action", "saveEmployee");
+		mv.addObject("showRole", false);
+		return mv;
+	}
+	
+	@RequestMapping(value = "employee/chart/{id}", method = RequestMethod.GET)
+	public ModelAndView chartScreen(@PathVariable Long id){
+		Employee findEmployeeById = staffFacade.findEmployeeById(id);	
+		ModelAndView mv = new ModelAndView("staff/chart");		
+		mv.addObject("yearAmmount", "100");
+		mv.addObject("dataChart", findEmployeeById.getGoal());
 		return mv;
 	}
 	
@@ -97,7 +106,6 @@ public class EmployeeController{
 			String objectName = objectError.getDefaultMessage();
 			error.add(objectName);
 		}
-		model.put("systemRoles", jbUtils.getListOfSytemRoles());
 		model.put("errors", error);
 		model.put("validator", true);
 	}
@@ -108,21 +116,16 @@ public class EmployeeController{
 		String parameter = request.getParameter("id");
         
 		if (result.hasErrors()) {
-			validForm(result, model);	
+			validForm(result, model);
+			model.put("systemRoles", jbUtils.getListOfSytemRoles());
 			return new ModelAndView("staff/employee", "staff", staff);
-		}else if(parameter == null || "".equals(parameter)){
-			staff.setActive(Boolean.TRUE);
-			staff.getLogin().setActive(Boolean.TRUE);
-			staff.getLogin().setLastAccess(new Date());
-			staff.getLogin().setTenantId(dashboardFacade.getAgency().getId());
 			
-			BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();
-			staff.getLogin().setPassword(passEnconder.encode(staff.getLogin().getPassword()));
+		}else if(parameter == null || "".equals(parameter)){
 			staffFacade.save(staff);
-			return staffScreen();
+			return new ModelAndView("redirect:/auth/staff", "listOfStaff", staffFacade.getListOfStaff());
 		}else{
 			staffFacade.update(staff, Long.parseLong(parameter));
-			return staffScreen();
+			return new ModelAndView("redirect:/auth/staff", "listOfStaff", staffFacade.getListOfStaff());
 		}
 
 	}
@@ -135,8 +138,16 @@ public class EmployeeController{
 	
 	@RequestMapping(value = "employee/edit/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model) {
-		model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
-		model.addAttribute("staff", staffFacade.findEmployeeById(id));   
+		Employee findEmployeeById = staffFacade.findEmployeeById(id);		
+		if(Role.ROLE_MASTER.equals(findEmployeeById.getLogin().getRole())){
+			model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
+			model.addAttribute("staff", findEmployeeById);   
+		    model.addAttribute("showRole", false);
+		}else{
+			model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
+			model.addAttribute("staff", findEmployeeById);
+		    model.addAttribute("showRole", true);
+		}
 		return "staff/employee";
 	}
 	
@@ -186,5 +197,25 @@ public class EmployeeController{
 			staffFacade.update(findEmployeeById, id);
 		}
 		return request.getContextPath()+"/image/avatar/"+id+"/avatar-"+id+".jpg";
+	}
+	
+	@RequestMapping(value = "goal/add", method=RequestMethod.POST)
+	public ModelAndView addGoals(@ModelAttribute("employee") @Valid Goals goals, @RequestParam Long employeeID, BindingResult result, ModelMap model){
+		
+		if (result.hasErrors()) {
+			validForm(result, model);
+			model.addAttribute("message", true);
+			return goalsScreen();
+		}else{
+			staffFacade.saveOrUpdateGoal(goals, employeeID);
+			return goalsScreen();
+		}
+		
+	}
+	
+	@RequestMapping(value = "goal/getGoal", method=RequestMethod.GET)
+	public @ResponseBody Goals addGoals(@RequestParam Long empID){
+		Employee findEmployeeById = staffFacade.findEmployeeById(empID);		
+		return findEmployeeById.getGoal();		
 	}
 }

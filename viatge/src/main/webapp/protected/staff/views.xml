@@ -17,8 +17,13 @@
 		<put-attribute name="body" value="/protected/staff/employeeDetails.jsp"/>
 	</definition>
 	
-		<!-- Map to goals.jsp view -->
+	<!-- Map to goals.jsp view -->
 	<definition extends="default" name="staff/goals">
 		<put-attribute name="body" value="/protected/staff/goals.jsp"/>
+	</definition>
+	
+	<!-- Map to goalsChart.jsp view -->
+	<definition extends="default" name="staff/chart">
+		<put-attribute name="body" value="/protected/staff/goalsChart.jsp"/>
 	</definition>
 </tiles-definitions>

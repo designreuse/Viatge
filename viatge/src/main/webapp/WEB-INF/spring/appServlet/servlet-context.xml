@@ -59,7 +59,7 @@
 
     <context:component-scan base-package="br.com.joocebox" />
 
-    <!-- Spring Security -->
+    <!-- Spring Security -->   
     <security:global-method-security secured-annotations="enabled" />
     <security:http auto-config="true" use-expressions="true" >
         <security:intercept-url pattern="/login" access="permitAll" />
@@ -74,6 +74,7 @@
 
     <security:authentication-manager>
         <security:authentication-provider>
+        	<security:password-encoder hash="bcrypt" />
             <security:jdbc-user-service
                 data-source-ref="dataSource"
                 users-by-username-query="select email, password, active from login where email = ?"

@@ -1,5 +1,4 @@
-//Sliding Effect Control
-head.js("/viatge/resources/js/skin-select/jquery.cookie.js");
+
 head.js("/viatge/resources/js/skin-select/skin-select.js");
 
 //Showing Date
@@ -57,59 +56,6 @@ head.js("/viatge/resources/js/search/jquery.quicksearch.js", function() {
 
     $('input#id_search').quicksearch('#menu-showhide li, .menu-left-nest li');
    
-
-});
-//-------------------------------------------------------------
-
-
-
-//EASY PIE CHART
-head.js("/viatge/resources/js/gage/jquery.easypiechart.min.js", function() {
-
-    $(function() {
-
-
-        $('.chart').easyPieChart({
-            easing: 'easeOutBounce',
-            trackColor: '#ffffff',
-            scaleColor: '#ffffff',
-            barColor: '#FF0064',
-            onStep: function(from, to, percent) {
-                $(this.el).find('.percent').text(Math.round(percent));
-            }
-        });
-        var chart = window.chart = $('.chart').data('easyPieChart');
-        $('.js_update').on('click', function() {
-            chart.update(Math.random() * 100);
-        });
-
-        $('.speed-car').easyPieChart({
-            easing: 'easeOutBounce',
-            trackColor: 'rgba(0,0,0,0.3)',
-            scaleColor: 'transparent',
-            barColor: '#0085DF',
-
-            lineWidth: 8,
-            onStep: function(from, to, percent) {
-                $(this.el).find('.percent2').text(Math.round(percent));
-            }
-        });
-        var chart = window.chart = $('.chart2').data('easyPieChart');
-        $('.js_update').on('click', function() {
-            chart.update(Math.random() * 100);
-        });
-        $('.overall').easyPieChart({
-            easing: 'easeOutBounce',
-            trackColor: 'rgba(0,0,0,0.3)',
-            scaleColor: '#323A45',
-            lineWidth: 35,
-            lineCap: 'butt',
-            barColor: '#FFB900',
-            onStep: function(from, to, percent) {
-                $(this.el).find('.percent3').text(Math.round(percent));
-            }
-        });
-    });
 
 });
 //-------------------------------------------------------------
@@ -186,11 +132,6 @@ head.js("/viatge/resources/js/nano/jquery.nanoscroller.js", function() {
 });
 //------------------------------------------------------------- 
 
-
-
-
-
-
 //------------------------------------------------------------- 
 //PAGE LOADER
 head.js("/viatge/resources/js/pace/pace.js", function() {
@@ -208,71 +149,6 @@ head.js("/viatge/resources/js/pace/pace.js", function() {
 
 //------------------------------------------------------------- 
 
-//SPARKLINE CHART
-head.js("/viatge/resources/js/chart/jquery.sparkline.js", function() {
-
-    $(function() {
-        $('.inlinebar').sparkline('html', {
-            type: 'bar',
-            barWidth: '8px',
-            height: '30px',
-            barSpacing: '2px',
-            barColor: '#A8BDCF'
-        });
-        $('.linebar').sparkline('html', {
-            type: 'bar',
-            barWidth: '5px',
-            height: '30px',
-            barSpacing: '2px',
-            barColor: '#44BBC1'
-        });
-        $('.linebar2').sparkline('html', {
-            type: 'bar',
-            barWidth: '5px',
-            height: '30px',
-            barSpacing: '2px',
-            barColor: '#AB6DB0'
-        });
-        $('.linebar3').sparkline('html', {
-            type: 'bar',
-            barWidth: '5px',
-            height: '30px',
-            barSpacing: '2px',
-            barColor: '#19A1F9'
-        });
-    });
-
-    $(function() {
-        var sparklineLogin = function() {
-            $('#sparkline').sparkline(
-                [5, 6, 7, 9, 9, 5, 3, 2, 2, 4, 6, 7], {
-                    type: 'line',
-                    width: '100%',
-                    height: '25',
-                    lineColor: '#ffffff',
-                    fillColor: '#0DB8DF',
-                    lineWidth: 1,
-                    spotColor: '#ffffff',
-                    minSpotColor: '#ffffff',
-                    maxSpotColor: '#ffffff',
-                    highlightSpotColor: '#ffffff',
-                    highlightLineColor: '#ffffff'
-                }
-            );
-        }
-        var sparkResize;
-        $(window).resize(function(e) {
-            clearTimeout(sparkResize);
-            sparkResize = setTimeout(sparklineLogin, 500);
-        });
-        sparklineLogin();
-    });
-
-
-});
-
-//------------------------------------------------------------- 
-
 //DIGITAL CLOCK
 head.js("/viatge/resources/js/clock/jquery.clock.js", function() {
 
@@ -281,36 +157,6 @@ head.js("/viatge/resources/js/clock/jquery.clock.js", function() {
         offset: '-2',
         type: 'digital'
     });
-
-
-});
-
-
-//------------------------------------------------------------- 
-
-head.js("/viatge/resources/js/gage/raphael.2.1.0.min.js", "/viatge/resources/js/gage/justgage.js", function() {
-
-
-
-    var g1;
-    window.onload = function() {
-        var g1 = new JustGage({
-            id: "g1",
-            value: getRandomInt(0, 1000),
-            min: 0,
-            max: 1000,
-            relativeGaugeSize: true,
-            gaugeColor: "rgba(0,0,0,0.4)",
-            levelColors: "#0DB8DF",
-            labelFontColor : "#ffffff",
-            titleFontColor: "#ffffff",
-            valueFontColor :"#ffffff",
-            label: "VISITORS",
-            gaugeWidthScale: 0.2,
-            donut: true
-        });
-    };
-
 
 
 });

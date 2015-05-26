@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -42,7 +41,7 @@ public class Login implements Serializable{
 	private String email;
 	
 	@Column(name = "password")
-	@NotNull(message = "A senha não pode estar em branco.")
+	@NotEmpty(message = "A senha não pode estar em branco.")
 	private String password;
 	
 	@Enumerated(EnumType.STRING)

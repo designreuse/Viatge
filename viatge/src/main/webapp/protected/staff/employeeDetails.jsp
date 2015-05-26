@@ -33,7 +33,7 @@
 	<div class="row-cols novo-atendimento">
 
 		<div class="col-sm-12 margin-bottom ">
-		 <a href="#" class="btn btn-primary">Metas de Vendas</a>
+		 <a href='<c:url value="/auth/employee/chart/${staff.id}"></c:url>' class="btn btn-primary">Metas de Vendas</a>
 		</div>
 
 		<div class="col-sm-8">

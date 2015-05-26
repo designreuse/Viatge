@@ -31,9 +31,13 @@
 
 <div class="content-wrap margin-bottom width-fixid-fluida">
 	<div class="row-cols novo-atendimento">
+	
+		<c:url var="saveGoal" value="/auth/goal/add"></c:url>
 
-		<f:form action="" method="post" modelAttribute="goal">
-
+		<f:form id="goalsForm" method="post" action="${saveGoal}" modelAttribute="goals">
+		
+		<input id="ajax-goal-url" type="hidden" value="${pageContext.request.contextPath}/auth/goal/getGoal"/>
+		
 			<div class="col-sm-12">
 
 				<div class="nest text margin-bottom">
@@ -45,16 +49,16 @@
 						<div class="nest text margin-bottom">
 
 							<div class="row-cols">
-								<div class="col-sm-8 margin-bottom">
-									<f:select id="employee-goal-year" cssClass="form-control"
-										style="width: 200px" path="">
+								<div class="col-sm-12 txt-right margin-bottom">
+									<select id="employee-goal" class="form-control"
+										style="width: 200px" name="employeeID">
 										<option value="">Funcionario</option>
 										<c:forEach items="${staff}" var="s">
-											<f:option value="${s.id}">${s.firstName}</f:option>
+											<option value="${s.id}">${s.firstName}</option>
 										</c:forEach>
-									</f:select>
+									</select>
 								</div>
-
+<!--  
 								<div class="col-sm-4 txt-right margin-bottom">
 									<f:select id="employee-goal-year" cssClass="form-control"
 										style="width: 200px" path="year">
@@ -65,7 +69,7 @@
 									</f:select>
 								</div>
 							</div>
-
+-->
 							<div class="row-cols meses-meta">
 								<div class="col-sm-3">
 									<f:input id="employee-goal-jan" data-thousands="."
@@ -170,7 +174,7 @@
 
 				</div>
 			</div>
-
+</div>
 		</f:form>
 
 	</div>

@@ -50,14 +50,34 @@
 	    form.validate({
 	        errorPlacement: function errorPlacement(error, element) { element.before(error); },
 	        rules: {
-	            confirm: {
+	        	confirm: {
 	                equalTo: "#password"
 	            }
 	        },
 	        messages: {
-	        	confirm :" Entre com a mesma Senha!"
+	        	confirm :"Entre com a mesma Senha!"
 	          }
 	    });
+	    
+	    $('#employee-goal').change(function() {
+	        $.get($('#ajax-goal-url').val(), {empID: $(this).val()}, function(data) {
+	    		$("#employee-goal-jan").val(data.january);
+	    		$('#employee-goal-feb').val(data.february);
+	    		$('#employee-goal-mar').val(data.march);
+	    		$('#employee-goal-abr').val(data.april);
+	    		$('#employee-goal-maio').val(data.may);
+	    		$('#employee-goal-jun').val(data.june);
+	    		$('#employee-goal-jul').val(data.july);
+	    		$('#employee-goal-ago').val(data.august);
+	    		$('#employee-goal-set').val(data.september);
+	    		$('#employee-goal-out').val(data.october);
+	    		$('#employee-goal-nov').val(data.november);
+	    		$('#employee-goal-dec').val(data.december);
+	        }).fail(function() {
+	            alert("Ocorreu um erro, tente novamente mais tarde.");
+	        });
+	    });
 
+	   
 	});
 })(jQuery);

@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Employee;
+import br.com.joocebox.model.Goals;
+import br.com.joocebox.model.Role;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.StaffRepository;
 
@@ -23,13 +25,19 @@ public class StaffFacade {
 	@Autowired
 	private CurrentTenantResolver<Long> tenantResolver;
 
-	// TODO:Incluir uma clausula "where" na colsulta para trazer o tenant
-	// corrente.
 	public List<Employee> getListOfStaff() {
 		return staffRepository.findAll();
 	}
 
 	public Employee save(Employee staff) {
+		staff.setActive(Boolean.TRUE);
+		staff.getLogin().setActive(Boolean.TRUE);
+		staff.getLogin().setLastAccess(new Date());
+		staff.getLogin().setTenantId(tenantResolver.getCurrentTenantId());
+		staff.setGoal(new Goals());
+		
+		BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();
+		staff.getLogin().setPassword(passEnconder.encode(staff.getLogin().getPassword()));
 		return staffRepository.save(staff);
 
 	}
@@ -46,37 +54,44 @@ public class StaffFacade {
 		oldEmployee.setLastName(newEmployee.getLastName());
 		oldEmployee.setBirthDate(newEmployee.getBirthDate());
 		oldEmployee.setGender(newEmployee.getGender());
+		if(Boolean.FALSE.equals(oldEmployee.getAvatar()))
 		oldEmployee.setAvatar(newEmployee.getAvatar());
 		
 		oldEmployee.getContact().setCelPhone(newEmployee.getContact().getCelPhone());
 		oldEmployee.getContact().setHomePhone(newEmployee.getContact().getHomePhone());
 
-		if (newEmployee.getGoal() != null) {
-			oldEmployee.getGoal().setYear(newEmployee.getGoal().getYear());
-			oldEmployee.getGoal().setJanuary(newEmployee.getGoal().getJanuary());
-			oldEmployee.getGoal().setFebruary(newEmployee.getGoal().getFebruary());
-			oldEmployee.getGoal().setMarch(newEmployee.getGoal().getMarch());
-			oldEmployee.getGoal().setApril(newEmployee.getGoal().getApril());
-			oldEmployee.getGoal().setMay(newEmployee.getGoal().getMay());
-			oldEmployee.getGoal().setJune(newEmployee.getGoal().getJune());
-			oldEmployee.getGoal().setJuly(newEmployee.getGoal().getJuly());
-			oldEmployee.getGoal().setAugust(newEmployee.getGoal().getAugust());
-			oldEmployee.getGoal().setSeptember(newEmployee.getGoal().getSeptember());
-			oldEmployee.getGoal().setOctober(newEmployee.getGoal().getOctober());
-			oldEmployee.getGoal().setNovember(newEmployee.getGoal().getNovember());
-			oldEmployee.getGoal().setDecember(newEmployee.getGoal().getDecember());
-		}
-		
 		BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();
+		if(!passEnconder.matches(newEmployee.getLogin().getPassword(), oldEmployee.getLogin().getPassword()))
+		oldEmployee.getLogin().setPassword(passEnconder.encode(newEmployee.getLogin().getPassword()));
 		
-		oldEmployee.getLogin().setActive(newEmployee.getLogin().getActive());
+		//oldEmployee.getLogin().setActive(newEmployee.getLogin().getActive());
 		oldEmployee.getLogin().setEmail(newEmployee.getLogin().getEmail());
 		oldEmployee.getLogin().setLastAccess(new Date());
-		oldEmployee.getLogin().setPassword(passEnconder.encode(newEmployee.getLogin().getPassword()));
+		
+		if(!Role.ROLE_MASTER.equals(oldEmployee.getLogin().getRole()))
 		oldEmployee.getLogin().setRole(newEmployee.getLogin().getRole());
 		oldEmployee.getLogin().setTenantId(tenantResolver.getCurrentTenantId());
 
-		save(oldEmployee);
+		staffRepository.save(oldEmployee);
+
+	}
+	
+	public void saveOrUpdateGoal(Goals goal, Long id) {
+		Employee employee = findEmployeeById(id);
+		Goals g = employee.getGoal();
+		g.setYear("2015");
+		g.setJanuary(goal.getJanuary());
+		g.setFebruary(goal.getFebruary());
+		g.setMarch(goal.getMarch());
+		g.setApril(goal.getApril());
+		g.setMay(goal.getMay());
+		g.setJune(goal.getJune());
+		g.setJuly(goal.getJuly());
+		g.setSeptember(goal.getSeptember());
+		g.setOctober(goal.getOctober());
+		g.setNovember(goal.getNovember());
+		g.setDecember(goal.getDecember());
+		staffRepository.save(employee);
 
 	}
 }

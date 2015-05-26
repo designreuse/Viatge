@@ -146,6 +146,7 @@
 
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>
+    
 
 <script type="text/javascript">
 $(function() {

@@ -121,6 +121,20 @@ public class DashboardFacade {
 
 	}
 	
+	public void callCreateMasterEmployeeProcedure(String firstName, String lastName, Long tenantId) {
+		SimpleJdbcCall simpleJdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("addMasterEmployee");
+		
+		Map<String, Object> inParamMap = new HashMap<String, Object>();
+		inParamMap.put("firstName", firstName);
+		inParamMap.put("lastName", lastName);
+		inParamMap.put("tenantId", tenantId);
+		SqlParameterSource in = new MapSqlParameterSource(inParamMap);
+		simpleJdbcCall.execute(in);
+
+	}
+	
+	
+	
 	//Destination Finish
 	
 	//Category

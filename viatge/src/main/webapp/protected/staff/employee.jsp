@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
 <!-- CONTENT -->
 <!--TITLE -->
 <div class="row">
@@ -115,7 +116,7 @@
 
 							<div class="box02">					
 								<f:radiobutton id="radio-m" path="gender" value="M"/>
-								<label for="radio-m">Masculino</label>
+								<label for="radio-m">Masculino</label>&nbsp;&nbsp;
 								<f:radiobutton id="radio-f" path="gender" value="F"/>
 								<label for="radio-f">Feminino</label>
 							</div>
@@ -124,7 +125,6 @@
 
 					</div>
 				</div>
-
 				<div class="nest text margin-bottom">
 
 					<div class="title-alt">
@@ -139,32 +139,59 @@
 					<div class="body-nest" id="dados-profissionais"
 						style="display: none;">
 
+						<c:choose>
+							<c:when test="${showRole}">
+								<div class="aling-form">
 
-						<div class="aling-form">
+									<div class="box01">
+										<div class="input-group ">
+											<span class="input-group-addon btn-success"> <i
+												class="fa fa-cogs"></i>
+											</span>
+											<f:input id="employee-jobTitle" placeholder="Cargo"
+												type="text" cssClass="form-control" path="jobTitle"
+												readonly="true" />
+										</div>
+									</div>
 
-							<div class="box01">
-								<div class="input-group ">
-									<span class="input-group-addon btn-success"> <i
-										class="fa fa-cogs"></i>
-									</span>
-									<f:input id="employee-jobTitle" placeholder="Cargo" type="text"
-										cssClass="form-control" path="jobTitle" />
+									<div class="box02">
+										<f:select id="employee-role" cssClass="form-control"
+											path="login.role" disabled="true">
+											<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
+											<f:options items="${systemRoles}" />
+										</f:select>
+									</div>
+
 								</div>
-							</div>
+							</c:when>
+							<c:otherwise>
+								<div class="aling-form">
 
-							<div class="box02">
-								<f:select id="employee-role" cssClass="form-control" path="login.role">
-									<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
-									<f:options items="${systemRoles}"/>
-								</f:select>
-							</div>
+									<div class="box01">
+										<div class="input-group ">
+											<span class="input-group-addon btn-success"> <i
+												class="fa fa-cogs"></i>
+											</span>
+											<f:input id="employee-jobTitle" placeholder="Cargo"
+												type="text" cssClass="form-control" path="jobTitle"
+												readonly="false" />
+										</div>
+									</div>
 
-						</div>
+									<div class="box02">
+										<f:select id="employee-role" cssClass="form-control"
+											path="login.role" disabled="false">
+											<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
+											<f:options items="${systemRoles}" />
+										</f:select>
+									</div>
 
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 
 				</div>
-
 				<div class="nest text margin-bottom">
 
 					<div class="title-alt">
@@ -191,22 +218,20 @@
 										path="login.email" />
 								</div>
 							</div>
-
 							<div class="box02">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"> <i
                                         class="fa fa-key"></i>
                                     </span>
-                                    <input id="password" name="login.password" placeholder="Senha" type="password" class="required form-control"/>
+                                    <f:password id="password" path="login.password" placeholder="Senha" cssClass="required form-control"/>
 								</div>
 							</div>
-
 							<div class="box01">
 								<div class="input-group ">
 									<span class="input-group-addon btn-success"> <i
                                         class="fa fa-key"></i>
                                     </span>
-									<input id="confirm" name="confirm" placeholder="Confirme a Senha" type="password" class="required form-control"/>
+									<input id="confirm" name="confirm" type="password" placeholder="Confirme a Senha" class="required form-control"/>
 								</div>
 							</div>
 
@@ -220,10 +245,9 @@
 					<button type="submit" style="margin-left: 15px;"
 						class="btn btn-info pull-right">Concluir</button>
 
-					<a href="<c:url value="staff"/>" class="btn btn-danger pull-right">
+					<a href="<c:url value="/auth/staff"/>" class="btn btn-danger pull-right">
 						<span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Cancelar
 					</a>
-
 
 				</div>
 			</div>
