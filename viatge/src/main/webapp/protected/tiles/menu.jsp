@@ -22,15 +22,15 @@
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Atendimentos"><i class="entypo-vcard"></i><span>Atendimentos</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="service"/>" title="Novo Atendimento"><i class="entypo-doc-text"></i><span>Novo Atendimento</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="serviceList"/>" title="Atendimentos em Aberto"><i class="entypo-doc-text"></i><span>Atendimentos em Aberto</span></a></li>                              
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/service" title="Novo Atendimento"><i class="entypo-doc-text"></i><span>Novo Atendimento</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/serviceList" title="Atendimentos em Aberto"><i class="entypo-doc-text"></i><span>Atendimentos em Aberto</span></a></li>                              
                             </ul>
                         </li>
                         
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Clientes"><i class="entypo-user"></i><span>Clientes</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="#" title="Submenu 01"><i class="entypo-doc-text"></i><span>Submenu 01</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/customer-list" title="Submenu 01"><i class="entypo-doc-text"></i><span>Lista de Clientes</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Submenu 02"><i class="entypo-newspaper"></i><span>Submenu 02</span></a></li>
                             </ul>
                         </li>
@@ -38,16 +38,16 @@
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Equipe"><i class="entypo-users"></i><span>Equipe</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="staff"/>" title="Gerenciar Equipe"><i class="entypo-doc-text"></i><span>Gerenciar Equipe</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="goals"/>" title="Gerenciar Metas"><i class="entypo-doc-text"></i><span>Gerenciar Metas</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/staff" title="Gerenciar Equipe"><i class="entypo-doc-text"></i><span>Gerenciar Equipe</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/goals" title="Gerenciar Metas"><i class="entypo-doc-text"></i><span>Gerenciar Metas</span></a></li>
                             </ul>
                         </li>
                         
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Destinos"><i class="entypo-globe"></i><span>Destinos</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="destination"/>" title="Gerenciamento de Destinos"><i class="entypo-doc-text"></i><span>Gerenciar Destinos</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="<c:url value="category"/>" title="Gerenciamento de Categorias"><i class="entypo-doc-text"></i><span>Gerenciar Categorias</span> </a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/destination>" title="Gerenciamento de Destinos"><i class="entypo-doc-text"></i><span>Gerenciar Destinos</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/category" title="Gerenciamento de Categorias"><i class="entypo-doc-text"></i><span>Gerenciar Categorias</span> </a></li>
                             </ul>
                         </li>
                         
