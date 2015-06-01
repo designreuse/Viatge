@@ -46,7 +46,7 @@
                         <li>
                             <a class="tooltip-tip ajax-load" href="#" title="Destinos"><i class="entypo-globe"></i><span>Destinos</span></a>
                             <ul>
-                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/destination>" title="Gerenciamento de Destinos"><i class="entypo-doc-text"></i><span>Gerenciar Destinos</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/destination" title="Gerenciamento de Destinos"><i class="entypo-doc-text"></i><span>Gerenciar Destinos</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/category" title="Gerenciamento de Categorias"><i class="entypo-doc-text"></i><span>Gerenciar Categorias</span> </a></li>
                             </ul>
                         </li>

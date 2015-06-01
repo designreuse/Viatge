@@ -1,8 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="spring"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!-- CONTENT -->
 <!--TITLE -->
 <div class="row">
@@ -38,7 +38,7 @@
 			</div>
 
 			<div class="col-sm-12">
-				<p>Você possui 380 clientes ativos</p>
+				<p>Você possui  <c:out value="${customerCount}"></c:out> clientes ativos</p>
 			</div>
 
 			<form action="#" method="post" class="form-filtro">
@@ -46,219 +46,46 @@
 					<input class="form-control" id="filter" placeholder="Procurar"
 						type="text" />
 				</div>
-				<div class="col-sm-6 pull-right">
-					<a href="#" class="pull-right btn btn-info filter-api"
-						title="Editar">Enviar E-mail</a>
-				</div>
 			</form>
 
 			<div class="col-sm-12">
-				<table class="table table-border-clientes table-striped cf">
-					<thead>
-						<tr>
-							<th class="border0"></th>
-							<th class="border0"></th>
-							<th class="t-filtro" colspan="6">Filtros de Perfil</th>
-							<th class="border0"></th>
-						</tr>
-						<tr>
-							<th class="vertical-align-center">Nome</th>
-							<th class="vertical-align-center">Sobrenome</th>
-							<th><select class="filter-status form-control">
-									<option value="">Social</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">De Viagem</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">Clima</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">Categoria</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">Econômico</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">Geral</option>
-							</select></th>
-							<th><select class="filter-status form-control">
-									<option value="">Ativo</option>
-							</select></th>
-						</tr>
-					</thead>
-					<tbody>
-						<!-- CONTEUDO DE TABLE -->
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-						<tr>
-							<td>José</td>
-							<td>Silveira</td>
-							<td>Cônjuge</td>
-							<td>Descanso</td>
-							<td>Calor</td>
-							<td>Nacional</td>
-							<td>Intermediário</td>
-							<td>Praia</td>
-							<td><div class="make-switch" data-on="info"
-									data-off="success">
-									<input type="checkbox" checked>
-								</div></td>
-						</tr>
-					</tbody>
-				</table>
+				<c:choose>
+					<c:when test="${!empty customerList}">
+						<table id="footable-res2" class="demo margin-bottom"
+								data-filter="#filter" data-filter-text-only="true">
+							<thead>
+								<tr>
+									<th class="vertical-align-center">Nome</th>
+									<th class="vertical-align-center">Sobrenome</th>
+									<th class="vertical-align-center">E-mail</th>
+									<th class="vertical-align-center">Data de Nascimento</th>
+									<th class="vertical-align-center">Ativo website</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${customerList}" var="c">
+									<tr>
+										<td>${c.firstName}</td>
+										<td>${c.lastName}</td>
+										<td>${c.email}</td>
+										<td><fmt:formatDate value="${c.birthDate}"/></td>
+										<td><div class="make-switch" data-on="info"
+												data-off="success">
+												<input type="checkbox" checked>
+											</div></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
+					</c:when>
+					<c:otherwise>
+						<div class="alert alert-info">
+							<span class="entypo-info-circled"></span> <strong>Hummm!</strong>&nbsp;&nbsp;Parece
+							que você ainda não possui nenhuma cliente cadastrado, adicione
+							por meio do <b>"Novo Atendimento"</b>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 
 		</div>

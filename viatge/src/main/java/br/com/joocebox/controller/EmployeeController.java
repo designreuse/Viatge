@@ -94,11 +94,6 @@ public class EmployeeController{
 		return mv;
 	}
 	
-	/**
-	 * @param result
-	 * @param model
-	 * @param error
-	 */
 	private void validForm(BindingResult result, ModelMap model) {
 		List<String> error = new ArrayList<>();
 		List<ObjectError> allErrors = result.getAllErrors();

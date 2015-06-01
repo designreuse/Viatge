@@ -37,5 +37,9 @@ public class CustomerFacade {
 	public List<Customer> getCustomerByFirstName(String firstName, Long tenant) {
 		return customerRepository.findByfirstNameAndTenantId(firstName, tenant);
 	}
+	
+	public List<Customer> getAllCustomers(){
+		return customerRepository.findAll();
+	}
 
 }
