@@ -58,18 +58,7 @@
 										</c:forEach>
 									</select>
 								</div>
-<!--  
-								<div class="col-sm-4 txt-right margin-bottom">
-									<f:select id="employee-goal-year" cssClass="form-control"
-										style="width: 200px" path="year">
-										<option value="">Ano</option>
-										<option value="2015">2015</option>
-										<option value="2016">2016</option>
-										<option value="2017">2017</option>
-									</f:select>
-								</div>
-							</div>
--->
+
 							<div class="row-cols meses-meta">
 								<div class="col-sm-3">
 									<f:input id="employee-goal-jan" data-thousands="."

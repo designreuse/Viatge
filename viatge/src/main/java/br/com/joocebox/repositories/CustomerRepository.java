@@ -10,5 +10,7 @@ import br.com.joocebox.model.Customer;
 public interface CustomerRepository extends BaseRepository<Customer, Long>{
 	
 	List<Customer> findByfirstNameAndTenantId(String firstName, Long tenantId);
+	
+	List<Customer> findAll();
 
 }

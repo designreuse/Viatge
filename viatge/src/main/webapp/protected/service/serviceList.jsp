@@ -85,7 +85,7 @@
 					<p>RETORNO DE VIAGEM</p>
 					<div class="var-metrica">
 						<span class="entypo-home"></span> 0
-					</div>
+					</div>										
 				</div>
 			</li>
 		</ul>
