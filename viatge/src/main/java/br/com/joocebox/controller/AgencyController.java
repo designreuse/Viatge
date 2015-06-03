@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.Iterator;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -17,7 +18,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.joocebox.model.Agency;
@@ -35,7 +39,10 @@ import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.utils.AjaxMessageReturn;
 import br.com.joocebox.utils.ImageUtils;
 import br.com.joocebox.utils.JooceBoxProperties;
+import br.com.joocebox.utils.JooceBoxUtils;
 import br.com.joocebox.utils.JsonUtils;
+
+import com.google.common.base.Strings;
 
 @Controller
 @Transactional(propagation=Propagation.REQUIRED)
@@ -54,6 +61,11 @@ public class AgencyController {
 	@RequestMapping("/register")
 	public String newRegister(@ModelAttribute("tenant") Agency tenant){
 		return "landing/register";	
+	}
+	
+	@RequestMapping("/register/wizard")
+	public String wizard(@ModelAttribute("agency") Agency agency){
+		return "landing/wizard";	
 	}
 	
 	/**
@@ -91,12 +103,6 @@ public class AgencyController {
 		}
 		
 		return "landing/register";
-	}
-	
-	
-	@RequestMapping("/register/wizard")
-	public String wizard(@ModelAttribute("tenant") Agency tenant){
-		return "landing/wizard";	
 	}
 	
 	/**
@@ -140,6 +146,10 @@ public class AgencyController {
 	                jsonUtils.generateJson(fileMeta);
 	                ajaxMessageReturn.setMessage("OK");
 				} else {
+					 File[] listFiles = base.listFiles();
+					 for (File file : listFiles) {
+						file.delete();
+					}
 	                 FileCopyUtils.copy(mpf.getBytes(), new FileOutputStream(path));
 	                 jsonUtils.generateJson(fileMeta);	      
 				}
@@ -152,7 +162,7 @@ public class AgencyController {
             	   ajaxMessageReturn.setSuccess(true);
             	   
             	   
-            	   String uri = request.getScheme() + "://" +   // "http" + "://
+            	   String uri = request.getScheme() + "://" +   
             	             request.getServerName() +       // "myhost"
             	             ":" +                           // ":"
             	             request.getServerPort() +       // "8080"
@@ -170,7 +180,6 @@ public class AgencyController {
         
         return ajaxMessageReturn;
 	}
-
 	
 	/**
 	 * Ação reponsável pela inserção de dados no cadstro da agência de acordo com o Wizard
@@ -178,32 +187,48 @@ public class AgencyController {
 	 * @return url de redirecionamento para o wizard
 	 */
 	@RequestMapping(value = "/register/populateAgency", method = RequestMethod.POST)
-	public String populateAgencyFromWizard(@ModelAttribute("agencyForm") Agency agency) {
+	public ModelAndView populateAgencyFromWizard(@ModelAttribute("agencyForm") @Valid Agency agency, BindingResult result, ModelMap model) {
 		
-		Agency populatedAgency = dashboardFacade.getAgency();
-		
-		if(populatedAgency != null){
-			populatedAgency.setAgencyName(agency.getAgencyName());
-			populatedAgency.setAgencyCNPJ(agency.getAgencyCNPJ());
-			populatedAgency.setAgencyPhone(agency.getAgencyPhone());
-			populatedAgency.setFirstName(agency.getFirstName());
-			populatedAgency.setLastName(agency.getLastName());
-			BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();	
-			populatedAgency.setLogin(new Login(agency.getLogin().getEmail(), passEnconder.encode(agency.getLogin().getPassword()), new Date(), Role.ROLE_MASTER, Boolean.TRUE, dashboardFacade.getAgency().getId()));
-			populatedAgency.setTemplateColor(agency.getTemplateColor());
-			populatedAgency.setSiteTemplate(agency.getSiteTemplate());
+		if(result.hasErrors() || isExtraFieldsHasErrors(agency, model)){
+			new JooceBoxUtils().validForm(result, model);
+			model.addAttribute("extraFields", true);
+			return new ModelAndView("landing/wizard", "agencyForm", agency);
+		}else{
+			Agency populatedAgency = dashboardFacade.getAgency();
 			
-			dashboardFacade.updateAgency(populatedAgency);
+			if(populatedAgency != null){
+				populatedAgency.setAgencyName(agency.getAgencyName());
+				populatedAgency.setAgencyCNPJ(agency.getAgencyCNPJ());
+				populatedAgency.setAgencyPhone(agency.getAgencyPhone());
+				populatedAgency.setFirstName(agency.getFirstName());
+				populatedAgency.setLastName(agency.getLastName());
+				BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();	
+				populatedAgency.setLogin(new Login(agency.getLogin().getEmail(), passEnconder.encode(agency.getLogin().getPassword()), new Date(), Role.ROLE_MASTER, Boolean.TRUE, dashboardFacade.getAgency().getId()));
+				populatedAgency.setTemplateColor(agency.getTemplateColor());
+				populatedAgency.setSiteTemplate(agency.getSiteTemplate());
 			
-			destinationImageReplication();
+				dashboardFacade.updateAgency(populatedAgency);
+				
+				destinationImageReplication();
+				
+				dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
+				
+				dashboardFacade.callCreateMasterEmployeeProcedure(agency.getFirstName(), agency.getLastName(), dashboardFacade.getAgency().getTenantId());
+			}
 			
-			dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
-			
-			dashboardFacade.callCreateMasterEmployeeProcedure(agency.getFirstName(), agency.getLastName(), dashboardFacade.getAgency().getTenantId());
+			return new ModelAndView("redirect:" + getAgencyFullUrl(populatedAgency));
 		}
-		
-		return "redirect:" + getAgencyFullUrl(populatedAgency);
-		
+	}
+
+	private Boolean isExtraFieldsHasErrors(Agency agency, ModelMap model) {
+		if(Strings.isNullOrEmpty(agency.getAgencyCNPJ()) ||
+				Strings.isNullOrEmpty(agency.getAgencyName()) ||
+				Strings.isNullOrEmpty(agency.getAgencyPhone())||
+				Strings.isNullOrEmpty(agency.getFirstName())||
+				Strings.isNullOrEmpty(agency.getLastName())){
+			return Boolean.TRUE;
+		}
+		return Boolean.FALSE;
 	}
 
 	public void destinationImageReplication() {

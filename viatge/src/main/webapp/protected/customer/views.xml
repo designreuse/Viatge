@@ -6,4 +6,9 @@
 	<definition extends="default" name="customer/customerList">
 		<put-attribute name="body" value="/protected/customer/customerList.jsp" />
 	</definition>
+	
+	<!-- Map to list of customerDetails.jsp view -->
+	<definition extends="default" name="customer/customerDetails">
+		<put-attribute name="body" value="/protected/customer/customerDetails.jsp" />
+	</definition>
 </tiles-definitions>

@@ -65,7 +65,7 @@
 							<tbody>
 								<c:forEach items="${customerList}" var="c">
 									<tr>
-										<td>${c.firstName}</td>
+										<td><a href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}</a></td>
 										<td>${c.lastName}</td>
 										<td>${c.email}</td>
 										<td><fmt:formatDate value="${c.birthDate}"/></td>

@@ -162,7 +162,7 @@ public class DashboardFacade {
 	}
 	
 	public void updateAgency(Agency agency) {
-		agencyRepository.save(agency);
+		agencyRepository.save(agency);		
 	}
 
 	public Agency getAgency() {
