@@ -51,7 +51,7 @@ public class Employee implements Serializable {
 
 	@NotNull
 	@NotEmpty(message = "O Sobrenome não pode estar em branco.")
-	@Column(name = "last_name")
+	@Column(name = "last_name", length=255)
 	private String lastName;
 
 	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

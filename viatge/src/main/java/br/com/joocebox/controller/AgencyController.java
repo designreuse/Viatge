@@ -147,7 +147,7 @@ public class AgencyController {
                Agency populatedAgency = dashboardFacade.getAgency();
                
                if(populatedAgency != null){
-            	   populatedAgency.setAgencyLogo(path);
+            	   populatedAgency.getAgencyConfig().setAgencyLogo(path);
             	   dashboardFacade.updateAgency(populatedAgency);
             	   ajaxMessageReturn.setSuccess(true);
             	   
@@ -179,8 +179,8 @@ public class AgencyController {
 	 */
 	@RequestMapping(value = "/register/populateAgency", method = RequestMethod.POST)
 	public String populateAgencyFromWizard(@ModelAttribute("agencyForm") Agency agency) {
-		
 		Agency populatedAgency = dashboardFacade.getAgency();
+		System.out.println("Agency Dashboard " + populatedAgency + " - " + populatedAgency.getAgencyName());
 		
 		if(populatedAgency != null){
 			populatedAgency.setAgencyName(agency.getAgencyName());
@@ -190,14 +190,19 @@ public class AgencyController {
 			populatedAgency.setLastName(agency.getLastName());
 			BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();	
 			populatedAgency.setLogin(new Login(agency.getLogin().getEmail(), passEnconder.encode(agency.getLogin().getPassword()), new Date(), Role.ROLE_MASTER, Boolean.TRUE, dashboardFacade.getAgency().getId()));
-			populatedAgency.setTemplateColor(agency.getTemplateColor());
-			populatedAgency.setSiteTemplate(agency.getSiteTemplate());
-			
+
+			System.out.println("ANTES DE UPDATE AGENCY");
+//			populatedAgency.setAgencyConfig(agency.getAgencyConfig());
+			System.out.println("Coisa " + populatedAgency.getAgencyConfig());
+			populatedAgency.getAgencyConfig().setAgencyLogo(agency.getAgencyConfig().getAgencyLogo());
+			populatedAgency.getAgencyConfig().setSiteTemplate(agency.getAgencyConfig().getSiteTemplate());
+			populatedAgency.getAgencyConfig().setTemplateColor(agency.getAgencyConfig().getTemplateColor());
 			dashboardFacade.updateAgency(populatedAgency);
+			System.out.println("DEPOIS QUE UPDATE AGENCY");
 			
-			destinationImageReplication();
-			
-			dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
+//			destinationImageReplication();
+//			
+//			dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
 			
 			dashboardFacade.callCreateMasterEmployeeProcedure(agency.getFirstName(), agency.getLastName(), dashboardFacade.getAgency().getTenantId());
 		}
