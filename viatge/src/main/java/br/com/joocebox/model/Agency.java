@@ -29,6 +29,12 @@ public class Agency implements Serializable {
 	@Column(name="agency_phone")
 	private String agencyPhone;
 	
+	@Column(name="agency_logo")
+	private String agencyLogo;
+	
+	@Column(name="template_color")
+	private String templateColor;
+	
 	@Column(name="first_name")
 	private String firstName;
 
@@ -49,13 +55,12 @@ public class Agency implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="creation_date")
 	private Date creationDate;
+
 	
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE})
-	@JoinColumn(name = "fk_agency_config")
-	private AgencyConfig agencyConfig;
+	@Column(name="site_template")
+	private int siteTemplate;
 
 	public Agency() {
-		this.setAgencyConfig(new AgencyConfig());
 	}
 	
 
@@ -66,16 +71,15 @@ public class Agency implements Serializable {
 		this.agencyName = agencyName;
 		this.agencyCNPJ = agencyCNPJ;
 		this.agencyPhone = agencyPhone;
-		this.setAgencyConfig(new AgencyConfig());
-		this.getAgencyConfig().setAgencyLogo(agencyLogo);
-		this.getAgencyConfig().setSiteTemplate(siteTemplate);
-		this.getAgencyConfig().setTemplateColor(templateColor);
+		this.agencyLogo = agencyLogo;
+		this.templateColor = templateColor;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.subdomain = subdomain;
 		this.login = login;
 		this.active = active;
 		this.creationDate = creationDate;
+		this.siteTemplate = siteTemplate;
 	}
 	
 	public Long getId(){
@@ -163,15 +167,30 @@ public class Agency implements Serializable {
 		this.agencyPhone = agencyPhone;
 	}
 
-	public AgencyConfig getAgencyConfig() {
-		return agencyConfig;
+	public String getAgencyLogo() {
+		return agencyLogo;
 	}
 
-
-	public void setAgencyConfig(AgencyConfig agencyConfig) {
-		this.agencyConfig = agencyConfig;
+	public void setAgencyLogo(String agencyLogo) {
+		this.agencyLogo = agencyLogo;
 	}
 	
+	public String getTemplateColor() {
+		return templateColor;
+	}
+
+	public void setTemplateColor(String templateColor) {
+		this.templateColor = templateColor;
+	}
+
+	public int getSiteTemplate() {
+		return siteTemplate;
+	}
+
+	public void setSiteTemplate(int siteTemplate) {
+		this.siteTemplate = siteTemplate;
+	}
+
 	@Override
 	public int hashCode() {
 		return Hashing.sha1().hashCode();
@@ -203,4 +222,5 @@ public class Agency implements Serializable {
 				.add("SubDominio", getSubdomain())
 				.toString();
 	}
+
 }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
@@ -48,7 +49,9 @@ public class Customer implements Serializable {
 	private String firstName;
 
 	@Column(name = "gender")
-	private char gender;
+	@NotNull
+	@Pattern(regexp = "^[M|F]{1}$", message = "Selecione o sexo do colaborador.")
+	private String gender;
 
 	@Column(name = "last_name")
 	private String lastName;
@@ -119,11 +122,11 @@ public class Customer implements Serializable {
 		this.firstName = firstName;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 

@@ -202,7 +202,7 @@ $(function() {
 
 			<div id="insertcolor" style="width: 612px; font-size: 14px;">
 				<b>O Código da cor selecionada é: </b><input type="text"
-					maxlength="7" id="templateColor" name="updateAgency.templateColor"
+					maxlength="7" id="templateColor" name="templateColor"
 					style="font-size: 20px; width: 100px;" readonly
 					class="form-control" />
 			</div>

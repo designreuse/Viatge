@@ -3,10 +3,8 @@ package br.com.joocebox.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +20,6 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -93,17 +90,7 @@ public class EmployeeController{
 		mv.addObject("dataChart", findEmployeeById.getGoal());
 		return mv;
 	}
-	
-	private void validForm(BindingResult result, ModelMap model) {
-		List<String> error = new ArrayList<>();
-		List<ObjectError> allErrors = result.getAllErrors();
-		for (ObjectError objectError : allErrors) {
-			String objectName = objectError.getDefaultMessage();
-			error.add(objectName);
-		}
-		model.put("errors", error);
-		model.put("validator", true);
-	}
+
 	
 	@RequestMapping(value = "/employee/add", method ={RequestMethod.POST, RequestMethod.PUT})
 	public ModelAndView saveEmployee(@ModelAttribute("staff") @Valid Employee staff, BindingResult result, ModelMap model, HttpServletRequest request) {
@@ -111,7 +98,7 @@ public class EmployeeController{
 		String parameter = request.getParameter("id");
         
 		if (result.hasErrors()) {
-			validForm(result, model);
+			new JooceBoxUtils().validForm(result, model);
 			model.put("systemRoles", jbUtils.getListOfSytemRoles());
 			return new ModelAndView("staff/employee", "staff", staff);
 			
@@ -198,7 +185,7 @@ public class EmployeeController{
 	public ModelAndView addGoals(@ModelAttribute("employee") @Valid Goals goals, @RequestParam Long employeeID, BindingResult result, ModelMap model){
 		
 		if (result.hasErrors()) {
-			validForm(result, model);
+			new JooceBoxUtils().validForm(result, model);
 			model.addAttribute("message", true);
 			return goalsScreen();
 		}else{

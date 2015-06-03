@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
@@ -72,7 +74,7 @@
     <section id="contato" class="">
    		<div class="text-heading">
             <p style="color: #2796FF; font-size: 36px;">
-            	Seu JooceBox já está quase pronto para ser utilizado. 
+            	Seu joocebox já está quase pronto para ser utilizado!
             </p>
             
             <br />
