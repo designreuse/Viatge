@@ -41,5 +41,10 @@
 	<definition extends="default_tp_02" name="site/aboutUs02">
 		<put-attribute name="body" value="/site/template/tp_02/aboutUs.jsp"/>
 	</definition>
+	
+	<!-- Mapeamento para a pagina de artigo do blog -->
+	<definition extends="default_tp_02" name="site/post02">
+		<put-attribute name="body" value="/site/template/tp_02/post.jsp"/>
+	</definition>
 
 </tiles-definitions>

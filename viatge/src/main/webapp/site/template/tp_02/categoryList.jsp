@@ -16,7 +16,7 @@
                 		<figure>
                 			<a href="${pageContext.request.contextPath}/destinationDetail/${listOfDestinationByCategory.idDestination}">
                 				<!-- IMAGEM 252PX POR 190PX -->
-                				<img src="${pageContext.request.contextPath}/image/destination/${listOfDestinationByCategory.dtName}" alt="nome do pacote">
+                				<img src="${pageContext.request.contextPath}/image/destination/thumbnail/${listOfDestinationByCategory.dtName}" alt="nome do pacote">
                 			</a>
                 		</figure> 
                     	<div class="info">

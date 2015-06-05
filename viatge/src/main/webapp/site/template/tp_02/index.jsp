@@ -91,11 +91,11 @@
 						<div class="info">
 
 							<h2>
-								<a href="destino.php"><c:out
+								<a href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}"><c:out
 										value="${destinationHighlight.dtName}" /></a>
 							</h2>
 							<p class="pais">
-								<a href="destino.php">${destinationHighlight.country.countryName}</a>
+								<a href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}">${destinationHighlight.country.countryName}</a>
 							</p>
 
 							<ul>
@@ -121,9 +121,7 @@
 		</div>
 
 	</article>
-
-
-
+	
 	<article class="pacotes">
 
 		<div class="container">

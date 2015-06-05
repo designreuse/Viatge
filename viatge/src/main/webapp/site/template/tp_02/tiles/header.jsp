@@ -6,7 +6,7 @@
 <header class="bg-thema">
 	<div class="center">
 		<h1 class="ocultar"><c:out value="${tenant.agencyName}"/></h1>
-        <a href="<c:out value="${pageContext.request.contextPath}/site"/>" class="logo"><img src="${pageContext.request.contextPath}/image/logo/${tenant.agencyLogo}" width="190" height="100" alt=<c:out value="${tenant.agencyName}"/>></a>
+        <a href="<c:out value="${pageContext.request.contextPath}/site"/>" class="logo"><img src="${pageContext.request.contextPath}/image/logo/${tenant.agencyConfig.agencyLogo}" width="190" height="100" alt=<c:out value="${tenant.agencyName}"/>></a>
         
         <nav>
         	<div class="phone"><i></i> <span class="txt-thema"><c:out value="${tenant.agencyPhone}"/></span></div>

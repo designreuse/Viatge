@@ -140,6 +140,13 @@ public class SiteController {
 		return "site/blog02";
 	}
 	
+	@RequestMapping("/blog/post")
+	public String getPostPage(){
+		//TODO: Implementar as atributos para a view
+		
+		return "site/post02";
+	}
+	
 	@RequestMapping("/about-us")
 	public String getAboutUsPage(){
 		//TODO: Implementar as atributos para a view
