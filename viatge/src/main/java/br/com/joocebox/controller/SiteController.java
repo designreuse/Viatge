@@ -48,10 +48,10 @@ public class SiteController {
 		}
 
 		Agency agency = dashboardFacade.getAgency();
-		String agencyLogo = agency.getAgencyLogo();
+		String agencyLogo = agency.getAgencyConfig().getAgencyLogo();
 		
 		String fileName = agencyLogo.replace("/app/joocebox-img/"+agency.getSubdomain()+"/logo/", "");
-		agency.setAgencyLogo(fileName);
+		agency.getAgencyConfig().setAgencyLogo(fileName);
 		//model.addAttribute("tenant", agency);
 		getAllCategories(model);
 		getDestinationsForWebSite(model);
@@ -59,7 +59,7 @@ public class SiteController {
 		logger.info("Buscando agência e adicionando seus atributos");
 		
 		
-		if (agency.getSiteTemplate() == 1) {
+		if (agency.getAgencyConfig().getSiteTemplate() == 1) {
 			return "site/index";
 		} else {
 			return "site/index02";
@@ -104,7 +104,7 @@ public class SiteController {
 		model.addAttribute("destinationDetail",dashboardFacade.getDestinationId(destinationId));
 		model.addAttribute("agencyDetail", agency);
 		
-		if(agency.getSiteTemplate() == 1){
+		if(agency.getAgencyConfig().getSiteTemplate() == 1){
 			return "site/destinationDetail";
 		}else{
 			return "site/destinationDetail02";
@@ -119,7 +119,7 @@ public class SiteController {
 		Category categoryId = dashboardFacade.getCategoryId(id);
 		model.addAttribute("listOfDestinationByCategory", categoryId.getDestination());
 		
-		if(agency.getSiteTemplate() == 1){
+		if(agency.getAgencyConfig().getSiteTemplate() == 1){
 			return "site/categoryList";
 		}else{
 			return "site/categoryList02";
@@ -164,7 +164,7 @@ public class SiteController {
 	@RequestMapping("/templateColorCodHex")
 	@ResponseBody
 	public String getCodHex(){
-		return dashboardFacade.getAgency().getTemplateColor();
+		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
 	}
 
 }

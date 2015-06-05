@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Map to list of templateList.jsp view -->
+	<definition extends="default" name="website/templateList">
+		<put-attribute name="body" value="/protected/website/templateList.jsp" />
+	</definition>
+
+	<!-- Map to selected template of templateSelected.jsp view -->
+	<definition extends="default" name="website/templateSelected">
+		<put-attribute name="body" value="/protected/website/templateSelected.jsp" />
+	</definition>
+</tiles-definitions>

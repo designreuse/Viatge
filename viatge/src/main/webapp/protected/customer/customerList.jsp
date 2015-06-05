@@ -66,6 +66,10 @@
 								<c:forEach items="${customerList}" var="c">
 									<tr>
 										<td><a href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}</a></td>
+<<<<<<< HEAD
+=======
+										<td>${c.firstName}</td>
+>>>>>>> branch 'master' of https://github.com/JooceBox/Viatge.git
 										<td>${c.lastName}</td>
 										<td>${c.email}</td>
 										<td><fmt:formatDate value="${c.birthDate}"/></td>
