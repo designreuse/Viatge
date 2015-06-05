@@ -202,7 +202,7 @@ $(function() {
 
 			<div id="insertcolor" style="width: 612px; font-size: 14px;">
 				<b>O Código da cor selecionada é: </b><input type="text"
-					maxlength="7" id="templateColor" name="templateColor"
+					maxlength="7" id="templateColor" name="agencyConfig.templateColor"
 					style="font-size: 20px; width: 100px;" readonly
 					class="form-control" />
 			</div>
@@ -229,7 +229,7 @@ $(function() {
 							src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb2.png"
 							width="80" height="80" style="margin-right: 25px;" /></a> <br />
 						Tema Padrão Joocebox 1
-					</label> <input id="template1" name="siteTemplate" value="1" type="radio"
+					</label> <input id="template1" name="agencyConfig.siteTemplate" value="1" type="radio"
 						checked>
 
 					<div style="float: left; width: 120px;">
@@ -239,7 +239,7 @@ $(function() {
 								src="${pageContext.request.contextPath}/resources/templates/thumbs/thumb1.png"
 								width="80" height="80" style="margin-right: 25px;" /></a> <br />
 							Tema Padrão Joocebox 2
-						</label> <input id="template2" name="siteTemplate" value="2" type="radio">
+						</label> <input id="template2" name="agencyConfig.siteTemplate" value="2" type="radio">
 					</div>
 				</div>
 

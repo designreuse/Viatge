@@ -77,6 +77,7 @@ public class AgencyController {
 
 	@RequestMapping(value = "/addAgency", method = RequestMethod.POST)
 	public String addAgency(@ModelAttribute("tenant") Agency agency, Model model) {
+		System.out.println("entrou add agency");
 		agency.setActive(true);
 		agency.setCreationDate(new Date());
 //		agency.setRole(Role.ROLE_MASTER);
@@ -157,7 +158,7 @@ public class AgencyController {
                Agency populatedAgency = dashboardFacade.getAgency();
                
                if(populatedAgency != null){
-            	   populatedAgency.setAgencyLogo(path);
+            	   populatedAgency.getAgencyConfig().setAgencyLogo(path);
             	   dashboardFacade.updateAgency(populatedAgency);
             	   ajaxMessageReturn.setSuccess(true);
             	   
@@ -204,8 +205,8 @@ public class AgencyController {
 				populatedAgency.setLastName(agency.getLastName());
 				BCryptPasswordEncoder passEnconder = new BCryptPasswordEncoder();	
 				populatedAgency.setLogin(new Login(agency.getLogin().getEmail(), passEnconder.encode(agency.getLogin().getPassword()), new Date(), Role.ROLE_MASTER, Boolean.TRUE, dashboardFacade.getAgency().getId()));
-				populatedAgency.setTemplateColor(agency.getTemplateColor());
-				populatedAgency.setSiteTemplate(agency.getSiteTemplate());
+				populatedAgency.getAgencyConfig().setTemplateColor(agency.getAgencyConfig().getTemplateColor());
+				populatedAgency.getAgencyConfig().setSiteTemplate(agency.getAgencyConfig().getSiteTemplate());
 			
 				dashboardFacade.updateAgency(populatedAgency);
 				
@@ -316,4 +317,5 @@ public class AgencyController {
 		redirectAttributes.addFlashAttribute("MasterAgencyCreate", "Dados Master criados com sucesso");
 		return "redirect:/login";
 	}
+
 }
