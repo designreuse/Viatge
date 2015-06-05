@@ -64,7 +64,7 @@ public class Customer implements Serializable {
 	@JoinColumn(name = "fk_customerPhone")
 	private CustomerPhone customerPhone;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
 	@JoinColumn(name = "fk_customer")
 	private Set<Passenger> passenger;
 

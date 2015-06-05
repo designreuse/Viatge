@@ -85,7 +85,7 @@ public class ImageController {
 	@RequestMapping(value = "/image/destination/{destinationName}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> viewDestination(@PathVariable String destinationName) {
 		
-		String pathDestination = pathWithTenant()+"/destination/highlight/"+destinationName;
+		String pathDestination = pathWithTenant()+"/destination/highlightImages/"+destinationName;
 
 		File imagesFile = new File(pathDestination);
 		File[] listFiles = imagesFile.listFiles();

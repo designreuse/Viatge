@@ -11,6 +11,10 @@ import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 
 /**
  * The persistent class for the passenger database table.
@@ -152,6 +156,27 @@ public class Passenger implements Serializable {
 	public void setDocumentPassenger(DocumentPassenger documentPassenger) {
 		this.documentPassenger = documentPassenger;
 	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final Passenger other = (Passenger) obj;
+	        return Objects.equal(this.lastName, other.lastName)
+	            && Objects.equal(this.email, other.email)
+	            && Objects.equal(this.firstName, other.firstName)
+	            && Objects.equal(this.mainTel, other.mainTel);
+	}
 
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(Passenger.class)
+				.add("Nome do passageiro", getFirstName())
+				.add("Email", getEmail()).toString();
+	}
 }

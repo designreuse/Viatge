@@ -6,7 +6,7 @@
 <header class="bg-thema">
 	<div class="center">
 		<h1 class="ocultar"><c:out value="${tenant.agencyName}"/></h1>
-        <a href="<c:out value="${pageContext.request.contextPath}/site"/>" class="logo"><img src="${pageContext.request.contextPath}/image/logo/${tenant.agencyLogo}" width="190" height="100" alt="Nome da Empresa"></a>
+        <a href="<c:out value="${pageContext.request.contextPath}/site"/>" class="logo"><img src="${pageContext.request.contextPath}/image/logo/${tenant.agencyLogo}" width="190" height="100" alt=<c:out value="${tenant.agencyName}"/>></a>
         
         <nav>
         	<div class="phone"><i></i> <span class="txt-thema"><c:out value="${tenant.agencyPhone}"/></span></div>
@@ -31,15 +31,15 @@
                 	<ul>
 					<c:forEach var="category" items="${categoryList}">
 						<li>
-							<a href="${pageContext.request.contextPath}/categoryList/${category.idCategory}">${category.ctName}</a>
+							<a href="${pageContext.request.contextPath}/category-list/${category.idCategory}">${category.ctName}</a>
 						</li>
 					</c:forEach>
                     </ul>
                 </li>
-				<li><a href="${pageContext.request.contextPath}/perfectTravel">VIAGEM PERFEITA</a></li>
+				<li><a href="${pageContext.request.contextPath}/perfect-travel">VIAGEM PERFEITA</a></li>
                 <li><a href="${pageContext.request.contextPath}/blog">BLOG</a></li>
-                <li><a href="${pageContext.request.contextPath}/onlineShop">COMPRE ONLINE</a></li>
-                <li><a href="${pageContext.request.contextPath}/aboutUs">QUEM SOMOS</a></li>
+                <li><a href="${pageContext.request.contextPath}/online-shop">COMPRE ONLINE</a></li>
+                <li><a href="${pageContext.request.contextPath}/about-us">QUEM SOMOS</a></li>
                 <li><a href="${pageContext.request.contextPath}/contact">CONTATO</a></li>
             </menu>
             <!-- FIM MENU PRINCIPAL -->  

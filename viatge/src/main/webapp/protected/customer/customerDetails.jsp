@@ -141,12 +141,12 @@
 									</h5>
 									<div>
 										<p class="box01 fontawesome-star"><fmt:formatDate value="${p.birthDate}"/></p>
-										<p class="box02 entypo-phone">${p.mainTel}</p>
+										<p class="box02 entypo-phone"> ${p.mainTel}</p>
 
 										<p class="box01 entypo-vcard">CPF: ${p.documentPassenger.cpf}</p>
 										<p class="box02 entypo-vcard">RG: ${p.documentPassenger.rg}</p>
 
-										<p class="box03 fontawesome-envelope">${p.email}</p>
+										<p class="box03 fontawesome-envelope"> ${p.email}</p>
 									</div>
 								</c:forEach>
 							</c:otherwise>

@@ -26,7 +26,7 @@ public class CustomerController {
 	
 	@Autowired
 	private CustomerFacade customerFacade;
-	
+
 	@RequestMapping("customer-list")
 	public ModelAndView customerListScreen(){
 		List<Customer> allCustomers = customerFacade.getAllCustomers();	

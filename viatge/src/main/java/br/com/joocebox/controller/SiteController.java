@@ -112,7 +112,7 @@ public class SiteController {
 		
 	}
 	
-	@RequestMapping("/categoryList/{id}")
+	@RequestMapping("/category-list/{id}")
 	public String getCategoryList(@PathVariable Long id, Model model){
 		Agency agency = dashboardFacade.getAgency();
 		
@@ -140,21 +140,21 @@ public class SiteController {
 		return "site/blog02";
 	}
 	
-	@RequestMapping("/aboutUs")
+	@RequestMapping("/about-us")
 	public String getAboutUsPage(){
 		//TODO: Implementar as atributos para a view
 		
 		return "site/aboutUs02";
 	}
 	
-	@RequestMapping("/onlineShop")
+	@RequestMapping("/online-shop")
 	public String getonlineShopPage(){
 		//TODO: Implementar as atributos para a view
 		
 		return "site/onlineShop02";
 	}
 	
-	@RequestMapping("/perfectTravel")
+	@RequestMapping("/perfect-travel")
 	public String getPerfectTravelPage(){
 		//TODO: Implementar as atributos para a view
 		

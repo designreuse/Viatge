@@ -45,13 +45,6 @@
 		<tiles:insertAttribute name="body" />
 
 		<tiles:insertAttribute name="footer" />
-
-	
-    <!--
-    	OBS. GERAL: ESTOU USANDO UM PARAMETRO NA URL PARA ATIVAR OS ALERTAS...
-        EXEMPLO URL. "alert=contato" ABRE A RESPOSTA DE CONTATO ENVIADO
-    	ESTOU USANDO O PHP PARA ISSO, ENTÃO PRECISAMOS ADAPITAR PARA O JAVA
-    -->
     
 </body>
 </html>

@@ -14,6 +14,10 @@ import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+import com.google.common.hash.Hashing;
+
 @Entity
 @Table(name="document_passenger")
 @Multitenant
@@ -69,6 +73,27 @@ public class DocumentPassenger implements Serializable{
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Hashing.sha1().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+	       if (obj == null) return false;
+	        if (getClass() != obj.getClass()) return false;
+	        final DocumentPassenger other = (DocumentPassenger) obj;
+	        return Objects.equal(this.cpf, other.cpf)
+	            && Objects.equal(this.rg, other.rg);
+	}
+
+	@Override
+	public String toString() {
+		return MoreObjects.toStringHelper(DocumentPassenger.class)
+				.add("CPF do Passageiro", getCpf())
+				.add("RG do Passageiro", getRg()).toString();
 	}
 
 }
