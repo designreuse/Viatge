@@ -22,9 +22,9 @@
 <ul id="breadcrumb">
 	<li><span class="entypo-home"></span></li>
 	<li><i class="fa fa-lg fa-angle-right"></i></li>
-	<li><a href="#" title="Sample page 1">Página Inicial</a></li>
+	<li><a href="${pageContext.request.contextPath}/auth/home" title="Sample page 1">Página Inicial</a></li>
 	<li><i class="fa fa-lg fa-angle-right"></i></li>
-	<li><a href="#" title="Sample page 1">Layout</a></li>
+	<li><a href="${pageContext.request.contextPath}/auth/template-list" title="Sample page 1">Layout</a></li>
 </ul>
 <!-- FIM BREADCRUMB -->
 

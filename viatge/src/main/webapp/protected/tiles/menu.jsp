@@ -64,6 +64,13 @@
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Dominios"><i class="entypo-newspaper"></i><span>Dominios</span></a></li>
                             </ul>
                         </li>
+
+                        <li>
+                            <a class="tooltip-tip ajax-load" href="#" title="Blog"><i class="entypo-globe"></i><span>Blog</span></a>
+                            <ul>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/category-blog-list" title="Categorias"><i class="entypo-doc-text"></i><span>Categorias</span> </a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                 </div>
