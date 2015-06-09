@@ -56,26 +56,26 @@ public class Customer implements Serializable {
 	@Column(name = "last_name")
 	private String lastName;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_document")
 	private Document document;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_customerPhone")
 	private CustomerPhone customerPhone;
 
-	@OneToMany(cascade = CascadeType.PERSIST, fetch=FetchType.EAGER)
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
 	@JoinColumn(name = "fk_customer")
 	private Set<Passenger> passenger;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_customerAddress")
 	private CustomerAddress customerAddress;
 
 	@Column(name = "observations")
 	private String observations;
 
-	@OneToMany(cascade = CascadeType.PERSIST)
+	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_customer")
 	private Set<CustomerService> customerService;
 

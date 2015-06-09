@@ -3,6 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="gravatar" uri="http://www.paalgyula.hu/schemas/tld/gravatar" %>
+
 
 <!-- CONTENT -->
 <!--TITLE -->
@@ -32,10 +34,9 @@
 	<div class="row-cols novo-atendimento">
 
 		<div class="col-sm-12 margin-bottom acoes-cliente">
-			<a href="#" class="btn btn-info">Editar</a>&nbsp; &nbsp;
-			<a href="#" class="btn btn-info">Atendimento em Aberto</a>&nbsp; &nbsp;
-			<a href="#" class="btn btn-info">Novo Atendimento</a>&nbsp; &nbsp;
-			<a href="#" class="btn btn-info">Histórico de Vendas</a>
+			<a href="<c:url value="/auth/customer/edit/${customer.idCustomer}"/>" class="btn btn-info">Editar</a>&nbsp; &nbsp;
+			<a href="<c:url value="/auth/service"/>" class="btn btn-info">Novo Atendimento</a>&nbsp; &nbsp;
+			<a href="<c:url value="/auth/customer/history/${customer.idCustomer}"/>" class="btn btn-info">Histórico de Vendas</a>
 		</div>
 		
 		<div class="col-sm-6">
@@ -46,11 +47,17 @@
 						<a href="#" rel="dados-gerais" class="toggle-box">Dados Gerais</a>
 					</h6>
 					<a href="#" rel="dados-gerais" class="icon-chevron-down toggle-box"></a>
+					
 				</div>
 
-				<div class="col-sm-12 dados-gerais">
-					<p>
+				<div class="box-anotacoes">
+					<figure>
+							<img src="<gravatar:image email="${customer.email}" size="80"/>" alt="${customer.firstName}" title="${customer.firstName}" style="margin-left: 6px;"/>
+					</figure>
+
+					<p>					
 						<span class="fontawesome-user"></span> <strong>&nbsp;${customer.firstName}&nbsp;${customer.lastName}</strong>
+						
 					</p>
 					<p>
 						<span class="fontawesome-star"></span> Nascimento: <fmt:formatDate value="${customer.birthDate}"/>
@@ -203,14 +210,7 @@
 				</div>
 
 				<div class="body-nest" id="dados-obs">
-					<div class="box-anotacoes">
-						<figure>
-							<img src="http://api.randomuser.me/portraits/thumb/women/1.jpg"
-								width="80" height="80" alt="">
-						</figure>
-						<p>
-							<strong>&nbsp;${customer.firstName}&nbsp;${customer.lastName}</strong><br>
-						</p>
+					<div >
 						<c:choose>
 							<c:when test="${empty customer.observations}">
 								<p>O Cliente não possui nenhuma observação.</p>

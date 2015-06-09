@@ -56,23 +56,19 @@
 							<thead>
 								<tr>
 									<th class="vertical-align-center">Nome</th>
-									<th class="vertical-align-center">Sobrenome</th>
 									<th class="vertical-align-center">E-mail</th>
-									<th class="vertical-align-center">Data de Nascimento</th>
-									<th class="vertical-align-center">Ativo website</th>
+									<th class="vertical-align-center">Telefone Celular</th>
+									<th class="vertical-align-center">Telefone Fixo</th>
+									<th class="vertical-align-center">Cliente Ativo</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items="${customerList}" var="c">
 									<tr>
-										<td><a href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}</a></td>
-<<<<<<< HEAD
-=======
-										<td>${c.firstName}</td>
->>>>>>> branch 'master' of https://github.com/JooceBox/Viatge.git
-										<td>${c.lastName}</td>
+										<td><a href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}&nbsp;${c.lastName}</a></td>
 										<td>${c.email}</td>
-										<td><fmt:formatDate value="${c.birthDate}"/></td>
+										<td>${c.customerPhone.celPhone}</td>
+										<td>${c.customerPhone.homePhone}</td>
 										<td><div class="make-switch" data-on="info"
 												data-off="success">
 												<input type="checkbox" checked>

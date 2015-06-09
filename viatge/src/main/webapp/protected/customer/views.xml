@@ -11,4 +11,14 @@
 	<definition extends="default" name="customer/customerDetails">
 		<put-attribute name="body" value="/protected/customer/customerDetails.jsp" />
 	</definition>
+	
+	<!-- Map to list of editCustomer.jsp view -->
+	<definition extends="default" name="customer/editCustomer">
+		<put-attribute name="body" value="/protected/customer/editCustomer.jsp" />
+	</definition>
+	
+	<!-- Map to list of historyOfCustomer.jsp view -->
+	<definition extends="default" name="customer/history">
+		<put-attribute name="body" value="/protected/customer/historyOfCustomer.jsp" />
+	</definition>
 </tiles-definitions>

@@ -174,13 +174,13 @@
 											</span>
 											<f:input id="employee-jobTitle" placeholder="Cargo"
 												type="text" cssClass="form-control" path="jobTitle"
-												readonly="false" />
+												readonly="true" />
 										</div>
 									</div>
 
 									<div class="box02">
 										<f:select id="employee-role" cssClass="form-control"
-											path="login.role" disabled="false">
+											path="login.role" disabled="true">
 											<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
 											<f:options items="${systemRoles}" />
 										</f:select>

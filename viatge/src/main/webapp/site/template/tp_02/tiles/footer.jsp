@@ -13,13 +13,14 @@
                 <h2 class="txt-thema">NAVEGAÇÃO</h2>
                 <ul>
                     <li><a href="#">CATEGORIAS</a></li>
-                    <li><a href="#">VIAGEM PERFEITA</a></li>
-                    <li><a href="#">BLOG</a></li>
-                    <li><a href="#">COMPRE ONLINE</a></li>
-                    <li><a href="#">QUEM SOMOS</a></li>
-                    <li><a href="#">CONTATO</a></li>
+            		<li><a href="${pageContext.request.contextPath}/perfect-travel">VIAGEM PERFEITA</a></li>
+               	 	<li><a href="${pageContext.request.contextPath}/blog">BLOG</a></li>
+               	 	<li><a href="${pageContext.request.contextPath}/online-shop">COMPRE ONLINE</a></li>
+                	<li><a href="${pageContext.request.contextPath}/about-us">QUEM SOMOS</a></li>
+                	<li><a href="${pageContext.request.contextPath}/contact">CONTATO</a></li>
                 </ul>
             </div>
+
             <!-- FIM MENU FOOTER -->
             
             <!-- TELEFONE FOOTER -->

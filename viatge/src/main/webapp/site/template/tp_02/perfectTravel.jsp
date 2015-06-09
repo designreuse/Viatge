@@ -27,64 +27,67 @@
             <!-- FILTRO DE DESTINO -->
             
             <form action="?alert=resposta" method="post" name="form-filtro" class="form-filtro">
-                <div class="box-select">
-                    <label>VIAJO COM (SOU)</label>
-                    <select class="select01" name="viajo">
-                        <option value="">Selecionar...</option>
-                        <option value="Opção 01">Opção 01</option>
-                        <option value="Opção 02">Opção 02</option>
-                        <option value="Opção 03">Opção 03</option>
-                        <option value="Opção 04">Opção 04</option>
-                    </select> 
-                </div>
-                
-                <div class="box-select">
-                    <label>PROCURO POR</label>
-                    <select class="select01" name="procuro">
-                        <option value="">Selecionar...</option>
-                        <option value="Opção 01">Opção 01</option>
-                        <option value="Opção 02">Opção 02</option>
-                        <option value="Opção 03">Opção 03</option>
-                        <option value="Opção 04">Opção 04</option>
-                    </select> 
-                </div>
-                
-                <div class="box-select">
-                    <label>QUERO</label>
-                    <select class="select01" name="quero">
-                        <option value="">Selecionar...</option>
-                        <option value="Opção 01">Opção 01</option>
-                        <option value="Opção 02">Opção 02</option>
-                        <option value="Opção 03">Opção 03</option>
-                        <option value="Opção 04">Opção 04</option>
-                    </select> 
-                </div>
-                
-                <div class="box-select">
-                    <label>PREFIRO</label>
-                    <select class="select01" name="prefiro">
-                        <option value="">Selecionar...</option>
-                        <option value="Opção 01">Opção 01</option>
-                        <option value="Opção 02">Opção 02</option>
-                        <option value="Opção 03">Opção 03</option>
-                        <option value="Opção 04">Opção 04</option>
-                    </select> 
-                </div>
-                
-                <div class="box-select">
-                    <label>ADORO</label>
-                    <select class="select01" name="adoro">
-                        <option value="">Selecionar...</option>
-                        <option value="Opção 01">Opção 01</option>
-                        <option value="Opção 02">Opção 02</option>
-                        <option value="Opção 03">Opção 03</option>
-                        <option value="Opção 04">Opção 04</option>
-                    </select> 
-                </div>
-                
-                <div class="box-botton">
-                    <button type="submit" class="button01 bg-thema"><i></i> REALIZAR BUSCA</button>
-                </div>
+	<div class="box-select">
+				<label>VIAJO COM (SOU)</label> <select class="select01" name="viajo">
+					<option value="">Selecionar...</option>
+					<option value="Opção 01">Acompanhante</option>
+					<option value="Opção 02">Sozinho</option>
+					<option value="Opção 03">Crianças</option>
+					<option value="Opção 04">Amigos</option>
+					<option value="Opção 04">Idosos</option>
+					<option value="Opção 04">Sem Crianças</option>
+					<option value="Opção 04">Jovem</option>
+				</select>
+			</div>
+
+			<div class="box-select">
+				<label>PROCURO POR</label> <select class="select01" name="procuro">
+					<option value="">Selecionar...</option>
+					<option value="Opção 01">Viagem Económica</option>
+					<option value="Opção 02">Viagem Intermediária</option>
+					<option value="Opção 03">Viagem de Luxo</option>
+				</select>
+			</div>
+
+			<div class="box-select">
+				<label>QUERO</label> <select class="select01" name="quero">
+					<option value="">Selecionar...</option>
+					<option value="Opção 01">Descanso e Relax</option>
+					<option value="Opção 02">Romance</option>
+					<option value="Opção 03">História, Arte e Cultura</option>
+					<option value="Opção 04">Festas e Vida Noturna</option>
+					<option value="Opção 05">Compras</option>
+					<option value="Opção 06">Ecoturismo e Esportes</option>
+					<option value="Opção 07">Gastronomia e Culinária</option>
+					<option value="Opção 08">Diversão e Aventura</option>
+					<option value="Opção 09">Parques Tematicos e Entretenimento</option>													
+				</select>
+			</div>
+
+			<div class="box-select">
+				<label>PREFIRO</label> <select class="select01" name="prefiro">
+					<option value="">Selecionar...</option>
+					<option value="Opção 01">Calor</option>
+					<option value="Opção 02">Frio</option>
+					<option value="Opção 03">Frio e Neve</option>
+				</select>
+			</div>
+
+			<div class="box-select">
+				<label>ADORO</label> <select class="select01" name="adoro">
+					<option value="">Selecionar...</option>
+					<option value="Opção 01">Praia</option>
+					<option value="Opção 02">Cidades e Grandes Centros Urbanos</option>
+					<option value="Opção 03">Campo</option>
+					<option value="Opção 04">Montanha</option>
+				</select>
+			</div>
+
+			<div class="box-botton">
+				<button type="submit" class="button01 bg-thema">
+					<i></i> REALIZAR BUSCA
+				</button>
+			</div>
             </form>
             
             <!-- FIM FILTRO DE DESTINO -->

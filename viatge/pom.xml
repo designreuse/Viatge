@@ -232,6 +232,13 @@
 			<artifactId>webutilities</artifactId>
 			<version>0.0.7</version>
 		</dependency>
+	
+		<dependency>
+			<groupId>hu.paalgyula</groupId>
+			<artifactId>gravatar-taglib</artifactId>
+			<version>0.1.4</version>
+			<type>jar</type>
+		</dependency>
 		
 		<!-- Gson Google -->
 		<dependency>
