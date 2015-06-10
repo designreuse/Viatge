@@ -69,6 +69,7 @@
                             <a class="tooltip-tip ajax-load" href="#" title="Blog"><i class="entypo-globe"></i><span>Blog</span></a>
                             <ul>
                                 <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/category-blog-list" title="Categorias"><i class="entypo-doc-text"></i><span>Categorias</span> </a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/article-blog-list" title="Artigos"><i class="entypo-doc-text"></i><span>Artigos</span> </a></li>
                             </ul>
                         </li>
                     </ul>

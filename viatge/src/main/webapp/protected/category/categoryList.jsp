@@ -45,7 +45,7 @@
 							<span class="entypo-thumbs-up"></span> <strong>Beleza!</strong>&nbsp;&nbsp;${message}
 						</div>
 					</c:if>
-					<a href="<c:url value="newCategory"/>"
+					<a href="<c:url value="newCategoryBlog"/>"
 						class="pull-left btn btn-info" title="Adicionar Nova Categoria">Nova
 						Categoria</a>
 				</div>

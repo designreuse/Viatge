@@ -1,8 +1,8 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
@@ -13,6 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 
 import org.eclipse.persistence.annotations.Multitenant;
@@ -42,7 +44,7 @@ public class Article implements Serializable {
 	
 	@Column(name="at_name")
 	@NotEmpty
-	@Size(min=3, max=25)
+	@Size(min=3, max=255)
 	private String atName;
 
 	@Column(name="at_content")
@@ -54,12 +56,17 @@ public class Article implements Serializable {
 
 	@Column(name="at_active")
 	private int atActive;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="posting_date")
+	private Date postingDate;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne
 	@JoinColumn(name = "fk_category_blog")
 	private CategoryBlog categoryBlog;
 	
-	public Article() {		
+	public Article() {	
+		this.setPostingDate(new Date());
 	}
 
 	public Long getIdArticle() {
@@ -118,6 +125,14 @@ public class Article implements Serializable {
 
 	public void setAtActive(int atActive) {
 		this.atActive = atActive;
+	}
+
+	public Date getPostingDate() {
+		return postingDate;
+	}
+
+	public void setPostingDate(Date postingDate) {
+		this.postingDate = postingDate;
 	}
 
 	@Override

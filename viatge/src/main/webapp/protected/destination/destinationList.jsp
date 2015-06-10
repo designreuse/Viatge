@@ -69,8 +69,8 @@
 						<div class="col-sm-6">
 							<a href="#clear" style="margin-left: 10px;"
 								class="pull-right btn btn-info clear-filter"
-								title="clear filter">Limpar Pesquisa</a> <a
-								href="<c:url value="newDestination"/>"
+								title="clear filter">Limpar Pesquisa</a> 
+							<a href="<c:url value="newDestination"/>"
 								class="pull-right btn btn-info"
 								title="Adicionar um Novo Destino">Novo Destino</a>
 						</div>

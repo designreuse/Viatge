@@ -2,9 +2,40 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-	<!-- Lista as categorias do Blog -->
+	<!--################# Categorias - Blog #####################-->
+	<!-- Lista as categorias do blog -->
 	<definition extends="default" name="blog/categoryBlogList">
 		<put-attribute name="body" value="/protected/blog/categoryBlogList.jsp" />
 	</definition>
 	
+	<!-- Adiciona uma nova categoria do blog-->
+	<definition extends="default" name="blog/newCategoryBlog">
+		<put-attribute name="body" value="/protected/blog/newCategoryBlog.jsp" />
+	</definition>
+	
+	<!-- Atualiza a categoria blog-->
+	<definition extends="default" name="blog/updateCategoryBlog">
+		<put-attribute name="body" value="/protected/blog/editCategoryBlog.jsp" />
+	</definition>
+	
+	<!--################# Artigos - Blog #####################-->	
+	<!-- Lista os artigos do blog -->
+	<definition extends="default" name="blog/articleBlogList">
+		<put-attribute name="body" value="/protected/blog/articleBlogList.jsp" />
+	</definition>
+
+	<!-- Adiciona um novo artigo do blog-->
+	<definition extends="default" name="blog/newArticleBlog">
+		<put-attribute name="body" value="/protected/blog/newArticleBlog.jsp" />
+	</definition>
+	
+	<!-- Atualiza o artigo do blog-->
+	<definition extends="default" name="blog/updateArticleBlog">
+		<put-attribute name="body" value="/protected/blog/editArticleBlog.jsp" />
+	</definition>
+	
+	<!-- Visualiza o artigo do blog-->
+	<definition extends="default" name="blog/visualizeArticleBlog">
+		<put-attribute name="body" value="/protected/blog/visualizeArticleBlog.jsp" />
+	</definition>
 </tiles-definitions>

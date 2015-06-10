@@ -34,7 +34,7 @@
 
         <div class="nest text">
             <div class="title-alt">
-                <h6>Gerenciar Categorias</h6>
+                <h6>Lista de Categorias</h6>
             </div>
 
 			<div class="row" style="margin-bottom: 10px;">
@@ -44,7 +44,7 @@
 							<span class="entypo-thumbs-up"></span> <strong>Beleza!</strong>&nbsp;&nbsp;${message}
 						</div>
 					</c:if>
-					<a href="<c:url value="newCategory"/>"
+					<a href="<c:url value="new-category-blog"/>"
 						class="pull-left btn btn-info" title="Adicionar Nova Categoria">Nova
 						Categoria</a>
 				</div>
@@ -53,29 +53,34 @@
 			<div class="col-sm-12">
 
                 <c:choose>
-                    <c:when test="${!empty category}">
+                    <c:when test="${!empty categoriesBlogList}">
                         <table class="table-striped footable-res footable metro-blue"
                                data-page-size="10">
                             <thead>
                                 <tr>
                                     <th><b>Nome</b></th>
-                                    <th><b>Destinos Vinculados</b></th>
-                                    <th><b>Ativo (WebSite)</b></th>
+                                    <th><b>Artigos Vinculados</b></th>
+                                    <th><b>Ativo (Website)</b></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <c:forEach items="${category}" var="c">
+                                <c:forEach items="${categoriesBlogList}" var="c">
                                     <tr>
-                                        <td><a href="editCategory?id=${c.idCategory}">${c.ctName}</a></td>
-                                        <td>${c.destinationSize}</td>
-                                        <c:choose>
-                                            <c:when test="${c.ctActive=='1'}">
-                                                <td><span class="label label-success">Ativo</span></td>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <td><span class="label label-warning">Desativo</span></td>
-                                            </c:otherwise>
-                                        </c:choose>
+                                        <td><a href="edit-category-blog?id=${c.idCategoryBlog}">${c.ctBgName}</a></td>
+                                        <td>Criar Função</td>
+<%--                                         <td>${c.destinationSize}</td> --%>
+                                        <td>
+											<div class="make-switch" data-on="primary" data-off="info">
+												<c:choose>
+													<c:when test="${c.ctBgActive == 1}">
+														<input type="checkbox" checked>
+													</c:when>
+													<c:otherwise>
+														<input type="checkbox">
+													</c:otherwise>
+												</c:choose>
+											</div>
+                                        </td>
                                     </tr>
                                 </c:forEach>
                             </tbody>
