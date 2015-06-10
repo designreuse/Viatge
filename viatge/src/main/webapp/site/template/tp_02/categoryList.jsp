@@ -49,7 +49,7 @@
         </div>
         
         <h3>Ainda não achou o seu destino perfeito? Podemos ajudar com isso?</h3>
-        <p><a href="destino-perfeito.php" class="btn bg-thema">DESTINO PERFEITO</a></p>
+        <p><a href="${pageContext.request.contextPath}/perfect-travel" class="btn bg-thema">DESTINO PERFEITO</a></p>
         
         
 	</div>

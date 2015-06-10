@@ -9,31 +9,34 @@
 	<article class="filtro">
 		<h1 class="bg-thema">ENCONTRAR DESTINO PERFEITO.</h1>
 
-		<form action="#" method="post" name="form-filtro" class="form-filtro">
+		<f:form id="form-filter-perfect-travel" modelAttribute="destination" action="${pageContext.request.contextPath}/perfect-travel-filter" method="post" class="form-filtro">
 			<div class="box-select">
-				<label>VIAJO COM (SOU)</label> <select class="select01" name="viajo">
+				<label>VIAJO COM (SOU)</label>
+				<f:select class="select01" path="socialProfiles">
 					<option value="">Selecionar...</option>
-					<option value="Opção 01">Acompanhante</option>
+					<f:option value="Opção 01">Acompanhante</f:option>
 					<option value="Opção 02">Sozinho</option>
 					<option value="Opção 03">Crianças</option>
 					<option value="Opção 04">Amigos</option>
 					<option value="Opção 04">Idosos</option>
 					<option value="Opção 04">Sem Crianças</option>
 					<option value="Opção 04">Jovem</option>
-				</select>
+				</f:select>
 			</div>
 
 			<div class="box-select">
-				<label>PROCURO POR</label> <select class="select01" name="procuro">
+				<label>PROCURO POR</label>
+				<f:select class="select01" path="economicProfiles">
 					<option value="">Selecionar...</option>
-					<option value="Opção 01">Viagem Económica</option>
-					<option value="Opção 02">Viagem Intermediária</option>
-					<option value="Opção 03">Viagem de Luxo</option>
-				</select>
+					<option value="economic">Viagem Económica</option>
+					<option value="intermediate">Viagem Intermediária</option>
+					<option value="luxury">Viagem de Luxo</option>
+				</f:select>
 			</div>
 
 			<div class="box-select">
-				<label>QUERO</label> <select class="select01" name="quero">
+				<label>QUERO</label>
+				<f:select class="select01" path="tripProfiles">
 					<option value="">Selecionar...</option>
 					<option value="Opção 01">Descanso e Relax</option>
 					<option value="Opção 02">Romance</option>
@@ -44,26 +47,28 @@
 					<option value="Opção 07">Gastronomia e Culinária</option>
 					<option value="Opção 08">Diversão e Aventura</option>
 					<option value="Opção 09">Parques Tematicos e Entretenimento</option>													
-				</select>
+				</f:select>
 			</div>
 
 			<div class="box-select">
-				<label>PREFIRO</label> <select class="select01" name="prefiro">
+				<label>PREFIRO</label>
+				<f:select class="select01" path="weatherprofile">
 					<option value="">Selecionar...</option>
 					<option value="Opção 01">Calor</option>
 					<option value="Opção 02">Frio</option>
 					<option value="Opção 03">Frio e Neve</option>
-				</select>
+				</f:select>
 			</div>
 
 			<div class="box-select">
-				<label>ADORO</label> <select class="select01" name="adoro">
+				<label>ADORO</label>
+				 <f:select class="select01" path="generalProfiles">
 					<option value="">Selecionar...</option>
 					<option value="Opção 01">Praia</option>
 					<option value="Opção 02">Cidades e Grandes Centros Urbanos</option>
 					<option value="Opção 03">Campo</option>
 					<option value="Opção 04">Montanha</option>
-				</select>
+				</f:select>
 			</div>
 
 			<div class="box-botton">
@@ -71,7 +76,7 @@
 					<i></i> REALIZAR BUSCA
 				</button>
 			</div>
-		</form>
+		</f:form>
 	</article>
 
 	<!-- FIM DE FILTRO -->

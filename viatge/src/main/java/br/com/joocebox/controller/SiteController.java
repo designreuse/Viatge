@@ -12,8 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.joocebox.model.Agency;
@@ -52,10 +54,10 @@ public class SiteController {
 		
 		String fileName = agencyLogo.replace("/app/joocebox-img/"+agency.getSubdomain()+"/logo/", "");
 		agency.getAgencyConfig().setAgencyLogo(fileName);
-		//model.addAttribute("tenant", agency);
 		getAllCategories(model);
 		getDestinationsForWebSite(model);
 		session.setAttribute("tenant", agency);
+		model.addAttribute("destination", new Destination());
 		logger.info("Buscando agência e adicionando seus atributos");
 		
 		
@@ -172,6 +174,12 @@ public class SiteController {
 	@ResponseBody
 	public String getCodHex(){
 		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
+	}
+	
+	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.POST)
+	public String getDestinations(@ModelAttribute("destination") Destination destination){
+		//Busca por um metodo que faça a pesquisa
+		return "site/destinations02";
 	}
 
 }

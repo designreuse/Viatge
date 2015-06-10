@@ -41,126 +41,37 @@ public class ImageController {
     
 	@RequestMapping(value = "/image/avatar/{id}/{fileName}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> viewAvatar(@PathVariable Long id, @PathVariable String fileName) {
-		
-		InputStream in;
-				
-		try {
-			
-			in = new FileInputStream(new File(pathWithTenant()+"/avatar/"+id+"/"+fileName+".jpg"));
-
-		    final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.IMAGE_JPEG);
-
-		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
+		String absolutePath = pathWithTenant()+"/avatar/"+id+"/"+fileName+".jpg";				
+		return serverImageJPEG(absolutePath);
 	}
 
     
 	@RequestMapping(value = "/image/logo/{pathname}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> viewLogo(@PathVariable String pathname) {
-		
-		InputStream in;
-				
-		try {
-			
-			in = new FileInputStream(new File(pathWithTenant()+"/logo/"+pathname+".png"));
-
-		    final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.IMAGE_PNG);
-
-		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-	}
-    
-	@RequestMapping(value = "/image/destination/{destinationName}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> viewDestination(@PathVariable String destinationName) {
-		
-		String pathDestination = pathWithTenant()+"/destination/highlightImages/"+destinationName;
-
-		File imagesFile = new File(pathDestination);
-		File[] listFiles = imagesFile.listFiles();
-		
-		InputStream in;
-		
-		try {
-			
-			in = new FileInputStream(listFiles[0]);
-
-		    final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.IMAGE_JPEG);
-
-		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-		
-	}
-	
-	@RequestMapping(value = "/image/destination/thumbnail/{destinationName}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> viewDestinationThubnail(@PathVariable String destinationName) {
-		
-		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+destinationName;
-
-		File imagesFile = new File(pathDestination);
-		File[] listFiles = imagesFile.listFiles();
-		
-		InputStream in;
-		
-		try {
-			
-			in = new FileInputStream(listFiles[0]);
-
-		    final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.IMAGE_JPEG);
-
-		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-		
+		String absolutePath = pathWithTenant()+"/logo/"+pathname+".png";
+		return serverImagePNG(absolutePath);
 	}
 	
 	@RequestMapping(value = "/image/destination/thubnail/{destinationName}/{id}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> viewThubnailCRM(@PathVariable String destinationName, @PathVariable Long id) {
-		
+	public ResponseEntity<byte[]> viewThubnailCRM(@PathVariable String destinationName, @PathVariable Long id) {	
 		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+dashboardFacade.getDestinationId(id).getDtName()+'/'+destinationName;
-
-		File imagesFile = new File(pathDestination);
-		
-		InputStream in;
-		
-		try {
-			
-			in = new FileInputStream(imagesFile);
-
-		    final HttpHeaders headers = new HttpHeaders();
-		    headers.setContentType(MediaType.IMAGE_JPEG);
-
-		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
-		return null;
-		
+		return serverImageJPEG(pathDestination);	
 	}
+
+    
+	@RequestMapping(value = "/image/destination/{destinationName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewDestinationhighlightImages(@PathVariable String destinationName) {		
+		String pathDestination = pathWithTenant()+"/destination/highlightImages/"+destinationName;
+		return serverListOfImageJPEG(pathDestination);		
+	}
+	
+	@RequestMapping(value = "/image/destination/thumbnail/{destinationName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewDestinationThubnail(@PathVariable String destinationName) {		
+		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+destinationName;
+		return serverListOfImageJPEG(pathDestination);	
+	}
+	
+	
 	
 	@RequestMapping(value = "/image/destinationDetail/{imageId}", method = RequestMethod.GET)
 	public ResponseEntity<byte[]> viewDestinationDetail(@PathVariable Long imageId) {
@@ -168,8 +79,6 @@ public class ImageController {
 		Image image = imageFacade.getImageId(imageId);
 
 		FileMeta loadImageFromJSONGson = loadImageFromJSONGson(image.getJson());
-		
-		new File(loadImageFromJSONGson.getFileTmpPath());
 		
 		InputStream in;
 		
@@ -190,6 +99,75 @@ public class ImageController {
 		
 	}
 	
+	/**
+	 * @param pathDestination
+	 * @return
+	 */
+	public ResponseEntity<byte[]> serverListOfImageJPEG(String pathDestination) {
+		File imagesFile = new File(pathDestination);
+		File[] listFiles = imagesFile.listFiles();
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(listFiles[0]);
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * @param absolutePath
+	 * @return
+	 */
+	public ResponseEntity<byte[]> serverImageJPEG(String absolutePath) {
+		InputStream in;
+		try {
+			
+			in = new FileInputStream(new File(absolutePath));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * @param pathname
+	 * @return
+	 */
+	public ResponseEntity<byte[]> serverImagePNG(String pathname) {
+		InputStream in;
+		try {
+			
+			in = new FileInputStream(new File(pathname));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_PNG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 	
 	public FileMeta loadImageFromJSONGson(String jsonString) {
 	    Gson gson = new Gson();
