@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.controller.FileArticleBlogController;
 import br.com.joocebox.model.Article;
+import br.com.joocebox.model.CategoryBlog;
 import br.com.joocebox.repositories.ArticleBlogRepository;
 
 @Service
@@ -63,4 +64,7 @@ public class ArticleBlogFacade {
 		articleBlogRepository.save(articleOld);
 	}
 	
+	public List<Article> findByCategoryBlogAndAtActive(CategoryBlog categoryBlog) {
+		return articleBlogRepository.findByCategoryBlogAndAtActive(categoryBlog, 1);
+	}
 }

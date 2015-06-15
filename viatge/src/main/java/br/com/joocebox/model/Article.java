@@ -67,7 +67,7 @@ public class Article implements Serializable {
 	@Column(name="posting_date")
 	private Date postingDate;
 
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "fk_category_blog")
 	private CategoryBlog categoryBlog;
 	
@@ -83,6 +83,7 @@ public class Article implements Serializable {
 		this.setPostingDate(new Date());
 	}
 
+	// GETTERS AND SETTERS
 	public Long getIdArticle() {
 		return idArticle;
 	}
@@ -157,14 +158,21 @@ public class Article implements Serializable {
 		this.images = images;
 	}
 	
-	public String getReducedContent() {
+	public String getReducedContent() {		
+		if (this.getAtContent().length() > 300) {
+			this.setReducedContent(this.getAtContent().substring(0, 300));
+		} else {
+			this.setReducedContent(this.getAtContent().substring(0, this.getAtContent().length()));
+		}
 		return reducedContent;
 	}
 
 	public void setReducedContent(String reducedContent) {
 		this.reducedContent = reducedContent;
 	}
-
+	// FIM GETTERS AND SETTERS //
+		
+	// EQUALS E HASHCODE //
 	@Override
 	public int hashCode() {
 		final int prime = 31;

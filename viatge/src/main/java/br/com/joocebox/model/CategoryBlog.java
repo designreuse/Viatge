@@ -47,7 +47,7 @@ public class CategoryBlog implements Serializable {
 	@Column(name="ct_bg_active")
 	private int ctBgActive;
 	
-	@OneToMany(mappedBy="categoryBlog", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="categoryBlog", fetch=FetchType.EAGER)
 	private List<Article> articlesBlog;
 
 	public CategoryBlog() {

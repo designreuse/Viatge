@@ -74,72 +74,72 @@
 
 			<div class="comentarios">
 				<!-- COMENTÁRIO -->
-				<h2>
-					<strong>77</strong> COMENTÁRIO
-				</h2>
-				<p>Onec mollis lacus arcu, a tincidunt orci euismod tempor.
-					Etiam viverra nulla nec justo eleifend tristique tincidunt et
-					dolor.</p>
+<!-- 				<h2> -->
+<!-- 					<strong>77</strong> COMENTÁRIO -->
+<!-- 				</h2> -->
+<!-- 				<p>Onec mollis lacus arcu, a tincidunt orci euismod tempor. -->
+<!-- 					Etiam viverra nulla nec justo eleifend tristique tincidunt et -->
+<!-- 					dolor.</p> -->
 
-				<ul class="list-comentarios">
-					<li>
-						<h3>Consectetur Adipiscing</h3>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum
-							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div>
-					</li>
+<!-- 				<ul class="list-comentarios"> -->
+<!-- 					<li> -->
+<!-- 						<h3>Consectetur Adipiscing</h3> -->
+<!-- 						<div>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum -->
+<!-- 							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div> -->
+<!-- 					</li> -->
 
 
-					<li class="resposta">
-						<!-- CLASS PARA RESPOSTA DE COMENTÁRIO -->
-						<h3>Modelador : Maicon Cesar</h3>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum
-							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div>
-					</li>
+<!-- 					<li class="resposta"> -->
+<!-- 						CLASS PARA RESPOSTA DE COMENTÁRIO -->
+<!-- 						<h3>Modelador : Maicon Cesar</h3> -->
+<!-- 						<div>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum -->
+<!-- 							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div> -->
+<!-- 					</li> -->
 
-					<li class="resposta">
-						<h3>Modelador : Maicon Cesar</h3>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum
-							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div>
-					</li>
+<!-- 					<li class="resposta"> -->
+<!-- 						<h3>Modelador : Maicon Cesar</h3> -->
+<!-- 						<div>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum -->
+<!-- 							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div> -->
+<!-- 					</li> -->
 
-					<li>
-						<h3>Consectetur Adipiscing</h3>
-						<div>Lorem ipsum dolor sit amet, consectetur adipiscing
-							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum
-							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div>
-					</li>
-				</ul>
+<!-- 					<li> -->
+<!-- 						<h3>Consectetur Adipiscing</h3> -->
+<!-- 						<div>Lorem ipsum dolor sit amet, consectetur adipiscing -->
+<!-- 							elit. Maecenas quis turpis cursus, sagittis arcu eu, condimentum -->
+<!-- 							mi. Donec mollis lacus arcu, a tincidunt orci euismod tempor.</div> -->
+<!-- 					</li> -->
+<!-- 				</ul> -->
 				<!-- FIM COMENTÁRIO -->
 
 				<!-- ADICIONAR COMENTÁRIO -->
-				<form action="#" method="post" name="form-comentarios"
-					class="form-comentarios">
-					<h2>DEIXE O SEU COMENTÁRIO</h2>
-					<div>
-						<label for="nome">*Nome</label> <input type="text" class="input01"
-							id="nome" name="nome">
-					</div>
+<%-- 				<form action="#" method="post" name="form-comentarios" --%>
+<%-- 					class="form-comentarios"> --%>
+<!-- 					<h2>DEIXE O SEU COMENTÁRIO</h2> -->
+<!-- 					<div> -->
+<!-- 						<label for="nome">*Nome</label> <input type="text" class="input01" -->
+<!-- 							id="nome" name="nome"> -->
+<!-- 					</div> -->
 
-					<div>
-						<label for="email">*E-mail</label> <input type="email"
-							class="input01" id="email" name="email">
-					</div>
+<!-- 					<div> -->
+<!-- 						<label for="email">*E-mail</label> <input type="email" -->
+<!-- 							class="input01" id="email" name="email"> -->
+<!-- 					</div> -->
 
-					<div>
-						<label for="comentario">*Comentário</label>
-						<textarea name="comentario" cols="5" rows="5" class="textarea01"
-							id="comentario" name="comentario"></textarea>
-					</div>
+<!-- 					<div> -->
+<!-- 						<label for="comentario">*Comentário</label> -->
+<!-- 						<textarea name="comentario" cols="5" rows="5" class="textarea01" -->
+<!-- 							id="comentario" name="comentario"></textarea> -->
+<!-- 					</div> -->
 
-					<div>
-						<button type="submit" class="submit01 btn" name="enviar">
-							<i></i> ENVIAR COMENTÁRIO
-						</button>
-					</div>
-				</form>
+<!-- 					<div> -->
+<!-- 						<button type="submit" class="submit01 btn" name="enviar"> -->
+<!-- 							<i></i> ENVIAR COMENTÁRIO -->
+<!-- 						</button> -->
+<!-- 					</div> -->
+<%-- 				</form> --%>
 				<!-- FIM ADICIONAR COMENTÁRIO -->
 			</div>
 
@@ -162,7 +162,7 @@
 				<h2>Categorias</h2>
 				<menu>
                 	<c:forEach items="${categories}" var="category">
-	                    <li><a href="#">${category.ctBgName}</a></li>
+	                    <li><a href="${pageContext.request.contextPath}/blog/category?id=${category.idCategoryBlog}">${category.ctBgName}</a></li>
 	                </c:forEach>
 				</menu>
 			</div>

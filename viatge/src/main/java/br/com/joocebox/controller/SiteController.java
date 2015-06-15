@@ -155,10 +155,6 @@ public class SiteController {
 	@RequestMapping("/blog")
 	public ModelAndView getBlogPage(){
 		List<Article> articlesBlog = articleBlogFacade.getAtivesArticlesBlog();
-		// Diminui o conteudo do artigo para 50 caracteres, para exibirmos na tela principal do blog.
-		for(Article at : articlesBlog) {
-			at.setReducedContent(at.getAtContent().substring(0, 100));
-		}
 		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articlesBlog);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
 		
@@ -176,7 +172,8 @@ public class SiteController {
 	@RequestMapping(value="/blog/category", method=RequestMethod.GET)
 	public ModelAndView getPostCategory(@RequestParam Long id) {
 		CategoryBlog cb = categoryBlogFacade.getCategoryBlogId(id);
-		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", cb.getArticlesBlog());
+		List<Article> articles = articleBlogFacade.findByCategoryBlogAndAtActive(cb);
+		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articles);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
 		return mv;
 	}
