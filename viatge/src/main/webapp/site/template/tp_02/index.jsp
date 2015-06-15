@@ -8,75 +8,75 @@
 	<!-- FILTRO -->
 	<article class="filtro">
 		<h1 class="bg-thema">ENCONTRAR DESTINO PERFEITO.</h1>
-
-		<f:form id="form-filter-perfect-travel" modelAttribute="destination" action="${pageContext.request.contextPath}/perfect-travel-filter" method="post" class="form-filtro">
+		<form id="form-filter-perfect-travel" method="get" class="form-filtro">
 			<div class="box-select">
-				<label>VIAJO COM (SOU)</label>
-				<f:select class="select01" path="socialProfiles">
+				<label>VIAJO COM (SOU)</label> <select id="social-select"
+					class="select01" name="social">
 					<option value="">Selecionar...</option>
-					<f:option value="Opção 01">Acompanhante</f:option>
-					<option value="Opção 02">Sozinho</option>
-					<option value="Opção 03">Crianças</option>
-					<option value="Opção 04">Amigos</option>
-					<option value="Opção 04">Idosos</option>
-					<option value="Opção 04">Sem Crianças</option>
-					<option value="Opção 04">Jovem</option>
-				</f:select>
+					<option value="accompanying">Acompanhante</option>
+					<option value="alone">Sozinho</option>
+					<option value="children">Crianças</option>
+					<option value="friends">Amigos</option>
+					<option value="elderly">Idosos</option>
+					<option value="familyChildren">Sem Crianças</option>
+					<option value="teenager">Jovem</option>
+				</select>
 			</div>
 
 			<div class="box-select">
-				<label>PROCURO POR</label>
-				<f:select class="select01" path="economicProfiles">
+				<label>PROCURO POR</label> <select id="economic-select"
+					class="select01" name="economic">
 					<option value="">Selecionar...</option>
 					<option value="economic">Viagem Económica</option>
 					<option value="intermediate">Viagem Intermediária</option>
 					<option value="luxury">Viagem de Luxo</option>
-				</f:select>
+				</select>
 			</div>
 
 			<div class="box-select">
-				<label>QUERO</label>
-				<f:select class="select01" path="tripProfiles">
+				<label>QUERO</label> <select id="trip-select" class="select01"
+					name="trip">
 					<option value="">Selecionar...</option>
-					<option value="Opção 01">Descanso e Relax</option>
-					<option value="Opção 02">Romance</option>
-					<option value="Opção 03">História, Arte e Cultura</option>
-					<option value="Opção 04">Festas e Vida Noturna</option>
-					<option value="Opção 05">Compras</option>
-					<option value="Opção 06">Ecoturismo e Esportes</option>
-					<option value="Opção 07">Gastronomia e Culinária</option>
-					<option value="Opção 08">Diversão e Aventura</option>
-					<option value="Opção 09">Parques Tematicos e Entretenimento</option>													
-				</f:select>
+					<option value="chill">Descanso e Relax</option>
+					<option value="romance">Romance</option>
+					<option value="history">História, Arte e Cultura</option>
+					<option value="fun">Festas e Vida Noturna</option>
+					<option value="shopping">Compras</option>
+					<option value="sports">Ecoturismo e Esportes</option>
+					<option value="gastronomy">Gastronomia e Culinária</option>
+					<option value="party">Diversão e Aventura</option>
+					<option value="entertainment">Parques Tematicos e
+						Entretenimento</option>
+				</select>
 			</div>
 
 			<div class="box-select">
-				<label>PREFIRO</label>
-				<f:select class="select01" path="weatherprofile">
+				<label>PREFIRO</label> <select id="weather-select" class="select01"
+					name="weather">
 					<option value="">Selecionar...</option>
-					<option value="Opção 01">Calor</option>
-					<option value="Opção 02">Frio</option>
-					<option value="Opção 03">Frio e Neve</option>
-				</f:select>
+					<option value="cold">Calor</option>
+					<option value="heat">Frio</option>
+					<option value="winter">Frio e Neve</option>
+				</select>
 			</div>
 
 			<div class="box-select">
-				<label>ADORO</label>
-				 <f:select class="select01" path="generalProfiles">
+				<label>ADORO</label> <select id="general-select" class="select01"
+					name="general">
 					<option value="">Selecionar...</option>
-					<option value="Opção 01">Praia</option>
-					<option value="Opção 02">Cidades e Grandes Centros Urbanos</option>
-					<option value="Opção 03">Campo</option>
-					<option value="Opção 04">Montanha</option>
-				</f:select>
+					<option value="beach">Praia</option>
+					<option value="city">Cidades e Grandes Centros Urbanos</option>
+					<option value="cottage">Campo</option>
+					<option value="mountain">Montanha</option>
+				</select>
 			</div>
 
 			<div class="box-botton">
-				<button type="submit" class="button01 bg-thema">
+				<button id="show-modal" type="button" class="button01 bg-thema">
 					<i></i> REALIZAR BUSCA
 				</button>
 			</div>
-		</f:form>
+		</form>
 	</article>
 
 	<!-- FIM DE FILTRO -->
@@ -102,11 +102,13 @@
 						<div class="info">
 
 							<h2>
-								<a href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}"><c:out
+								<a
+									href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}"><c:out
 										value="${destinationHighlight.dtName}" /></a>
 							</h2>
 							<p class="pais">
-								<a href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}">${destinationHighlight.country.countryName}</a>
+								<a
+									href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}">${destinationHighlight.country.countryName}</a>
 							</p>
 
 							<ul>
@@ -132,7 +134,7 @@
 		</div>
 
 	</article>
-	
+
 	<article class="pacotes">
 
 		<div class="container">
@@ -187,3 +189,24 @@
 	<!-- FIM DE PACOTES -->
 
 </section>
+
+<div id="dialog-form">
+	<p>Legal, encontramos 3 destinos que são perfeitos para você!</p>
+	<p>Por gentileza informe seu nome e e-mail...</p>
+
+	<form action="destinos.php" method="post" name="form-cadastro"
+		class="form-cadastro">
+		<div>
+			<input type="text" class="input01" name="nome"
+				placeholder="Seu Nome_">
+		</div>
+		<div>
+			<input type="email" class="input01" name="email"
+				placeholder="Seu E-mail_">
+		</div>
+		<div>
+			<button type="submit" name="cadastrar" class="btn bg-thema submit01">VER
+				DESTINOS</button>
+		</div>
+	</form>
+</div>

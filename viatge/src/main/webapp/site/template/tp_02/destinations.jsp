@@ -6,30 +6,38 @@
 <section id="destinos">
 
 	<div class="container">
-		<h1>Destinos Que Combinam com você</h1>
+		<h1>Destinos Que Mais Combinam com você</h1>
+
 
 		<div class="pacotes">
-
+			<c:if test="${perfectDestinationError}">
+				<div style="font-size: 20px" class="txt-destino-perfeito txt-thema">
+					<p>Ops, você precisa preencher todos os filtros de viagem para
+						nós acharmos o destino que mais combina com você :)</p>
+				</div>
+			</c:if>
 			<div class="grid">
-				<c:forEach var="listOfDestinationByCategory"
-					items="${listOfDestinationByCategory}">
+
+
+				<c:forEach var="destination" items="${perfectDestinations}">
 					<div class="item">
 						<figure>
 							<a
-								href="${pageContext.request.contextPath}/destinationDetail/${listOfDestinationByCategory.idDestination}">
+								href="${pageContext.request.contextPath}/destinationDetail/${destination.idDestination}">
 								<!-- IMAGEM 252PX POR 190PX --> <img
-								src="${pageContext.request.contextPath}/image/destination/thumbnail/${listOfDestinationByCategory.dtName}"
+								src="${pageContext.request.contextPath}/image/destination/thumbnail/${destination.dtName}"
 								alt="nome do pacote">
 							</a>
 						</figure>
 						<div class="info">
 
 							<h2>
-								<a href="#"><c:out value="${listOfDestinationByCategory.dtName}" /></a>
+								<a href="#"><c:out value="${destination.dtName}" /></a>
 							</h2>
 
 							<p class="pais">
-								<a href="#"> <c:out value="${listOfDestinationByCategory.country.countryName}" />
+								<a href="#"> <c:out
+										value="${destination.country.countryName}" />
 								</a>
 							</p>
 
@@ -42,7 +50,7 @@
 								<li><a href="#" class="adoro" title="adoro"></a></li>
 							</ul>
 							<a
-								href="${pageContext.request.contextPath}/destinationDetail/${listOfDestinationByCategory.idDestination}"
+								href="${pageContext.request.contextPath}/destinationDetail/${destination.idDestination}"
 								class="btn">MAIS DETALHES</a>
 
 						</div>
@@ -56,8 +64,8 @@
 		<h3>Ainda não achou o seu destino perfeito? Podemos ajudar com
 			isso?</h3>
 		<p>
-			<a href="${pageContext.request.contextPath}/perfect-travel" class="btn bg-thema">DESTINO
-				PERFEITO</a>
+			<a href="${pageContext.request.contextPath}/perfect-travel"
+				class="btn bg-thema">DESTINO PERFEITO</a>
 		</p>
 
 

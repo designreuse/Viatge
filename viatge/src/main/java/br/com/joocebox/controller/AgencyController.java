@@ -141,7 +141,7 @@ public class AgencyController {
 					base.mkdirs();
 					
 					imageUtils = new ImageUtils();
-					byte[] resizeImage = imageUtils.resizeImageToPng(mpf.getBytes(), 156, 30);
+					byte[] resizeImage = imageUtils.resizeImageToPng(mpf.getBytes(), 190, 100);
 					
 	                FileCopyUtils.copy(resizeImage, new FileOutputStream(path)); 
 	                jsonUtils.generateJson(fileMeta);

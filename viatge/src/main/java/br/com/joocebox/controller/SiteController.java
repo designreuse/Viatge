@@ -1,5 +1,6 @@
 package br.com.joocebox.controller;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,25 +13,33 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.joocebox.model.Agency;
 import br.com.joocebox.model.Category;
 import br.com.joocebox.model.Destination;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.service.DashboardFacade;
+import br.com.joocebox.service.DestinationFacade;
+
+import com.google.common.base.Strings;
 
 @Controller
 @Transactional(propagation=Propagation.REQUIRED)
-public class SiteController {
-    final static Logger logger = LoggerFactory.getLogger(SiteController.class);
+public class SiteController{
+
+	final static Logger logger = LoggerFactory.getLogger(SiteController.class);
 
     @Autowired
     private DashboardFacade dashboardFacade;
+    
+    @Autowired
+    private DestinationFacade destinationFacade;
     
     @Autowired
     private CurrentTenantResolver<Long> tenantResolver;
@@ -164,10 +173,14 @@ public class SiteController {
 	}
 	
 	@RequestMapping("/perfect-travel")
-	public String getPerfectTravelPage(){
-		//TODO: Implementar as atributos para a view
-		
-		return "site/perfectTravel02";
+	public ModelAndView getPerfectTravelPage(){		
+		return new ModelAndView("site/perfectTravel02", "agencyName", dashboardFacade.getAgency().getAgencyName());
+	}
+	
+	@RequestMapping("/budget")
+	public String getBudgetPage(){
+		//TODO: Implementar as atributos para a view		
+		return "site/budget02";
 	}
 	
 	@RequestMapping("/templateColorCodHex")
@@ -176,10 +189,14 @@ public class SiteController {
 		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
 	}
 	
-	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.POST)
-	public String getDestinations(@ModelAttribute("destination") Destination destination){
-		//Busca por um metodo que faça a pesquisa
-		return "site/destinations02";
+	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.GET)
+	public ModelAndView getDestinations(@RequestParam String social, @RequestParam String economic, @RequestParam String trip, @RequestParam String weather, @RequestParam String general, Model model) throws SQLException{
+		if(Strings.isNullOrEmpty(social) || Strings.isNullOrEmpty(economic) || Strings.isNullOrEmpty(trip) || Strings.isNullOrEmpty(weather) || Strings.isNullOrEmpty(general)){
+			return new ModelAndView("site/destinations02", "perfectDestinationError", true);
+		}else{
+			return new ModelAndView("site/destinations02", "perfectDestinations", destinationFacade.filterDestinations(economic, general, social, weather, trip));
+		}
+
 	}
 
 }

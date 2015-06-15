@@ -32,7 +32,7 @@ public 	class GeneralProfile implements Serializable{
 	
 	private Boolean beach;
 	
-	private Boolean Cottage;
+	private Boolean cottage;
 	
 	private Boolean mountain;
 	
@@ -60,7 +60,7 @@ public 	class GeneralProfile implements Serializable{
 
 
 	public Boolean getCottage() {
-		return Cottage;
+		return cottage;
 	}
 
 
@@ -90,7 +90,7 @@ public 	class GeneralProfile implements Serializable{
 
 
 	public void setCottage(Boolean cottage) {
-		Cottage = cottage;
+		this.cottage = cottage;
 	}
 
 

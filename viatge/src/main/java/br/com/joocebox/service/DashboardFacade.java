@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.sql.DataSource;
 
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -59,6 +62,9 @@ public class DashboardFacade {
 	
 	@Autowired  
 	private DataSource dataSource;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 	   
 	//Image
 	public ImageJson addImagePathTmp(ImageJson tempPath){
