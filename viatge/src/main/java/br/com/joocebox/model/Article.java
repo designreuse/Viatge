@@ -1,18 +1,26 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import org.eclipse.persistence.annotations.Multitenant;
@@ -42,7 +50,7 @@ public class Article implements Serializable {
 	
 	@Column(name="at_name")
 	@NotEmpty
-	@Size(min=3, max=25)
+	@Size(min=3, max=255)
 	private String atName;
 
 	@Column(name="at_content")
@@ -54,14 +62,28 @@ public class Article implements Serializable {
 
 	@Column(name="at_active")
 	private int atActive;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="posting_date")
+	private Date postingDate;
 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name = "fk_category_blog")
 	private CategoryBlog categoryBlog;
 	
-	public Article() {		
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+	@JoinColumn(name="fk_ArticleBlog")
+	@Valid
+	private Set<Image> images;
+
+	@Transient
+	private String reducedContent; 
+	
+	public Article() {	
+		this.setPostingDate(new Date());
 	}
 
+	// GETTERS AND SETTERS
 	public Long getIdArticle() {
 		return idArticle;
 	}
@@ -120,6 +142,37 @@ public class Article implements Serializable {
 		this.atActive = atActive;
 	}
 
+	public Date getPostingDate() {
+		return postingDate;
+	}
+
+	public void setPostingDate(Date postingDate) {
+		this.postingDate = postingDate;
+	}
+
+	public Set<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<Image> images) {
+		this.images = images;
+	}
+	
+	public String getReducedContent() {		
+		if (this.getAtContent().length() > 300) {
+			this.setReducedContent(this.getAtContent().substring(0, 300));
+		} else {
+			this.setReducedContent(this.getAtContent().substring(0, this.getAtContent().length()));
+		}
+		return reducedContent;
+	}
+
+	public void setReducedContent(String reducedContent) {
+		this.reducedContent = reducedContent;
+	}
+	// FIM GETTERS AND SETTERS //
+		
+	// EQUALS E HASHCODE //
 	@Override
 	public int hashCode() {
 		final int prime = 31;
