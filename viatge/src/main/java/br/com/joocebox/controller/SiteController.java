@@ -16,12 +16,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.joocebox.model.Agency;
+import br.com.joocebox.model.Article;
 import br.com.joocebox.model.Category;
+import br.com.joocebox.model.CategoryBlog;
 import br.com.joocebox.model.Destination;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
+import br.com.joocebox.service.ArticleBlogFacade;
+import br.com.joocebox.service.CategoryBlogFacade;
 import br.com.joocebox.service.DashboardFacade;
 
 @Controller
@@ -30,10 +36,13 @@ public class SiteController {
     final static Logger logger = LoggerFactory.getLogger(SiteController.class);
 
     @Autowired
-    private DashboardFacade dashboardFacade;
-    
+    private DashboardFacade dashboardFacade;    
     @Autowired
     private CurrentTenantResolver<Long> tenantResolver;
+    @Autowired
+    private ArticleBlogFacade articleBlogFacade;
+    @Autowired
+    private CategoryBlogFacade categoryBlogFacade;
     
     
 	/**
@@ -135,26 +144,43 @@ public class SiteController {
 		return "site/contact02";
 	}
 	
-	@RequestMapping("/blog")
-	public String getBlogPage(){
-		//TODO: Implementar as atributos para a view
-		
-		return "site/blog02";
-	}
-	
-	@RequestMapping("/blog/post")
-	public String getPostPage(){
-		//TODO: Implementar as atributos para a view
-		
-		return "site/post02";
-	}
-	
 	@RequestMapping("/about-us")
 	public String getAboutUsPage(){
 		//TODO: Implementar as atributos para a view
 		
 		return "site/aboutUs02";
 	}
+	
+	//--------- BLOG ---------------------------------------------------------------------------
+	@RequestMapping("/blog")
+	public ModelAndView getBlogPage(){
+		List<Article> articlesBlog = articleBlogFacade.getAtivesArticlesBlog();
+		// Diminui o conteudo do artigo para 50 caracteres, para exibirmos na tela principal do blog.
+		for(Article at : articlesBlog) {
+			at.setReducedContent(at.getAtContent().substring(0, 100));
+		}
+		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articlesBlog);
+		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		
+		return mv;
+	}
+	
+	@RequestMapping("/blog/post/{idArticle}")
+	public ModelAndView getPostPage(@PathVariable Long idArticle){
+		Article articleId = articleBlogFacade.getArticleBlogId(idArticle);
+		ModelAndView mv = new ModelAndView("site/post02", "articleCurrent", articleId);
+		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		return mv;
+	}
+	
+	@RequestMapping(value="/blog/category", method=RequestMethod.GET)
+	public ModelAndView getPostCategory(@RequestParam Long id) {
+		CategoryBlog cb = categoryBlogFacade.getCategoryBlogId(id);
+		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", cb.getArticlesBlog());
+		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		return mv;
+	}
+	//--------- FIM BLOG ---------------------------------------------------------------------------
 	
 	@RequestMapping("/online-shop")
 	public String getonlineShopPage(){

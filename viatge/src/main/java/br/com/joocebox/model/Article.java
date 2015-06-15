@@ -2,19 +2,25 @@ package br.com.joocebox.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.Valid;
 import javax.validation.constraints.Size;
 
 import org.eclipse.persistence.annotations.Multitenant;
@@ -61,9 +67,17 @@ public class Article implements Serializable {
 	@Column(name="posting_date")
 	private Date postingDate;
 
-	@OneToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "fk_category_blog")
 	private CategoryBlog categoryBlog;
+	
+	@OneToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.EAGER)
+	@JoinColumn(name="fk_ArticleBlog")
+	@Valid
+	private Set<Image> images;
+
+	@Transient
+	private String reducedContent; 
 	
 	public Article() {	
 		this.setPostingDate(new Date());
@@ -133,6 +147,22 @@ public class Article implements Serializable {
 
 	public void setPostingDate(Date postingDate) {
 		this.postingDate = postingDate;
+	}
+
+	public Set<Image> getImages() {
+		return images;
+	}
+
+	public void setImages(Set<Image> images) {
+		this.images = images;
+	}
+	
+	public String getReducedContent() {
+		return reducedContent;
+	}
+
+	public void setReducedContent(String reducedContent) {
+		this.reducedContent = reducedContent;
 	}
 
 	@Override

@@ -44,3 +44,64 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+$(function() {
+    $("div#myDropZone").dropzone({
+        url: "/viatge/fileArticleBlog/upload?${_csrf.parameterName}=${_csrf.token}",
+        autoProcessQueue: true,
+        uploadMultiple: false,
+        parallelUploads: 1,
+        maxFilesize: 5,
+        maxFiles: 1,
+        acceptedFiles: "image/jpeg",
+        dictDefaultMessage: "Upload",
+        dictRemoveFile: "Remover",
+        dictInvalidFileType: "Tipo de Arquivo Invalido! Selecione uma imagem do tipo JPG.",
+        dictFileTooBig: "Arquivo grande demais. Selecione outro até 5mb",
+        dictResponseError: "Servidor fora do ar. Contacte o administrador de sistemas",
+        dictMaxFilesExceeded: "O limite de imagens excedeu!",
+        addRemoveLinks: true,
+        removedfile: function(fileArticleBlog) {
+            var imageName = fileArticleBlog.name; 
+            var url = location.href;
+            var id = url.split("?id=");
+            $.ajax({
+                url: '/viatge/fileArticleBlog/imageDelete/'+id[1]+'/'+imageName,
+                type: 'GET', 
+                success: function(result) {
+                    alert('Imagem '+result+' deletada com sucesso!');
+                }
+            });
+
+
+        var _ref;
+        return (_ref = fileArticleBlog.previewElement) != null ? _ref.parentNode.removeChild(fileArticleBlog.previewElement) : void 0;        
+                      },
+        
+        init: function() {          
+            Dropzone.autoDiscover = false;
+            
+            thisDropzone = this;
+            
+            $.get('/viatge/fileArticleBlog/imageList/'+$('#articleBlogID').val(), function(data) {
+            	var existingFileCount = 0;
+                $.each(data, function(key,value){
+                    
+                    var obj = JSON.parse(value);
+                     
+                    var mockFile = { name: obj.fileName, size: obj.fileSize };
+                     
+                    thisDropzone.options.addedfile.call(thisDropzone, mockFile);    
+                    thisDropzone.options.thumbnail.call(thisDropzone, mockFile, "/viatge/image/articleBlog/thubnail/"+obj.fileName+'/'+$('#articleBlogID').val());
+                    
+                    existingFileCount = existingFileCount + 1; // The number of files already uploaded
+                    thisDropzone.options.maxFiles = thisDropzone.options.maxFiles - existingFileCount;
+                     
+                });
+                 
+            });
+        }
+    });
+});
+</script>

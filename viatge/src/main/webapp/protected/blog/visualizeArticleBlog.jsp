@@ -56,8 +56,9 @@
 						</div>
 					</c:if>
 						<div class="col-sm-4">
-							<a href="<c:url value="edit-article-blog/${articleBlogForm.idArticle}"/>"
-							style="class="pull-right btn btn-info "
+							<a href="edit-article-blog?id=${articleBlogForm.idArticle}"
+							style="margin-right: 10px;"
+								class="pull-right btn btn-info "
 								title="Editar Artigo">Editar </a> 
 								<a href="#"
 								style="margin-left: 10px;"
@@ -68,10 +69,14 @@
 				</div>
 
 				<div class="col-sm-12">
-					Titulo: ${articleBlogForm.atName} 
+					<h4>Titulo: ${articleBlogForm.atName}</h4>
+					<h4>Categoria : ${articleBlogForm.categoryBlog.ctBgName}</h4> 
 					<br /> 
-					<img alt="Capa do Artigo"
-						src="${articleBlogForm.articleCover}" />
+					<figure>
+						<img id="cover-article-img" alt="Capa do Artigo"
+							 src="${pageContext.request.contextPath}/image/articleBlog/${articleBlogForm.atName}/${articleBlogForm.idArticle}" />
+					</figure>
+						
 						 <br /><br />
 					${articleBlogForm.atContent}
 				</div>

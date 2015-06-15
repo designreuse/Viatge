@@ -67,8 +67,7 @@
                                 <c:forEach items="${categoriesBlogList}" var="c">
                                     <tr>
                                         <td><a href="edit-category-blog?id=${c.idCategoryBlog}">${c.ctBgName}</a></td>
-                                        <td>Criar Função</td>
-<%--                                         <td>${c.destinationSize}</td> --%>
+                                        <td>${c.articlesLinked}</td>
                                         <td>
 											<div class="make-switch" data-on="primary" data-off="info">
 												<c:choose>

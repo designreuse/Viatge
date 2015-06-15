@@ -96,7 +96,7 @@
 							<tbody>
 								<c:forEach items="${articlesBlogList}" var="a">
 									<tr>
-										<td><a href="visualize-article-blog/${a.idArticle}">${a.atName}</a></td>
+										<td><a href="visualize-article-blog?id=${a.idArticle}">${a.atName}</a></td>
 										<td>${a.categoryBlog.ctBgName}</td>
 										<td>
 											<fmt:formatDate value="${a.postingDate}" pattern="dd/MM/yyyy"/>

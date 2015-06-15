@@ -1,13 +1,16 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -43,6 +46,9 @@ public class CategoryBlog implements Serializable {
 	
 	@Column(name="ct_bg_active")
 	private int ctBgActive;
+	
+	@OneToMany(mappedBy="categoryBlog", fetch = FetchType.LAZY)
+	private List<Article> articlesBlog;
 
 	public CategoryBlog() {
 	}
@@ -78,6 +84,26 @@ public class CategoryBlog implements Serializable {
 	public void setCtBgActive(int ctBgActive) {
 		this.ctBgActive = ctBgActive;
 	}	
+	
+	public List<Article> getArticlesBlog() {
+		return articlesBlog;
+	}
+
+	public void setArticlesBlog(List<Article> articlesBlog) {
+		this.articlesBlog = articlesBlog;
+	}
+
+	/**
+	 * Retorna quantos artigos estão vinculados a essa categoria.
+	 * @return int - Qtd. de artigos.
+	 */
+	public int getArticlesLinked() {
+		if (this.getArticlesBlog() != null && !this.getArticlesBlog().isEmpty()) {
+			return this.getArticlesBlog().size();
+		} else {
+			return 0;
+		}
+	}
 	
 	@Override
 	public int hashCode() {

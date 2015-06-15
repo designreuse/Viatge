@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 
 import br.com.joocebox.model.FileMeta;
 import br.com.joocebox.model.Image;
+import br.com.joocebox.service.ArticleBlogFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.ImageFacade;
 import br.com.joocebox.utils.JooceBoxProperties;
@@ -35,6 +36,8 @@ public class ImageController {
 	
     @Autowired
     private DashboardFacade dashboardFacade;
+    @Autowired
+    private ArticleBlogFacade articleBlogFacade;
     
     @Autowired
     private ImageFacade imageFacade;
@@ -185,6 +188,60 @@ public class ImageController {
 		String tenantName = dashboardFacade.getAgency().getSubdomain();		
 		String absolutePath = new JooceBoxProperties().getPathTenants()+tenantName;		
 		return absolutePath;
+	}
+
+	/////// ****** Imagens Artigos do Blog ****** //////////
+	
+	@RequestMapping(value = "/image/articleBlog/thubnail/{articleBlogName}/{id}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewArticleBlogThubnailCRM(@PathVariable String articleBlogName, @PathVariable Long id) {	
+		String pathArticleBlog = pathWithTenant()+"/articleBlog/thumbnail/"+articleBlogFacade.getArticleBlogId(id).getAtName()+'/'+articleBlogName;
+		return serverImageJPEG(pathArticleBlog);	
+	}
+
+    
+	@RequestMapping(value = "/image/articleBlog/{articleBlogName}/{id}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewArticleBlogResizedImagesCRM(@PathVariable String articleBlogName, @PathVariable Long id) {		
+		String pathArticleBlog = pathWithTenant()+"/articleBlog/resizedImages/"+articleBlogFacade.getArticleBlogId(id).getAtName();
+		return serverListOfImageJPEG(pathArticleBlog);		
+	}
+	
+	@RequestMapping(value = "/image/articleBlog/{articleBlogName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewArticleBlogResizedImages(@PathVariable String articleBlogName) {		
+		String pathArticleBlog = pathWithTenant()+"/articleBlog/resizedImages/"+articleBlogName;
+		return serverListOfImageJPEG(pathArticleBlog);		
+	}
+	
+	@RequestMapping(value = "/image/articleBlog/thumbnail/{articleBlogName}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewArticleBlogThubnail(@PathVariable String articleBlogName) {		
+		String pathArticleBlog = pathWithTenant()+"/articleBlog/thumbnail/"+articleBlogName;
+		return serverListOfImageJPEG(pathArticleBlog);	
+	}
+	
+	
+	
+	@RequestMapping(value = "/image/articleBlogDetail/{imageId}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> viewArticleBlogDetail(@PathVariable Long imageId) {
+		
+		Image image = imageFacade.getImageId(imageId);
+
+		FileMeta loadImageFromJSONGson = loadImageFromJSONGson(image.getJson());
+		
+		InputStream in;
+		
+		try {
+			
+			in = new FileInputStream(new File(loadImageFromJSONGson.getFileTmpPath().replace("original", "resizedImages")));
+
+		    final HttpHeaders headers = new HttpHeaders();
+		    headers.setContentType(MediaType.IMAGE_JPEG);
+
+		    return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), headers, HttpStatus.CREATED);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return null;		
 	}
 	
 }

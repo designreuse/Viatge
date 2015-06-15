@@ -31,5 +31,18 @@ public class JooceBoxProperties {
 	public String getPathHighlightImage(String domain){
 		return this.pathTenants+domain+"/destination/highlightImages/";
 	}
+
+	// ****** ARTIGO DO BLOG ****** //
+	public String getPathOriginalImagesArticleBlog(String domain){
+		return this.pathTenants+domain+"/articleBlog/original/";
+	}
+	
+	public String getPathThumbnailImageArticleBlog(String domain){
+		return this.pathTenants+domain+"/articleBlog/thumbnail/";
+	}
+	
+	public String getPathResizedImageArticleBlog(String domain){
+		return this.pathTenants+domain+"/articleBlog/resizedImages/";
+	}
 	
 }

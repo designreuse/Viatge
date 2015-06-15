@@ -9,43 +9,46 @@
 
 		<!-- POST -->
 		<article class="post">
-			<h1>Maecenas quis turpis cursus</h1>
+			<h1>${articleCurrent.atName}</h1>
 
 			<figure>
-				<img src="public/image/temp/post03.jpg" width="100%"
+				<img src="${pageContext.request.contextPath}/image/articleBlog/${articleCurrent.atName}/${articleCurrent.idArticle}" width="100%"
 					alt="titulo do post">
 			</figure>
 
 			<!-- TEXTO DE POST -->
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-				Maecenas quis turpis cursus, sagittis arcu eu, condimentum mi. Donec
-				mollis lacus arcu, a tincidunt orci euismod tempor. Etiam viverra
-				nulla nec justo eleifend tristique tincidunt et dolor. Donec eu
-				ullamcorper purus. Integer sed ullamcorper velit, et rhoncus turpis.
-				Sed tempor nunc malesuada, scelerisque mauris ut, efficitur felis.
-				Ut ut metus eu sapien faucibus condimentum. Vivamus quis suscipit
-				neque, nec placerat velit.</p>
-			<p>Integer semper dolor vitae lacus convallis, eget eleifend nisi
-				pulvinar. Phasellus volutpat dictum fringilla. Etiam non risus nisl.
-				Mauris tempor malesuada faucibus. Praesent sem nisi, imperdiet in
-				ultrices blandit, porta sed quam. Integer rutrum elementum ligula,
-				sit amet lobortis diam finibus vel. Praesent eget mauris tempor,
-				commodo enim id, sagittis dui. Mauris volutpat elit sit amet
-				suscipit convallis. Mauris orci odio, faucibus nec ante non, laoreet
-				volutpat diam. Suspendisse a lobortis turpis. Sed sollicitudin velit
-				odio, eget posuere turpis iaculis et. Quisque malesuada elit vel
-				faucibus efficitur. Vestibulum nibh orci, tincidunt nec tellus
-				feugiat, iaculis suscipit orci.</p>
-			<p>Vivamus molestie dignissim tortor, sed consequat dui tempus
-				ac. Morbi a aliquam velit. Pellentesque vitae tellus eget nunc porta
-				rutrum ut imperdiet augue. Suspendisse laoreet finibus libero in
-				dignissim. Sed blandit sit amet sapien ac varius. Sed gravida purus
-				orci, eget pellentesque ex pulvinar a. Nullam consectetur augue eu
-				ullamcorper lobortis. Nam tincidunt neque eu mauris efficitur
-				dictum. Pellentesque non orci tincidunt, ultricies ligula eu,
-				elementum odio. Cras consectetur eget tortor ut vehicula. Vivamus
-				vitae dictum dolor. Nullam ultrices enim nec nunc volutpat, ac
-				vestibulum diam iaculis. Vivamus a convallis enim.</p>
+			<p>
+				${articleCurrent.atContent}
+			</p>
+<!-- 			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. -->
+<!-- 				Maecenas quis turpis cursus, sagittis arcu eu, condimentum mi. Donec -->
+<!-- 				mollis lacus arcu, a tincidunt orci euismod tempor. Etiam viverra -->
+<!-- 				nulla nec justo eleifend tristique tincidunt et dolor. Donec eu -->
+<!-- 				ullamcorper purus. Integer sed ullamcorper velit, et rhoncus turpis. -->
+<!-- 				Sed tempor nunc malesuada, scelerisque mauris ut, efficitur felis. -->
+<!-- 				Ut ut metus eu sapien faucibus condimentum. Vivamus quis suscipit -->
+<!-- 				neque, nec placerat velit.</p> -->
+<!-- 			<p>Integer semper dolor vitae lacus convallis, eget eleifend nisi -->
+<!-- 				pulvinar. Phasellus volutpat dictum fringilla. Etiam non risus nisl. -->
+<!-- 				Mauris tempor malesuada faucibus. Praesent sem nisi, imperdiet in -->
+<!-- 				ultrices blandit, porta sed quam. Integer rutrum elementum ligula, -->
+<!-- 				sit amet lobortis diam finibus vel. Praesent eget mauris tempor, -->
+<!-- 				commodo enim id, sagittis dui. Mauris volutpat elit sit amet -->
+<!-- 				suscipit convallis. Mauris orci odio, faucibus nec ante non, laoreet -->
+<!-- 				volutpat diam. Suspendisse a lobortis turpis. Sed sollicitudin velit -->
+<!-- 				odio, eget posuere turpis iaculis et. Quisque malesuada elit vel -->
+<!-- 				faucibus efficitur. Vestibulum nibh orci, tincidunt nec tellus -->
+<!-- 				feugiat, iaculis suscipit orci.</p> -->
+<!-- 			<p>Vivamus molestie dignissim tortor, sed consequat dui tempus -->
+<!-- 				ac. Morbi a aliquam velit. Pellentesque vitae tellus eget nunc porta -->
+<!-- 				rutrum ut imperdiet augue. Suspendisse laoreet finibus libero in -->
+<!-- 				dignissim. Sed blandit sit amet sapien ac varius. Sed gravida purus -->
+<!-- 				orci, eget pellentesque ex pulvinar a. Nullam consectetur augue eu -->
+<!-- 				ullamcorper lobortis. Nam tincidunt neque eu mauris efficitur -->
+<!-- 				dictum. Pellentesque non orci tincidunt, ultricies ligula eu, -->
+<!-- 				elementum odio. Cras consectetur eget tortor ut vehicula. Vivamus -->
+<!-- 				vitae dictum dolor. Nullam ultrices enim nec nunc volutpat, ac -->
+<!-- 				vestibulum diam iaculis. Vivamus a convallis enim.</p> -->
 
 			<!-- COMPARTILHAMENTO -->
 			<div class="compartilhamento">
@@ -158,18 +161,9 @@
 			<div class="categorias">
 				<h2>Categorias</h2>
 				<menu>
-					<li><a href="#">Sollicitudin</a></li>
-					<li><a href="#">Pellentesque</a></li>
-					<li><a href="#">Sagittis urna</a></li>
-					<li><a href="#">Vivamus maximus</a></li>
-					<li><a href="#">Maecenas porta</a></li>
-					<li><a href="#">Maecenas urna</a></li>
-					<li><a href="#">Sollicitudin</a></li>
-					<li><a href="#">Pellentesque</a></li>
-					<li><a href="#">Sagittis urna</a></li>
-					<li><a href="#">Vivamus maximus</a></li>
-					<li><a href="#">Maecenas porta</a></li>
-					<li><a href="#">Maecenas urna</a></li>
+                	<c:forEach items="${categories}" var="category">
+	                    <li><a href="#">${category.ctBgName}</a></li>
+	                </c:forEach>
 				</menu>
 			</div>
 
