@@ -24,10 +24,13 @@ import br.com.joocebox.model.Agency;
 import br.com.joocebox.model.Article;
 import br.com.joocebox.model.Category;
 import br.com.joocebox.model.CategoryBlog;
+import br.com.joocebox.model.Customer;
+import br.com.joocebox.model.CustomerPhone;
 import br.com.joocebox.model.Destination;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.service.ArticleBlogFacade;
 import br.com.joocebox.service.CategoryBlogFacade;
+import br.com.joocebox.service.CustomerFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.DestinationFacade;
 
@@ -50,8 +53,8 @@ public class SiteController{
     private ArticleBlogFacade articleBlogFacade;
     @Autowired
     private CategoryBlogFacade categoryBlogFacade;
-    
-    
+    @Autowired
+    private CustomerFacade customerFacade;
 	/**
 	 * Método utilizado para apresentar os dados do tenant corrente no site.
 	 *  
@@ -75,7 +78,7 @@ public class SiteController{
 		session.setAttribute("tenant", agency);
 		model.addAttribute("destination", new Destination());
 		logger.info("Buscando agência e adicionando seus atributos");
-		
+		model.addAttribute("articlesFooter", articleBlogFacade.findActivesArticles());
 		
 		if (agency.getAgencyConfig().getSiteTemplate() == 1) {
 			return "site/index";
@@ -161,9 +164,10 @@ public class SiteController{
 	//--------- BLOG ---------------------------------------------------------------------------
 	@RequestMapping("/blog")
 	public ModelAndView getBlogPage(){
-		List<Article> articlesBlog = articleBlogFacade.getAtivesArticlesBlog();
-		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articlesBlog);
+		ModelAndView mv = new ModelAndView("site/blog02");
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		mv.addObject("articlesBlog", articleBlogFacade.findActivesArticles());
+		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
 		
 		return mv;
 	}
@@ -173,6 +177,7 @@ public class SiteController{
 		Article articleId = articleBlogFacade.getArticleBlogId(idArticle);
 		ModelAndView mv = new ModelAndView("site/post02", "articleCurrent", articleId);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
 		return mv;
 	}
 	
@@ -182,6 +187,7 @@ public class SiteController{
 		List<Article> articles = articleBlogFacade.findByCategoryBlogAndAtActive(cb);
 		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articles);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
+		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
 		return mv;
 	}
 	//--------- FIM BLOG ---------------------------------------------------------------------------
@@ -198,11 +204,22 @@ public class SiteController{
 		return new ModelAndView("site/perfectTravel02", "agencyName", dashboardFacade.getAgency().getAgencyName());
 	}
 	
+	
+	//--------- ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	@RequestMapping("/budget")
-	public String getBudgetPage(){
-		//TODO: Implementar as atributos para a view		
-		return "site/budget02";
+	public ModelAndView getBudgetPage(){
+		ModelAndView mv = new ModelAndView("site/budget02");
+		//Busca pelo e-mail // caso tenha cookie.
+		Customer customerForm = customerFacade.getCustomerByEmail("");
+		CustomerPhone customerPhoneForm;
+		if (customerForm == null) {
+			customerForm = new Customer();
+			customerPhoneForm = new CustomerPhone();
+		}
+		mv.addObject("customerForm", customerForm);
+		return mv;
 	}
+	//--------- FIM ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	
 	@RequestMapping("/templateColorCodHex")
 	@ResponseBody
