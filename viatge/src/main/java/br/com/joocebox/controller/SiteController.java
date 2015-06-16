@@ -56,9 +56,8 @@ public class SiteController{
     private ArticleBlogFacade articleBlogFacade;
     @Autowired
     private CategoryBlogFacade categoryBlogFacade;
-    @Autowired
-    private CustomerFacade customerFacade;
-	/**
+
+    /**
 	 * Método utilizado para apresentar os dados do tenant corrente no site.
 	 *  
 	 * @return String
@@ -210,7 +209,6 @@ public class SiteController{
 	
 	//--------- ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	@RequestMapping("/budget")
-<<<<<<< HEAD
 	public ModelAndView getBudgetPage(){
 		ModelAndView mv = new ModelAndView("site/budget02");
 		//Busca pelo e-mail // caso tenha cookie.
@@ -222,10 +220,6 @@ public class SiteController{
 		}
 		mv.addObject("customerForm", customerForm);
 		return mv;
-=======
-	public String getBudgetPage(){
-		return "site/budget02";
->>>>>>> branch 'master' of https://github.com/JooceBox/Viatge.git
 	}
 	//--------- FIM ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	
