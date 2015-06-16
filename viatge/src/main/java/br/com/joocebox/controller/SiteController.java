@@ -28,6 +28,7 @@ import br.com.joocebox.model.Destination;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.service.ArticleBlogFacade;
 import br.com.joocebox.service.CategoryBlogFacade;
+import br.com.joocebox.service.CustomerFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.DestinationFacade;
 
@@ -43,6 +44,9 @@ public class SiteController{
     private DashboardFacade dashboardFacade;    
     @Autowired
     private DestinationFacade destinationFacade;
+    
+    @Autowired
+    private CustomerFacade customerFacade;
     
     @Autowired
     private CurrentTenantResolver<Long> tenantResolver;
@@ -200,7 +204,6 @@ public class SiteController{
 	
 	@RequestMapping("/budget")
 	public String getBudgetPage(){
-		//TODO: Implementar as atributos para a view		
 		return "site/budget02";
 	}
 	
@@ -208,6 +211,12 @@ public class SiteController{
 	@ResponseBody
 	public String getCodHex(){
 		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
+	}
+	
+	@RequestMapping(value = "/add-new-customer", method = RequestMethod.GET)
+	@ResponseBody
+	public void saveCustomerBySite(String name, String email){
+		customerFacade.saveCustomerBySite(name, email);
 	}
 	
 	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.GET)

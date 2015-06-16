@@ -190,23 +190,27 @@
 
 </section>
 
-<div id="dialog-form">
-	<p>Legal, encontramos 3 destinos que são perfeitos para você!</p>
-	<p>Por gentileza informe seu nome e e-mail...</p>
+<div id="dialog-form" title="Cadastar-se no site">
+	<p class="validateTips txt-thema">Legal, encontramos os destinos que são
+		perfeitos para você!</p>
+	<p class="txt-thema">Por gentileza informe seu nome e e-mail...</p>
 
-	<form action="destinos.php" method="post" name="form-cadastro"
-		class="form-cadastro">
+	<form>
 		<div>
-			<input type="text" class="input01" name="nome"
-				placeholder="Seu Nome_">
+				<input type="text" name="name"
+				id="name" placeholder="Seu Nome..."
+				class="input01">
 		</div>
+		<br />
 		<div>
-			<input type="email" class="input01" name="email"
-				placeholder="Seu E-mail_">
+				<input type="text" name="email"
+				id="email" placeholder="Seu E-mail..."
+				class=" input01">
 		</div>
-		<div>
-			<button type="submit" name="cadastrar" class="btn bg-thema submit01">VER
-				DESTINOS</button>
-		</div>
+
+		<!-- Allow form submission with keyboard without duplicating the dialog button -->
+		<input type="submit" tabindex="-1"
+			style="position: absolute; top: -1000px">
+
 	</form>
 </div>

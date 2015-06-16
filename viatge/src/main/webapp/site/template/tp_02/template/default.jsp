@@ -22,7 +22,7 @@
 <!--[if lt IE 9]>
 <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
+
 <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.tooltipster.min.js"></script>
@@ -32,6 +32,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.customSelect.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.maskedinput.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/placeholder.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/application.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/changeThemeColor.js"></script>

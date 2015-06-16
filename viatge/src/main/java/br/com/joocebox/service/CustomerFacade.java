@@ -1,6 +1,9 @@
 package br.com.joocebox.service;
 
+import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Customer;
+import br.com.joocebox.model.CustomerService;
+import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
 
@@ -21,6 +26,9 @@ public class CustomerFacade {
 	
 	@Autowired
 	private CustomerRepository customerRepository;
+	
+	@Autowired
+	private CurrentTenantResolver<Long> tenantResolver;
 	
 	public List<Country> getCountriesList() {
 		return countryRepsitory.findAll();
@@ -40,6 +48,28 @@ public class CustomerFacade {
 	
 	public List<Customer> getAllCustomers(){
 		return customerRepository.findAll();
+	}
+	
+	public void saveCustomerBySite(String name, String email){
+		
+		//TODO: Realizar a verificação prévia se já existe tal e-mail na BD. Tudo isso para não duplicar clientes.
+		//Customer findByEmailLike = customerRepository.findByEmailLikeAndTenantId(email, tenantResolver.getCurrentTenantId());	
+			Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
+			
+			Customer c = new Customer();
+			c.setFirstName(name);
+			c.setEmail(email);
+			
+			CustomerService cs = new CustomerService();
+			cs.setDate(new Date());
+			cs.setSituation(true);
+			cs.setServiceObservations("Registro realizado via site");
+			customerServiceList.add(cs);
+			
+			c.setCustomerService(customerServiceList);
+			
+			customerRepository.save(c);
+		
 	}
 	
 	public void update(Customer customer, Long id) {

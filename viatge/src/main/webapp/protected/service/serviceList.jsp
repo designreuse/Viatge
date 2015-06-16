@@ -55,7 +55,7 @@
 
 			<li class="status03">
 				<div>
-					<p>EM NEGOCIAÇÃO</p>
+					<p>ORÇAMENTO ENVIADO</p>
 					<div class="var-metrica">
 						<span class="fontawesome-comments"></span> <c:out value="${submitted_budget_div}"/>
 					</div>
