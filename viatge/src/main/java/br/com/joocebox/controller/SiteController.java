@@ -48,6 +48,9 @@ public class SiteController{
     private DestinationFacade destinationFacade;
     
     @Autowired
+    private CustomerFacade customerFacade;
+    
+    @Autowired
     private CurrentTenantResolver<Long> tenantResolver;
     @Autowired
     private ArticleBlogFacade articleBlogFacade;
@@ -207,6 +210,7 @@ public class SiteController{
 	
 	//--------- ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	@RequestMapping("/budget")
+<<<<<<< HEAD
 	public ModelAndView getBudgetPage(){
 		ModelAndView mv = new ModelAndView("site/budget02");
 		//Busca pelo e-mail // caso tenha cookie.
@@ -218,6 +222,10 @@ public class SiteController{
 		}
 		mv.addObject("customerForm", customerForm);
 		return mv;
+=======
+	public String getBudgetPage(){
+		return "site/budget02";
+>>>>>>> branch 'master' of https://github.com/JooceBox/Viatge.git
 	}
 	//--------- FIM ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	
@@ -225,6 +233,12 @@ public class SiteController{
 	@ResponseBody
 	public String getCodHex(){
 		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
+	}
+	
+	@RequestMapping(value = "/add-new-customer", method = RequestMethod.GET)
+	@ResponseBody
+	public void saveCustomerBySite(String name, String email){
+		customerFacade.saveCustomerBySite(name, email);
 	}
 	
 	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.GET)

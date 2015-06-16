@@ -1,9 +1,23 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Pattern;
 
 import org.eclipse.persistence.annotations.Multitenant;
@@ -15,9 +29,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.hash.Hashing;
-
-import java.util.Date;
-import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -37,7 +48,6 @@ public class Customer implements Serializable {
 	@Column(name = "birth_date")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
-	@NotNull(message = "A data de nascimento não pode estar vazia!")
 	private Date birthDate;
 
 	@Column(name = "email")
@@ -49,7 +59,6 @@ public class Customer implements Serializable {
 	private String firstName;
 
 	@Column(name = "gender")
-	@NotNull
 	@Pattern(regexp = "^[M|F]{1}$", message = "Selecione o sexo do colaborador.")
 	private String gender;
 
@@ -203,7 +212,7 @@ public class Customer implements Serializable {
 
 	@Override
 	public String toString() {
-		return MoreObjects.toStringHelper(ServiceItem.class)
+		return MoreObjects.toStringHelper(Customer.class)
 				.add("Nome do Cliente", getFirstName())
 				.add("Email", getEmail()).toString();
 	}

@@ -59,7 +59,7 @@
             	<h2>TELEFONE</h2>
                 <p>
                 	<i class="txt-thema"></i>
-                    <a href="tel:04332589856" class="link-telefone"><small>(43)</small> 3258-9856</a>
+                    <a href="tel:04332589856" class="link-telefone"><small>(43)</small> 0000-0000</a>
                 </p>
             </div>
             

@@ -10,8 +10,7 @@
 	      emailRegex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/,
 	      name = $( "#name" ),
 	      email = $( "#email" ),
-	      password = $( "#password" ),
-	      allFields = $( [] ).add( name ).add( email ).add( password ),
+	      allFields = $( [] ).add( name ).add( email ),
 	      tips = $( ".validateTips" );
 	 
 	    function updateTips( t ) {
@@ -26,8 +25,8 @@
 	    function checkLength( o, n, min, max ) {
 	      if ( o.val().length > max || o.val().length < min ) {
 	        o.addClass( "ui-state-error" );
-	        updateTips( "Length of " + n + " must be between " +
-	          min + " and " + max + "." );
+	        updateTips( "O Comprimento do campo " + n + " precisar ser maior " +
+	          min + " e menor que  " + max + "." );
 	        return false;
 	      } else {
 	        return true;
@@ -43,38 +42,65 @@
 	        return true;
 	      }
 	    }
+	    
+	    function callAJAX(name, email){
+            $.ajax({
+                type: "GET",
+                url: "/viatge/add-new-customer",
+                data:{ name: $(name).val(), email: $(email).val()},
+                success: function (response) {
+                	perfectDestinationFilter();
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+	    }
+	    
+	    function perfectDestinationFilter(){
+            $.ajax({
+                type: "GET",
+                url: "/viatge/perfect-travel-filter",
+                data: $('#form-filter-perfect-travel').serialize(),
+                success: function (response) {
+                	$('html').html( response );
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError);
+                }
+            });
+	    }
 	 
 	    function addUser() {
 	      var valid = true;
 	      allFields.removeClass( "ui-state-error" );
 	 
-	      valid = valid && checkLength( name, "username", 3, 16 );
+	      valid = valid && checkLength( name, "Nome", 3, 16 );
 	      valid = valid && checkLength( email, "email", 6, 80 );
-	      valid = valid && checkLength( password, "password", 5, 16 );
 	 
-	      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "Username may consist of a-z, 0-9, underscores, spaces and must begin with a letter." );
-	      valid = valid && checkRegexp( email, emailRegex, "eg. ui@jquery.com" );
-	      valid = valid && checkRegexp( password, /^([0-9a-zA-Z])+$/, "Password field only allow : a-z 0-9" );
-	 
-	      if ( valid ) {
-	        $( "#users tbody" ).append( "<tr>" +
-	          "<td>" + name.val() + "</td>" +
-	          "<td>" + email.val() + "</td>" +
-	          "<td>" + password.val() + "</td>" +
-	        "</tr>" );
-	        dialog.dialog( "close" );
+	      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "O nome deve conter apenas caracteres alfanumericos" );
+	      valid = valid && checkRegexp( email, emailRegex, "Insira um e-mail valido Ex. fulano@joocebox.com" );
+	      
+	      if(valid && ($.cookie('jb_client_name') == null && $.cookie('jb_client_email') == null)){
+	    	  $.cookie('jb_client_name', $(name).val());
+	    	  $.cookie('jb_client_email', $(email).val());
+	          callAJAX(name, email);
+	          dialog.dialog( "close" );
+	      }else{	    		 
+		      return valid;
 	      }
-	      return valid;
+
 	    }
 	 
 	    dialog = $( "#dialog-form" ).dialog({
 	      autoOpen: false,
-	      height: 500,
-	      width: 500,
+	      height: 300,
+	      width: 300,
 	      modal: true,
+	      resizable: false,
 	      buttons: {
 	        "Ver Destinos": addUser,
-	        Cancel: function() {
+	        "Cancelar": function() {
 	          dialog.dialog( "close" );
 	        }
 	      },
@@ -89,8 +115,12 @@
 	      addUser();
 	    });
 	 
-	    $( "#show-modal" ).button().on( "click", function() {
-	      dialog.dialog( "open" );
+	    $( "#show-modal" ).click(function() {
+		      if ($.cookie('jb_client_email') == null && $.cookie('jb_client_name') == null) {	          
+		          dialog.dialog( "open" );
+		      }else{
+		    	  perfectDestinationFilter();
+		      }
 	    });
 	  });
 
