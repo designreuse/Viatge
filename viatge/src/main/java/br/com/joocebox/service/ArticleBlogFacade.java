@@ -1,6 +1,5 @@
 package br.com.joocebox.service;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,17 +33,8 @@ public class ArticleBlogFacade {
 	 * Método que retorna uma lista de Artigos(Blog) ativos.
 	 * @return List<Article> Artigos Ativos.
 	 */
-	public List<Article> getAtivesArticlesBlog() {
-		List<Article> allArticleBlog = this.getArticlesBlogList();
-		Iterator<Article> iterator = allArticleBlog.iterator();
-		//Verificação de artigos que não estão ativos.		
-		while (iterator.hasNext()) {
-			Article articleBlog = (Article) iterator.next();
-			if(articleBlog.getAtActive() != 1){ 
-				iterator.remove();							
-			}
-		}
-		return allArticleBlog;
+	public List<Article> findActivesArticles() {
+		return articleBlogRepository.findByAtActiveEquals(1);
 	}
 
 	public void addArticleBlog(Article article) {

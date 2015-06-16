@@ -11,24 +11,24 @@
 		<p>Fusce quis nibh tempor, posuere sapien et, venenatis tortor
 			mauris feugiat tempor magna, a accumsan purus molestie sed.</p>
 
-		<form action="orcamento.php?alert=orcamento" method="post"
+		<f:form action="orcamento.php?alert=orcamento" method="post"
 			name="form-contato" class="form-orcamento">
 
 			<h2>Dados de contato</h2>
 
 			<div class="box-01">
 				<label for="nome">*Primeiro Nome:</label> <input type="text"
-					class="input01" name="nome" id="nome">
+					class="input01" name="nome" id="nome" value="${customerForm.firstName}">
 			</div>
 
 			<div class="box-02">
 				<label for="sobrenome">*Sobrenome:</label> <input type="text"
-					class="input01" name="sobrenome" id="sobrenome">
+					class="input01" name="sobrenome" id="sobrenome" value="${customerForm.lastName}">
 			</div>
 
 			<div class="box-01">
 				<label for="email">*E-mail:</label> <input type="email"
-					class="input01" name="email" id="email">
+					class="input01" name="email" id="email" value="${customerForm.email}">
 			</div>
 
 			<div class="box-02">
@@ -39,13 +39,13 @@
 			<div class="box-01">
 				<label for="telefone">*Telefone:</label> <input type="tel"
 					class="input01" name="telefone" id="telefone"
-					placeholder="Telefone: (00) 0000-0000">
+					placeholder="Telefone: (00) 0000-0000" value="${contactForm.customerPhone.homePhone}">
 			</div>
 
 			<div class="box-02">
 				<label for="celular">Celular:</label> <input type="tel"
 					class="input01" name="celular" id="celular"
-					placeholder="Celular: (00) 0000-0000">
+					placeholder="Celular: (00) 0000-0000" value="${contactForm.customerPhone.celPhone}">
 			</div>
 
 			<h2>Destino desejado</h2>
@@ -86,7 +86,7 @@
 				</button>
 			</div>
 
-		</form>
+		</f:form>
 
 		<!-- AUTO COMPLATE DE DESTINO -->
 		<script>

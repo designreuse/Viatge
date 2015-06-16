@@ -78,6 +78,8 @@ public class Article implements Serializable {
 
 	@Transient
 	private String reducedContent; 
+	@Transient
+	private String reducedContentFooter; 
 	
 	public Article() {	
 		this.setPostingDate(new Date());
@@ -170,8 +172,21 @@ public class Article implements Serializable {
 	public void setReducedContent(String reducedContent) {
 		this.reducedContent = reducedContent;
 	}
+	
+	public String getReducedContentFooter() {
+		if (this.getAtContent().length() > 60) {
+			this.setReducedContentFooter(this.getAtContent().substring(0, 60));
+		} else {
+			this.setReducedContentFooter(this.getAtContent().substring(0, this.getAtContent().length()));
+		}
+		return reducedContentFooter;
+	}
+
+	public void setReducedContentFooter(String reducedContentFooter) {
+		this.reducedContentFooter = reducedContentFooter;
+	}
 	// FIM GETTERS AND SETTERS //
-		
+
 	// EQUALS E HASHCODE //
 	@Override
 	public int hashCode() {

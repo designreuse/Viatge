@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <footer>
@@ -38,23 +39,16 @@
             	<h2 class="txt-thema">NO BLOG</h2>
                 <!-- FEEDS DE NOTÍCIAS -->
                 <ul>
-                	<li>
-                    	<figure><a href="#"><img src="public/image/temp/post-p01.jpg" alt=""></a></figure> <!-- IMAGEM DE 70 x 70 PX -->
-                        <div>
-                            <h3><a href="#">AMAZING PLACES</a></h3>
-                            <p><a href="#">Purus ac congue arcu cursus ut vitae pulvinar massaidp.</a></p>
-                            <p>25 março, 2015</p>
-                    	</div>
-                    </li>
-                    
-                    <li>
-                    	<figure><a href="#"><img src="public/image/temp/post-p02.jpg" alt=""></a></figure> <!-- IMAGEM DE 70 x 70 PX -->
-                        <div>
-                            <h3><a href="#">TRAVEL INSURANCE</a></h3>
-                            <p><a href="#">Purus ac congue arcu cursus ut vitae pulvinar massaidp.</a></p>
-                            <p>25 março, 2015</p>
-                        </div>
-                    </li>
+                <c:forEach items="${articlesFooter}" var="aFooter" end="1">
+	                	<li>
+	                    	<figure><a href="${pageContext.request.contextPath}/blog/post/${aFooter.idArticle}"><img src="${pageContext.request.contextPath}/image/articleBlog/thumbnail/${aFooter.atName}" alt="imagemPost"></a></figure> <!-- IMAGEM DE 70 x 70 PX -->
+	                        <div>
+	                            <h3><a href="${pageContext.request.contextPath}/blog/post/${aFooter.idArticle}">${aFooter.atName}</a></h3>
+	                            <p><a href="${pageContext.request.contextPath}/blog/post/${aFooter.idArticle}">${aFooter.reducedContentFooter}</a></p>
+	                            <p><fmt:formatDate value="${aFooter.postingDate}" dateStyle="long"/></p>
+	                    	</div>
+	                    </li>   
+                    </c:forEach>                 
                 </ul>
                 <!-- FIM FEEDS DE NOTÍCIAS -->
             </div>

@@ -101,4 +101,17 @@ public class CustomerFacade {
 		customerRepository.save(oldCustomer);
 	}
 
+	/**
+	 * Retorna um Customer baseado no e-mail informado.
+	 * @param email do Customer
+	 * @return Customer referente ao e-mail ou NULO, caso não encontre.
+	 */
+	public Customer getCustomerByEmail(String email) {
+		List<Customer> customers = customerRepository.findByEmail(email);
+		if (customers != null && !customers.isEmpty()) {
+			return customers.get(0);
+		} else {
+			return null;
+		}
+	}
 }

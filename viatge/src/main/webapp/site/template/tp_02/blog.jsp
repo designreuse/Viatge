@@ -16,7 +16,7 @@
             	<h1>${article.atName}</h1>
                 <figure><img src="${pageContext.request.contextPath}/image/articleBlog/${article.atName}/${article.idArticle}" width="100%" alt="titulo do post"></figure><!-- IMAGEM 650PX POR ALT. AUTO -->
             	<p>
-            		${article.reducedContent}
+            		${article.reducedContent} ...
 				</p>
 
                 <a href="${pageContext.request.contextPath}/blog/post/${article.idArticle}" class="btn bg-thema">Continuar Lendo</a>
