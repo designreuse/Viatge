@@ -70,6 +70,14 @@
                 }
             });
 	    }
+	    
+	    function verifyCookie(){
+		      if ($.cookie('jb_client_email') == null && $.cookie('jb_client_name') == null) {	          
+		          dialog.dialog( "open" );
+		      }else{
+		    	  perfectDestinationFilter();
+		      }
+	    }
 	 
 	    function addUser() {
 	      var valid = true;
@@ -114,13 +122,13 @@
 	      event.preventDefault();
 	      addUser();
 	    });
-	 
+
 	    $( "#show-modal" ).click(function() {
-		      if ($.cookie('jb_client_email') == null && $.cookie('jb_client_name') == null) {	          
-		          dialog.dialog( "open" );
-		      }else{
-		    	  perfectDestinationFilter();
-		      }
+	    	verifyCookie();
+	    });
+	    
+	    $('#show-modal-perfect').click(function() {
+	    	verifyCookie();
 	    });
 	  });
 

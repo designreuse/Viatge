@@ -190,6 +190,7 @@ public class ServiceController{
 	            
 	        	//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
 	            customer.setPassenger(passengerList);
+	            customer.setSite(Boolean.FALSE);
 	            
 	            //Persiste um novo Cliente
 	            customerFacade.saveCustomer(customer);

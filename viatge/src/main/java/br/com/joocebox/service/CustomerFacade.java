@@ -16,6 +16,7 @@ import br.com.joocebox.model.CustomerService;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
+import br.com.joocebox.repositories.dao.CustomerDAO;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
@@ -29,6 +30,9 @@ public class CustomerFacade {
 	
 	@Autowired
 	private CurrentTenantResolver<Long> tenantResolver;
+	
+	@Autowired
+	private CustomerDAO customerDao;
 	
 	public List<Country> getCountriesList() {
 		return countryRepsitory.findAll();
@@ -50,25 +54,27 @@ public class CustomerFacade {
 		return customerRepository.findAll();
 	}
 	
-	public void saveCustomerBySite(String name, String email){
-		
-		//TODO: Realizar a verificação prévia se já existe tal e-mail na BD. Tudo isso para não duplicar clientes.
-		//Customer findByEmailLike = customerRepository.findByEmailLikeAndTenantId(email, tenantResolver.getCurrentTenantId());	
+	public void saveCustomerBySite(String name, String email){		
+		if(customerDao.findCustomerByEmail(email)){
 			Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
-			
+
 			Customer c = new Customer();
 			c.setFirstName(name);
 			c.setEmail(email);
-			
+			c.setSite(Boolean.TRUE);
+
 			CustomerService cs = new CustomerService();
 			cs.setDate(new Date());
 			cs.setSituation(true);
 			cs.setServiceObservations("Registro realizado via site");
 			customerServiceList.add(cs);
-			
+
 			c.setCustomerService(customerServiceList);
-			
+
 			customerRepository.save(c);
+		}else{
+			//TODO: Abrir ou não um novo atendimento?
+		}
 		
 	}
 	

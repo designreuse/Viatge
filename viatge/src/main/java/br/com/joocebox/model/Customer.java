@@ -83,6 +83,9 @@ public class Customer implements Serializable {
 
 	@Column(name = "observations")
 	private String observations;
+	
+	@Column(name = "site")
+	private Boolean site;
 
 	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name = "fk_customer")
@@ -196,6 +199,14 @@ public class Customer implements Serializable {
 		this.customerService = customerService;
 	}
 	
+	public Boolean getSite() {
+		return site;
+	}
+
+	public void setSite(Boolean site) {
+		this.site = site;
+	}
+
 	@Override
 	public int hashCode() {
 		return Hashing.sha1().hashCode();

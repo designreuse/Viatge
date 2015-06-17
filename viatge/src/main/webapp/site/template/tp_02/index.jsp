@@ -198,14 +198,14 @@
 	<form>
 		<div>
 				<input type="text" name="name"
-				id="name" placeholder="Seu Nome..."
-				class="input01">
+				id="name" placeholder="Primeiro Nome..."
+				style="display: block; margin: 0; width: 100%; font-family: sans-serif; font-size: 14px; appearance: none; box-shadow: none; border-radius: none;">
 		</div>
 		<br />
 		<div>
 				<input type="text" name="email"
-				id="email" placeholder="Seu E-mail..."
-				class=" input01">
+				id="email" placeholder="E-mail..."
+				style="display: block; margin: 0; width: 100%; font-family: sans-serif; font-size: 14px; appearance: none; box-shadow: none; border-radius: none;">
 		</div>
 
 		<!-- Allow form submission with keyboard without duplicating the dialog button -->

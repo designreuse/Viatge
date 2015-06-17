@@ -11,8 +11,6 @@ public interface CustomerRepository extends BaseRepository<Customer, Long>{
 	
 	List<Customer> findByfirstNameAndTenantId(String firstName, Long tenantId);
 	
-	Customer findByEmailLikeAndTenantId(String email, Long tenantId);
-	
 	List<Customer> findAll();
 	
 	List<Customer> findByEmail(String email);

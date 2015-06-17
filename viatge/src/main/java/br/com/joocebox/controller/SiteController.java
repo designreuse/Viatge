@@ -44,6 +44,7 @@ public class SiteController{
 
     @Autowired
     private DashboardFacade dashboardFacade;    
+    
     @Autowired
     private DestinationFacade destinationFacade;
     
@@ -244,5 +245,4 @@ public class SiteController{
 		}
 
 	}
-
 }

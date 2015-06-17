@@ -59,6 +59,17 @@
 						<span class="fontawesome-user"></span> <strong>&nbsp;${customer.firstName}&nbsp;${customer.lastName}</strong>
 						
 					</p>
+					<p>	
+						<c:choose>
+                        	<c:when test="${customer.site}">
+								<span class="fontawesome-bar-chart"></span> Origem: Site
+							</c:when>
+							<c:otherwise>
+								<span class="fontawesome-bar-chart"></span> Origem: CRM
+							</c:otherwise>
+						</c:choose>			
+											
+					</p>
 					<p>
 						<span class="fontawesome-star"></span> Nascimento: <fmt:formatDate value="${customer.birthDate}"/>
 					</p>
