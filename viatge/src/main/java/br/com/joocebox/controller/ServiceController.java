@@ -104,28 +104,28 @@ public class ServiceController{
 
 	@RequestMapping("/serviceList")
 	public ModelAndView getMenuServiceList(Model model) {
-
-		Iterable<VwOpenService> openServiceList = serviceFacade.getOpenServiceList();
-		
-		List<VwOpenService> auxCustomer = new ArrayList<VwOpenService>();
-		
-		for (VwOpenService vwOpenService : openServiceList) {
-			
-	        if ("SUBMITTED_BUDGET".equals(vwOpenService.getSaleType()) || "SEND_BUDGET".equals(vwOpenService.getSaleType())) {
-	            auxCustomer.add(vwOpenService);
-	            
-	        }
-			
-		}
-
 		ModelAndView mv = new ModelAndView("service/serviceList");
-		mv.addObject("serviceListRegister", auxCustomer);
-		mv.addObject("ListSize", auxCustomer.size());
+		List<VwOpenService> openServiceList = serviceFacade.getOpenServiceList();		
+		mv.addObject("serviceListRegister", openServiceList);
+		mv.addObject("ListSize", openServiceList.size());
+		mv.addObject("nextToTravel", nextToTravel(openServiceList));
 		avgBudgets(model);
-		countOfBudgets(model);
-		
+		countOfBudgets(model);	
 		return mv;
+	}
 
+	/**
+	 * @param openServiceList
+	 * @return int
+	 */
+	public int nextToTravel(List<VwOpenService> openServiceList) {
+		int nextToTravel = 0;
+		for(VwOpenService openService : openServiceList){
+			if(openService.getSite()){
+				nextToTravel ++;
+			}				
+		}
+		return nextToTravel;
 	}
 	
 	public void initializeComponents(Model model) {

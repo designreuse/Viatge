@@ -33,14 +33,14 @@ import com.google.common.hash.Hashing;
 public class VwOpenService implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-
+	@Id
 	@Column(name="id_customer")
 	private Long id;
 	
 	@Column(name="id_customer_service")
 	private Long idCustomerService;
 	
-	@Id
+	
 	@Column(name="hash_id")
 	private String hashId;
 	
@@ -66,6 +66,9 @@ public class VwOpenService implements Serializable {
 	
 	@Column(name="sale_type")
 	private String saleType;
+	
+	@Column(name ="site")
+	private Boolean site;
 
 
 	public VwOpenService() {
@@ -182,6 +185,16 @@ public class VwOpenService implements Serializable {
 	public void setSaleType(String saleType) {
 		this.saleType = saleType;
 	}
+
+	public Boolean getSite() {
+		return site;
+	}
+
+
+	public void setSite(Boolean site) {
+		this.site = site;
+	}
+
 
 	@Override
 	public int hashCode() {
