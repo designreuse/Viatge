@@ -212,7 +212,7 @@ public class AgencyController {
 				
 				destinationImageReplication();
 				
-				dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
+				//dashboardFacade.callReplicationDestinationProcedure(populatedAgency.getSubdomain(), dashboardFacade.getAgency().getTenantId());
 				
 				dashboardFacade.callCreateMasterEmployeeProcedure(agency.getFirstName(), agency.getLastName(), dashboardFacade.getAgency().getTenantId());
 			}
