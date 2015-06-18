@@ -58,21 +58,11 @@
 	    }
 	    
 	    function perfectDestinationFilter(){
-            $.ajax({
-                type: "GET",
-                url: "/viatge/perfect-travel-filter",
-                data: $('#form-filter-perfect-travel').serialize(),
-                success: function (response) {
-                	$('html').html( response );
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
+	    	$("#form-filter-perfect-travel").submit();
 	    }
 	    
 	    function verifyCookie(){
-		      if ($.cookie('jb_client_email') == null && $.cookie('jb_client_name') == null) {	          
+		      if ($.cookie('jb_client_email') === null && $.cookie('jb_client_name') === null) {	          
 		          dialog.dialog( "open" );
 		      }else{
 		    	  perfectDestinationFilter();
@@ -89,7 +79,7 @@
 	      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "O nome deve conter apenas caracteres alfanumericos" );
 	      valid = valid && checkRegexp( email, emailRegex, "Insira um e-mail valido Ex. fulano@joocebox.com" );
 	      
-	      if(valid && ($.cookie('jb_client_name') == null && $.cookie('jb_client_email') == null)){
+	      if(valid && ($.cookie('jb_client_name') === null && $.cookie('jb_client_email') === null)){
 	    	  $.cookie('jb_client_name', $(name).val());
 	    	  $.cookie('jb_client_email', $(email).val());
 	          callAJAX(name, email);

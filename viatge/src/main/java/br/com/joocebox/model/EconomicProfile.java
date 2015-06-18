@@ -1,6 +1,8 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+
+import com.google.common.base.Joiner;
 
 @Entity
 @Table(name="economic_profile")
@@ -81,5 +85,21 @@ public class EconomicProfile implements Serializable{
 
 	public void setLuxury(Boolean luxury) {
 		this.luxury = luxury;
+	}
+	
+	@Override
+	public String toString() {
+		List<String> economicProfileList = new ArrayList<String>();
+		
+		if(Boolean.TRUE.equals(this.economic))
+			economicProfileList.add("Viagem Econômica");
+		
+		if(Boolean.TRUE.equals(this.intermediate))
+			economicProfileList.add("Viagem Intermediária");
+		
+		if(Boolean.TRUE.equals(this.luxury))
+			economicProfileList.add("Viagem de Luxo");
+
+		return "Procuro: " + Joiner.on(",").join(economicProfileList);
 	}
 }

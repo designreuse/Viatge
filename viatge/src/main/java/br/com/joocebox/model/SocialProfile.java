@@ -1,6 +1,8 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+
+import com.google.common.base.Joiner;
 
 @Entity
 @Table(name="social_profile")
@@ -97,6 +101,34 @@ public class SocialProfile implements Serializable{
 
 	public void setFamilyChildren(Boolean familyChildren) {
 		this.familyChildren = familyChildren;
+	}
+	
+	@Override
+	public String toString() {
+		List<String> socialProfileList = new ArrayList<String>();
+		
+		if(Boolean.TRUE.equals(this.accompanying))
+			socialProfileList.add("Acompanhantes");
+		
+		if(Boolean.TRUE.equals(this.alone))
+			socialProfileList.add("Sozinho");
+		
+		if(Boolean.TRUE.equals(this.children))
+			socialProfileList.add("Crianças");
+		
+		if(Boolean.TRUE.equals(this.elderly))
+			socialProfileList.add("Idosos");
+		
+		if(Boolean.TRUE.equals(this.familyChildren))
+			socialProfileList.add("Sem Crianças");
+		
+		if(Boolean.TRUE.equals(this.friends))
+			socialProfileList.add("Amigos");
+		
+		if(Boolean.TRUE.equals(this.teenager))
+			socialProfileList.add("Jovem");
+
+		return "Adoro: " + Joiner.on(",").join(socialProfileList);
 	}
 
 }

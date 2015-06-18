@@ -12,7 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Customer;
+import br.com.joocebox.model.CustomerAddress;
+import br.com.joocebox.model.CustomerPhone;
 import br.com.joocebox.model.CustomerService;
+import br.com.joocebox.model.Document;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
@@ -70,6 +73,10 @@ public class CustomerFacade {
 			customerServiceList.add(cs);
 
 			c.setCustomerService(customerServiceList);
+			
+			c.setCustomerAddress(new CustomerAddress());
+			c.setCustomerPhone(new CustomerPhone());
+			c.setDocument(new Document());
 
 			customerRepository.save(c);
 		}else{
@@ -100,6 +107,8 @@ public class CustomerFacade {
 		oldCustomer.getCustomerPhone().setCelPhone(customer.getCustomerPhone().getCelPhone());
 		oldCustomer.getCustomerPhone().setHomePhone(customer.getCustomerPhone().getHomePhone());
 		oldCustomer.getCustomerPhone().setWorkPhone(customer.getCustomerPhone().getWorkPhone());
+		
+		
 
 		oldCustomer.getDocument().setCpf(customer.getDocument().getCpf());
 		oldCustomer.getDocument().setRg(customer.getDocument().getRg());

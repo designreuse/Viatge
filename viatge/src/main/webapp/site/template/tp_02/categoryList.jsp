@@ -32,11 +32,11 @@
                        		</p>
                         
                         <ul>
-                            <li><a href="#" class="viajo" title="viajo"></a></li> <!-- TOOLTIP = TITLE DE LINK -->
-                            <li><a href="#" class="procuro" title="procuro"></a></li>
-                            <li><a href="#" class="quero" title="quero"></a></li>
-                            <li><a href="#" class="prefiro" title="prefiro"></a></li>
-                            <li><a href="#" class="adoro" title="adoro"></a></li>
+								<li><a href="#" class="viajo" title="${listOfDestinationByCategory.socialProfiles}"></a></li>
+								<li><a href="#" class="procuro" title="${listOfDestinationByCategory.economicProfiles}"></a></li>
+								<li><a href="#" class="quero" title="${listOfDestinationByCategory.tripProfiles}"></a></li>
+								<li><a href="#" class="prefiro" title="${listOfDestinationByCategory.weatherprofile}"></a></li>
+								<li><a href="#" class="adoro" title="${listOfDestinationByCategory.generalProfiles}"></a></li>
                         </ul>
                         <a href="${pageContext.request.contextPath}/destinationDetail/${listOfDestinationByCategory.idDestination}" class="btn">MAIS DETALHES</a>
                 	
