@@ -117,7 +117,7 @@ public class SocialProfile implements Serializable{
 			socialProfileList.add("Crianças");
 		
 		if(Boolean.TRUE.equals(this.elderly))
-			socialProfileList.add("Idosos");
+			socialProfileList.add("Terceira Idade");
 		
 		if(Boolean.TRUE.equals(this.familyChildren))
 			socialProfileList.add("Sem Crianças");
@@ -128,7 +128,7 @@ public class SocialProfile implements Serializable{
 		if(Boolean.TRUE.equals(this.teenager))
 			socialProfileList.add("Jovem");
 
-		return "Adoro: " + Joiner.on(",").join(socialProfileList);
+		return Joiner.on(",").join(socialProfileList);
 	}
 
 }

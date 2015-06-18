@@ -124,6 +124,6 @@ public 	class GeneralProfile implements Serializable{
 		if(Boolean.TRUE.equals(this.city))
 			generalProfileList.add("Cidade");
 
-		return "Adoro: " + Joiner.on(",").join(generalProfileList);
+		return Joiner.on(",").join(generalProfileList);
 	}
 }

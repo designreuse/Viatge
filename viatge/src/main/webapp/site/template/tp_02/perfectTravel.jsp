@@ -31,7 +31,7 @@
 
 			<!-- FILTRO DE DESTINO -->
 
-		<form id="form-filter-perfect-travel" method="get" class="form-filtro">
+		<form id="form-filter-perfect-travel" action="${pageContext.request.contextPath}/perfect-travel-filter" method="get" class="form-filtro">
 			<div class="box-select">
 				<label>VIAJO COM (SOU)</label> <select id="social-select"
 					class="select01" name="social">
@@ -40,7 +40,7 @@
 					<option value="alone">Sozinho</option>
 					<option value="children">Crianças</option>
 					<option value="friends">Amigos</option>
-					<option value="elderly">Idosos</option>
+					<option value="elderly">Terceira Idade</option>
 					<option value="familyChildren">Sem Crianças</option>
 					<option value="teenager">Jovem</option>
 				</select>
@@ -77,8 +77,8 @@
 				<label>PREFIRO</label> <select id="weather-select" class="select01"
 					name="weather">
 					<option value="">Selecionar...</option>
-					<option value="cold">Calor</option>
-					<option value="heat">Frio</option>
+					<option value="cold">Frio</option>
+					<option value="heat">Calor</option>
 					<option value="winter">Frio e Neve</option>
 				</select>
 			</div>
@@ -116,8 +116,7 @@
 </section>
 
 <div id="dialog-form" title="Cadastar-se no site">
-	<p class="validateTips txt-thema">Legal, encontramos os destinos que são
-		perfeitos para você!</p>
+	<p class="validateTips txt-thema">Legal, encontramos os destinos que são perfeitos para você!</p>
 	<p class="txt-thema">Por gentileza informe seu nome e e-mail...</p>
 
 	<form>

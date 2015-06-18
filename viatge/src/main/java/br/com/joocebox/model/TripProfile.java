@@ -146,6 +146,6 @@ public class TripProfile implements Serializable{
 		if(Boolean.TRUE.equals(this.sports))
 			tripProfileList.add("Ecoturismo e Esportes");
 
-		return "Quero: " + Joiner.on(",").join(tripProfileList);
+		return Joiner.on(",").join(tripProfileList);
 	}
 }

@@ -100,6 +100,6 @@ public class EconomicProfile implements Serializable{
 		if(Boolean.TRUE.equals(this.luxury))
 			economicProfileList.add("Viagem de Luxo");
 
-		return "Procuro: " + Joiner.on(",").join(economicProfileList);
+		return Joiner.on(",").join(economicProfileList);
 	}
 }

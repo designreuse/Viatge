@@ -87,7 +87,7 @@ public class WeatherProfile implements Serializable{
 		if(Boolean.TRUE.equals(this.winter))
 			weatherProfileList.add("Frio e Neve");
 
-		return "Prefiro: " + Joiner.on(",").join(weatherProfileList);
+		return Joiner.on(",").join(weatherProfileList);
 	}
 
 }
