@@ -126,7 +126,7 @@ public class TripProfile implements Serializable{
 			tripProfileList.add("Parques Tematicos e Entretenimento");
 		
 		if(Boolean.TRUE.equals(this.fun))
-			tripProfileList.add("Festas e Vida Noturna");
+			tripProfileList.add("Diversão e Aventura");
 		
 		if(Boolean.TRUE.equals(this.gastronomy))
 			tripProfileList.add("Gastronomia e Culinária");
@@ -135,7 +135,7 @@ public class TripProfile implements Serializable{
 			tripProfileList.add("História, Arte e Cultura");
 		
 		if(Boolean.TRUE.equals(this.party))
-			tripProfileList.add("Diversão e Aventura");
+			tripProfileList.add("Festas e Vida Noturna");
 		
 		if(Boolean.TRUE.equals(this.romance))
 			tripProfileList.add("Romance");
