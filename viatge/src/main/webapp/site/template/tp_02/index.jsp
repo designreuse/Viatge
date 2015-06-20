@@ -8,7 +8,7 @@
 	<!-- FILTRO -->
 	<article class="filtro">
 		<h1 class="bg-thema">ENCONTRAR DESTINO PERFEITO.</h1>
-		<form id="form-filter-perfect-travel" method="get" class="form-filtro">
+		<form id="form-filter-perfect-travel" action="${pageContext.request.contextPath}/perfect-travel-filter" method="get" class="form-filtro">
 			<div class="box-select">
 				<label>VIAJO COM (SOU)</label> <select id="social-select"
 					class="select01" name="social">
@@ -17,7 +17,7 @@
 					<option value="alone">Sozinho</option>
 					<option value="children">Crianças</option>
 					<option value="friends">Amigos</option>
-					<option value="elderly">Idosos</option>
+					<option value="elderly">Terceira Idade</option>
 					<option value="familyChildren">Sem Crianças</option>
 					<option value="teenager">Jovem</option>
 				</select>
@@ -54,8 +54,8 @@
 				<label>PREFIRO</label> <select id="weather-select" class="select01"
 					name="weather">
 					<option value="">Selecionar...</option>
-					<option value="cold">Calor</option>
-					<option value="heat">Frio</option>
+					<option value="cold">Frio</option>
+					<option value="heat">Calor</option>
 					<option value="winter">Frio e Neve</option>
 				</select>
 			</div>
@@ -113,11 +113,12 @@
 
 							<ul>
 								<!-- TOOLTIP = TITLE DE LINK -->
-								<li><a href="#" class="viajo" title="viajo"></a></li>
-								<li><a href="#" class="procuro" title="procuro"></a></li>
-								<li><a href="#" class="quero" title="quero"></a></li>
-								<li><a href="#" class="prefiro" title="prefiro"></a></li>
-								<li><a href="#" class="adoro" title="adoro"></a></li>
+								<li><a href="#" class="viajo" title="${destinationHighlight.socialProfiles}"></a></li>
+								<!-- TOOLTIP = TITLE DE LINK -->
+								<li><a href="#" class="procuro" title="${destinationHighlight.economicProfiles}"></a></li>
+								<li><a href="#" class="quero" title="${destinationHighlight.tripProfiles}"></a></li>
+								<li><a href="#" class="prefiro" title="${destinationHighlight.weatherprofile}"></a></li>
+								<li><a href="#" class="adoro" title="${destinationHighlight.generalProfiles}"></a></li>
 							</ul>
 							<a
 								href="${pageContext.request.contextPath}/destinationDetail/${destinationHighlight.idDestination}"
@@ -166,12 +167,11 @@
 							</p>
 
 							<ul>
-								<li><a href="#" class="viajo" title="${d.generalProfiles}"></a></li>
-								<!-- TOOLTIP = TITLE DE LINK -->
-								<li><a href="#" class="procuro" title="procuro"></a></li>
-								<li><a href="#" class="quero" title="quero"></a></li>
-								<li><a href="#" class="prefiro" title="prefiro"></a></li>
-								<li><a href="#" class="adoro" title="adoro"></a></li>
+								<li><a href="#" class="viajo" title="${d.socialProfiles}"></a></li>
+								<li><a href="#" class="procuro" title="${d.economicProfiles}"></a></li>
+								<li><a href="#" class="quero" title="${d.tripProfiles}"></a></li>
+								<li><a href="#" class="prefiro" title="${d.weatherprofile}"></a></li>
+								<li><a href="#" class="adoro" title="${d.generalProfiles}"></a></li>
 							</ul>
 							<a
 								href="${pageContext.request.contextPath}/destinationDetail/${d.idDestination}"
@@ -189,7 +189,7 @@
 	<!-- FIM DE PACOTES -->
 
 </section>
-
+<!-- Modal -->
 <div id="dialog-form" title="Cadastar-se no site">
 	<p class="validateTips txt-thema">Legal, encontramos os destinos que são
 		perfeitos para você!</p>
@@ -198,14 +198,14 @@
 	<form>
 		<div>
 				<input type="text" name="name"
-				id="name" placeholder="Seu Nome..."
-				class="input01">
+				id="name" placeholder="Primeiro Nome..."
+				style="display: block; margin: 0; width: 100%; font-family: sans-serif; font-size: 14px; appearance: none; box-shadow: none; border-radius: none;">
 		</div>
 		<br />
 		<div>
 				<input type="text" name="email"
-				id="email" placeholder="Seu E-mail..."
-				class=" input01">
+				id="email" placeholder="E-mail..."
+				style="display: block; margin: 0; width: 100%; font-family: sans-serif; font-size: 14px; appearance: none; box-shadow: none; border-radius: none;">
 		</div>
 
 		<!-- Allow form submission with keyboard without duplicating the dialog button -->

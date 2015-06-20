@@ -60,11 +60,11 @@
 			</table>
 		</div>
 
-		<button type="submit" class="btn btn-primary">
+		<button type="submit" class="pull-right btn btn-primary">
 			<span class="entypo-plus-squared"></span>&nbsp;&nbsp;Cadastrar
 		</button>
 
-		<a class="btn btn-danger" href="<c:url value="article-blog-list"/>">
+		<a class="pull-right btn btn-danger" href="<c:url value="article-blog-list"/>">
 			<span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Cancelar
 		</a>
 	</f:form>

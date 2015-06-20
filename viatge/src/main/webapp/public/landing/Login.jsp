@@ -17,8 +17,7 @@
 
 
 		<div class="alert alert-success" ng-show="displayLogoutMessage">
-			<span class="entypo-thumbs-up"></span> <strong>Tchau!</strong>&nbsp;&nbsp;Você
-			efetuou o logout com sucesso!
+			<span class="entypo-thumbs-up"></span> <strong>Tchau!</strong>&nbsp;&nbsp;Logout efetuado com sucesso!
 		</div>
 	</div>
 	<div class="input-group">

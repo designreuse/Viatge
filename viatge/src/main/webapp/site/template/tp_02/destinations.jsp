@@ -42,12 +42,11 @@
 							</p>
 
 							<ul>
-								<li><a href="#" class="viajo" title="viajo"></a></li>
-								<!-- TOOLTIP = TITLE DE LINK -->
-								<li><a href="#" class="procuro" title="procuro"></a></li>
-								<li><a href="#" class="quero" title="quero"></a></li>
-								<li><a href="#" class="prefiro" title="prefiro"></a></li>
-								<li><a href="#" class="adoro" title="adoro"></a></li>
+								<li><a href="#" class="viajo" title="${destination.socialProfiles}"></a></li>
+								<li><a href="#" class="procuro" title="${destination.economicProfiles}"></a></li>
+								<li><a href="#" class="quero" title="${destination.tripProfiles}"></a></li>
+								<li><a href="#" class="prefiro" title="${destination.weatherprofile}"></a></li>
+								<li><a href="#" class="adoro" title="${destination.generalProfiles}"></a></li>
 							</ul>
 							<a
 								href="${pageContext.request.contextPath}/destinationDetail/${destination.idDestination}"

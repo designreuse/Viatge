@@ -58,12 +58,12 @@
 						<div class="col-sm-4">
 							<a href="edit-article-blog?id=${articleBlogForm.idArticle}"
 							style="margin-right: 10px;"
-								class="pull-right btn btn-info "
+								class="pull-left btn btn-info "
 								title="Editar Artigo">Editar </a> 
 								&nbsp;&nbsp;
 								<a href="#"
 								style="margin-left: 10px;"
-								class="pull-right btn btn-info" title="Ver Artigo no Site">
+								class=" btn btn-info" title="Ver Artigo no Site">
 								Ver no Site </a>
 						</div>
 				</div>

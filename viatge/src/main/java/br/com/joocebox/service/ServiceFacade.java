@@ -40,8 +40,7 @@ public class ServiceFacade {
 		return serviceRepository.findAll();
 	}
 
-	public Iterable<VwOpenService> getOpenServiceList() {
+	public List<VwOpenService> getOpenServiceList() {
 		return vwOpenService.findAll();
 	}
-
 }

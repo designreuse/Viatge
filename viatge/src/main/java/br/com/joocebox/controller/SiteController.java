@@ -58,6 +58,7 @@ public class SiteController{
 
     @Autowired
     private DashboardFacade dashboardFacade;    
+    
     @Autowired
     private DestinationFacade destinationFacade;
     @Autowired
@@ -274,7 +275,6 @@ public class SiteController{
 			} else {
 				customer = new Customer();
 				customer.setCustomerPhone(new CustomerPhone());
-				customer.setCustomerService(new HashSet<CustomerService>());
 				
 			}
 			customer.setFirstName(customerForm.getFirstName());
@@ -288,7 +288,7 @@ public class SiteController{
 			if (customerServiceId != null) {
 				cService = customerServiceFacade.findById(customerServiceId);
 			}			
-			customer.getCustomerService().add(cService);
+			customer.setCustomerService(cService);
 			Date dataIda = FormatObjects.formatStringDateToDateObject(ida, redirectAttributes);
 			Date dataVolta = FormatObjects.formatStringDateToDateObject(volta, redirectAttributes);
 			
@@ -296,7 +296,7 @@ public class SiteController{
 			cService.setServiceItem(new HashSet<ServiceItem>());
 			cService.getServiceItem().add(sItem);
 			//save customer
-			customerFacade.saveCustomer(customer);
+			customerFacade.save(customer);
 			//save customerService
 			customerServiceFacade.saveCustomerService(cService);
 			//save serviceItem
@@ -330,5 +330,4 @@ public class SiteController{
 		}
 
 	}
-
 }

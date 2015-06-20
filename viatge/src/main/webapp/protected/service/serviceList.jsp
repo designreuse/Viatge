@@ -37,7 +37,7 @@
 				<div>
 					<p>PRÓXIMOS DE VIAJAR</p>
 					<div class="var-metrica">
-						<span class="entypo-clock"></span> 0
+						<span class="entypo-clock"></span> <c:out value="${nextToTravel}"></c:out>
 					</div>
 				</div>
 			</li>
@@ -141,6 +141,9 @@
                                         	<fmt:formatDate value="${service.seeIn}"/>
                                         </td>
                                         <c:choose>
+                                            <c:when test="${true}">
+                                        		<td><span class="label label-success status01">&nbsp;&nbsp;</span></td>
+                                        	</c:when>
                                         	<c:when test="${service.saleType eq 'SEND_BUDGET'}">
                                         		<td><span class="label label-success status02">&nbsp;&nbsp;</span></td>
                                         	</c:when>

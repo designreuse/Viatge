@@ -27,7 +27,7 @@ public class StreetView implements Serializable {
 	@Column(name="tenant_id", insertable=false, updatable=false)
 	private Long tenantId;
 	
-	@Column(name="embedCode", length=1000)
+	@Column(name="embedCode", length=4000)
 	private String embedCode;
 	
 	@Column(name="src")

@@ -1,6 +1,8 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+
+import com.google.common.base.Joiner;
 
 @Entity
 @Table(name="weather_profile")
@@ -41,6 +45,7 @@ public class WeatherProfile implements Serializable{
 	public Long getId() {
 		return id;
 	}
+
 	public Long getTenantId() {
 		return tenantId;
 	}
@@ -67,6 +72,22 @@ public class WeatherProfile implements Serializable{
 	}
 	public void setWinter(Boolean winter) {
 		this.winter = winter;
+	}
+	
+	@Override
+	public String toString() {
+		List<String> weatherProfileList = new ArrayList<String>();
+		
+		if(Boolean.TRUE.equals(this.cold))
+			weatherProfileList.add("Frio");
+		
+		if(Boolean.TRUE.equals(this.heat))
+			weatherProfileList.add("Calor");
+		
+		if(Boolean.TRUE.equals(this.winter))
+			weatherProfileList.add("Frio e Neve");
+
+		return Joiner.on(",").join(weatherProfileList);
 	}
 
 }

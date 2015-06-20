@@ -35,7 +35,7 @@ public class CategoryController {
         return "category/categoryList";
     }
     
-    @RequestMapping("newCategory")
+    @RequestMapping("new-category")
     public String newCategory(Model model) {
         model.addAttribute("categoryForm", new Category());
         model.addAttribute("action", "addCategory");

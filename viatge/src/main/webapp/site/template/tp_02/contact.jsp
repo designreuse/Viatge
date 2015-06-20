@@ -9,7 +9,7 @@
     	
         <div class="col-1">
             <h1>Contato</h1>    
-            <p>Fusce quis nibh tempor, posuere sapien et, venenatis tortor mauris feugiat tempor magna, a accumsan purus molestie sed. </p>
+            <p>E vivencie as melhores experiências de viagem da sua vida.</p>
             
             <form action="contato.php?alert=contato" method="post" name="form-contato" class="form-contato">
                 <div class="box-1">

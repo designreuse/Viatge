@@ -8,13 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    
+    <script type="text/javascript" src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
     <!-- Le styles -->
+
     <script src="${pageContext.request.contextPath}/resources/js/wizard/lib/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
-    
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"></link>
+
+    <link  rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css"></link>
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/loader-style.css">
@@ -81,7 +82,7 @@
     
 </head>
 
-<body>
+<body ng-app="JooceboxCrm">
 
 	<tiles:insertAttribute name="navbar" />
 
@@ -147,7 +148,10 @@
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>
     
+    <!-- Funcionalidade de "Gestão de Atendimentos" -->
+    <script src="${pageContext.request.contextPath}/resources/js/app-crm/serviceController.js" type="text/javascript"></script>
 
+    
 <script type="text/javascript">
 $(function() {
 	var winWrap = $(window).height() - 75;

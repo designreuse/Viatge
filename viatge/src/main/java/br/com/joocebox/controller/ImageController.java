@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.Normalizer;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -69,8 +70,9 @@ public class ImageController {
 	}
 	
 	@RequestMapping(value = "/image/destination/thumbnail/{destinationName}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> viewDestinationThubnail(@PathVariable String destinationName) {		
-		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+destinationName;
+	public ResponseEntity<byte[]> viewDestinationThubnail(@PathVariable String destinationName) {
+		String normalizeUnicode = normalizeUnicode(destinationName);
+		String pathDestination = pathWithTenant()+"/destination/thumbnail/"+normalizeUnicode;
 		return serverListOfImageJPEG(pathDestination);	
 	}
 	
@@ -242,6 +244,14 @@ public class ImageController {
 		}
 		
 		return null;		
+	}
+	
+	protected String normalizeUnicode(String str) {
+	    Normalizer.Form form = Normalizer.Form.NFC;
+	    if (!Normalizer.isNormalized(str, form)) {
+	        return Normalizer.normalize(str, form);
+	    }
+	    return str;
 	}
 	
 }

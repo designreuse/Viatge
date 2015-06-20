@@ -1,6 +1,8 @@
 package br.com.joocebox.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorType;
@@ -13,6 +15,8 @@ import javax.persistence.Table;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+
+import com.google.common.base.Joiner;
 
 @Entity
 @Table(name="general_profile")
@@ -103,6 +107,23 @@ public 	class GeneralProfile implements Serializable{
 		this.city = city;
 	}
 
-		
 
+	@Override
+	public String toString() {
+		List<String> generalProfileList = new ArrayList<String>();
+		
+		if(Boolean.TRUE.equals(this.beach))
+			generalProfileList.add("Praia");
+		
+		if(Boolean.TRUE.equals(this.cottage))
+			generalProfileList.add("Campo");
+		
+		if(Boolean.TRUE.equals(this.mountain))
+			generalProfileList.add("Montanha");
+		
+		if(Boolean.TRUE.equals(this.city))
+			generalProfileList.add("Cidade");
+
+		return Joiner.on(",").join(generalProfileList);
+	}
 }

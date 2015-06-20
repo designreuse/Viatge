@@ -18,12 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.joocebox.model.Country;
 import br.com.joocebox.model.Customer;
+import br.com.joocebox.model.CustomerAddress;
+import br.com.joocebox.model.CustomerPhone;
 import br.com.joocebox.model.CustomerService;
 import br.com.joocebox.model.FamilyBond;
 import br.com.joocebox.model.Passenger;
+import br.com.joocebox.model.Document;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
+import br.com.joocebox.repositories.dao.CustomerDAO;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
@@ -41,12 +45,27 @@ public class CustomerFacade {
 	@PersistenceContext
     private EntityManager entityManager;
 
+	@Autowired
+	private CustomerDAO customerDao;
+	
 	public List<Country> getCountriesList() {
 		return countryRepsitory.findAll();
 	}
 	
-	public Customer saveCustomer(Customer customer) {
-		return customerRepository.save(customer);
+	public void save(Customer customer) {
+		//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
+        customer.setSite(Boolean.FALSE);
+        
+        //Inicia um objeto do tipo CustomerService para abrir um atendimento.
+        CustomerService customerService = new CustomerService();        
+        //Atualiza a data da ultima abertura do serviço
+        customerService.setDate(new Date());
+        
+        //Seta 
+        //customerService.setSituation(Boolean.TRUE);         
+
+	
+		//return customerRepository.save(customer);
 	}
 
 	public Customer getCustomerId(Long id) {
@@ -61,25 +80,29 @@ public class CustomerFacade {
 		return customerRepository.findAll();
 	}
 	
-	public void saveCustomerBySite(String name, String email){
-		
-		//TODO: Realizar a verificação prévia se já existe tal e-mail na BD. Tudo isso para não duplicar clientes.
-		//Customer findByEmailLike = customerRepository.findByEmailLikeAndTenantId(email, tenantResolver.getCurrentTenantId());	
-			Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
-			
+	public void saveCustomerBySite(String name, String email){		
+		if(customerDao.findCustomerByEmail(email)){
+
 			Customer c = new Customer();
 			c.setFirstName(name);
 			c.setEmail(email);
-			
+			c.setSite(Boolean.TRUE);
+
 			CustomerService cs = new CustomerService();
 			cs.setDate(new Date());
 			cs.setSituation(true);
 			cs.setServiceObservations("Registro realizado via site");
-			customerServiceList.add(cs);
+
+			c.setCustomerService(cs);
 			
-			c.setCustomerService(customerServiceList);
-			
+			c.setCustomerAddress(new CustomerAddress());
+			c.setCustomerPhone(new CustomerPhone());
+			c.setDocument(new Document());
+
 			customerRepository.save(c);
+		}else{
+			//TODO: Abrir ou não um novo atendimento?
+		}
 		
 	}
 	
@@ -105,6 +128,8 @@ public class CustomerFacade {
 		oldCustomer.getCustomerPhone().setCelPhone(customer.getCustomerPhone().getCelPhone());
 		oldCustomer.getCustomerPhone().setHomePhone(customer.getCustomerPhone().getHomePhone());
 		oldCustomer.getCustomerPhone().setWorkPhone(customer.getCustomerPhone().getWorkPhone());
+		
+		
 
 		oldCustomer.getDocument().setCpf(customer.getDocument().getCpf());
 		oldCustomer.getDocument().setRg(customer.getDocument().getRg());

@@ -45,7 +45,7 @@
 							<span class="entypo-thumbs-up"></span> <strong>Beleza!</strong>&nbsp;&nbsp;${message}
 						</div>
 					</c:if>
-					<a href="<c:url value="newCategoryBlog"/>"
+					<a href="<c:url value="new-category"/>"
 						class="pull-left btn btn-info" title="Adicionar Nova Categoria">Nova
 						Categoria</a>
 				</div>
@@ -91,7 +91,6 @@
                     </c:when>
                     <c:otherwise>
                         <div class="alert alert-info">
-                            <button data-dismiss="alert" class="close" type="button">×</button>
                             <span class="entypo-info-circled"></span> <strong>Hummm!</strong>&nbsp;&nbsp;Parece
                             que você ainda não possui nenhuma categoria cadastrada, clique
                             no botão <b>"Nova Categoria"</b>

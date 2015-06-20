@@ -179,7 +179,7 @@
         
         <div class="coluna-2">
         	<h2>Entre em contato</h2>
-            <p>Morbi in libero sed turpis finibus egestas non sit amet dolor</p>
+            <p>E vivencie as melhores experiências de viagem da sua vida.</p>
             <p class="telefone txt-thema"><small>(43)</small> 6598-8458</p>
             <p class="email"><a href="mailto:contato@seusiteaqui.com.br">contato@seusiteaqui.com.br</a></p>
         </div>

@@ -58,17 +58,43 @@
 	    }
 	    
 	    function perfectDestinationFilter(){
-            $.ajax({
-                type: "GET",
-                url: "/viatge/perfect-travel-filter",
-                data: $('#form-filter-perfect-travel').serialize(),
-                success: function (response) {
-                	$('html').html( response );
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError);
-                }
-            });
+	    	$("#form-filter-perfect-travel").submit();
+	    }
+	    
+	    function getCookie(c_name) {
+	        if (document.cookie.length > 0) {
+	            c_start = document.cookie.indexOf(c_name + "=");
+	            if (c_start != -1) {
+	                c_start = c_start + c_name.length + 1;
+	                c_end = document.cookie.indexOf(";", c_start);
+	                if (c_end == -1) {
+	                    c_end = document.cookie.length;
+	                }
+	                return unescape(document.cookie.substring(c_start, c_end));
+	            }
+	        }
+	        return "";
+	    }
+	    
+	    var createCookie = function(name, value, days) {
+	        var expires;
+	        if (days) {
+	            var date = new Date();
+	            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+	            expires = "; expires=" + date.toGMTString();
+	        }
+	        else {
+	            expires = "";
+	        }
+	        document.cookie = name + "=" + value + expires + "; path=/";
+	    }
+	    
+	    function verifyCookie(){
+		      if (getCookie("jb_client_name") && getCookie("jb_client_email")) {	          
+		    	  perfectDestinationFilter();
+		      }else{
+		    	  dialog.dialog( "open" );	    	  
+		      }
 	    }
 	 
 	    function addUser() {
@@ -81,9 +107,9 @@
 	      valid = valid && checkRegexp( name, /^[a-z]([0-9a-z_\s])+$/i, "O nome deve conter apenas caracteres alfanumericos" );
 	      valid = valid && checkRegexp( email, emailRegex, "Insira um e-mail valido Ex. fulano@joocebox.com" );
 	      
-	      if(valid && ($.cookie('jb_client_name') == null && $.cookie('jb_client_email') == null)){
-	    	  $.cookie('jb_client_name', $(name).val());
-	    	  $.cookie('jb_client_email', $(email).val());
+	      if(valid && (!getCookie("jb_client_name") && !getCookie("jb_client_email"))){
+	    	  createCookie("jb_client_name", $(name).val(), 1825);
+	    	  createCookie("jb_client_email", $(email).val(), 1825);
 	          callAJAX(name, email);
 	          dialog.dialog( "close" );
 	      }else{	    		 
@@ -114,13 +140,13 @@
 	      event.preventDefault();
 	      addUser();
 	    });
-	 
+
 	    $( "#show-modal" ).click(function() {
-		      if ($.cookie('jb_client_email') == null && $.cookie('jb_client_name') == null) {	          
-		          dialog.dialog( "open" );
-		      }else{
-		    	  perfectDestinationFilter();
-		      }
+	    	verifyCookie();
+	    });
+	    
+	    $('#show-modal-perfect').click(function() {
+	    	verifyCookie();
 	    });
 	  });
 
