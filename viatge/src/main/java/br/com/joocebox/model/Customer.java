@@ -23,6 +23,7 @@ import javax.validation.constraints.Pattern;
 import org.eclipse.persistence.annotations.Multitenant;
 import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -51,11 +52,12 @@ public class Customer implements Serializable {
 	private Date birthDate;
 
 	@Column(name = "email")
-	@NotEmpty(message = "O E-mail não pode estar vazio!")
+	@NotEmpty(message = "O E-mail do cliente não pode estar vazio!")
+	@Email(message = "Insira um E-mail válido!")
 	private String email;
 
 	@Column(name = "first_name")
-	@NotEmpty(message = "O Nome não pode ser vazio!")
+	@NotEmpty(message = "O Nome do cliente não pode ser vazio!")
 	private String firstName;
 
 	@Column(name = "gender")
@@ -87,9 +89,9 @@ public class Customer implements Serializable {
 	@Column(name = "site")
 	private Boolean site;
 
-	@OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinColumn(name = "fk_customer")
-	private Set<CustomerService> customerService;
+	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name = "fk_customerService")
+	private CustomerService customerService;
 
 	public Customer() {
 		this.setCustomerPhone(new CustomerPhone());
@@ -191,11 +193,11 @@ public class Customer implements Serializable {
 		this.passenger = passenger;
 	}
 
-	public Set<CustomerService> getCustomerService() {
+	public CustomerService getCustomerService() {
 		return customerService;
 	}
 
-	public void setCustomerService(Set<CustomerService> customerService) {
+	public void setCustomerService(CustomerService customerService) {
 		this.customerService = customerService;
 	}
 	

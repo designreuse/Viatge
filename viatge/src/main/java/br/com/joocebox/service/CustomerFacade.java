@@ -1,9 +1,7 @@
 package br.com.joocebox.service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +39,20 @@ public class CustomerFacade {
 		return countryRepsitory.findAll();
 	}
 	
-	public Customer saveCustomer(Customer customer) {
-		return customerRepository.save(customer);
+	public void save(Customer customer) {
+		//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
+        customer.setSite(Boolean.FALSE);
+        
+        //Inicia um objeto do tipo CustomerService para abrir um atendimento.
+        CustomerService customerService = new CustomerService();        
+        //Atualiza a data da ultima abertura do serviço
+        customerService.setDate(new Date());
+        
+        //Seta 
+        //customerService.setSituation(Boolean.TRUE);         
+
+	
+		//return customerRepository.save(customer);
 	}
 
 	public Customer getCustomerId(Long id) {
@@ -59,7 +69,6 @@ public class CustomerFacade {
 	
 	public void saveCustomerBySite(String name, String email){		
 		if(customerDao.findCustomerByEmail(email)){
-			Set<CustomerService> customerServiceList = new HashSet<CustomerService>();
 
 			Customer c = new Customer();
 			c.setFirstName(name);
@@ -70,9 +79,8 @@ public class CustomerFacade {
 			cs.setDate(new Date());
 			cs.setSituation(true);
 			cs.setServiceObservations("Registro realizado via site");
-			customerServiceList.add(cs);
 
-			c.setCustomerService(customerServiceList);
+			c.setCustomerService(cs);
 			
 			c.setCustomerAddress(new CustomerAddress());
 			c.setCustomerPhone(new CustomerPhone());

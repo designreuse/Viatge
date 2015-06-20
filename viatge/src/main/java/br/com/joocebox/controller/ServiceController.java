@@ -3,8 +3,6 @@ package br.com.joocebox.controller;
 import static br.com.joocebox.utils.FormatObjects.formatStringDateToDateObject;
 import static br.com.joocebox.utils.FormatObjects.formatStringPriceToNumberObject;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,18 +19,16 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -50,12 +46,12 @@ import br.com.joocebox.model.History;
 import br.com.joocebox.model.Passenger;
 import br.com.joocebox.model.SaleType;
 import br.com.joocebox.model.ServiceItem;
-import br.com.joocebox.model.views.VwOpenService;
 import br.com.joocebox.service.CustomerFacade;
 import br.com.joocebox.service.CustomerServiceFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.ServiceFacade;
 import br.com.joocebox.service.ServiceItemFacade;
+import br.com.joocebox.utils.JooceBoxUtils;
 
 import com.google.common.base.Strings;
 
@@ -77,10 +73,10 @@ public class ServiceController{
 	private CustomerServiceFacade customerServiceFacade;
 	
 	@Autowired
-	private ServiceItemFacade serviceItemFacade;
+	private DashboardFacade dashboardFacade;
 	
 	@Autowired
-	private DashboardFacade dashboardFacade;
+	private ServiceItemFacade serviceItemFacade;
 
 	private Set<CustomerService> customerServiceList;
 	
@@ -94,45 +90,15 @@ public class ServiceController{
 	
 
 	@RequestMapping("/service")
-	public ModelAndView getMenuService(Model model) {
-
+	public ModelAndView getMenuService(ModelMap model) {
 		initializeComponents(model);
 		model.addAttribute("requestedDestination", new ServiceItem());
-		return new ModelAndView("service/newService", "customer",
-				new Customer());
-	}
-
-	@RequestMapping("/serviceList")
-	public ModelAndView getMenuServiceList(Model model) {
-		ModelAndView mv = new ModelAndView("service/serviceList");
-		List<VwOpenService> openServiceList = serviceFacade.getOpenServiceList();		
-		mv.addObject("serviceListRegister", openServiceList);
-		mv.addObject("ListSize", openServiceList.size());
-		mv.addObject("nextToTravel", nextToTravel(openServiceList));
-		avgBudgets(model);
-		countOfBudgets(model);	
-		return mv;
-	}
-
-	/**
-	 * @param openServiceList
-	 * @return int
-	 */
-	public int nextToTravel(List<VwOpenService> openServiceList) {
-		int nextToTravel = 0;
-		for(VwOpenService openService : openServiceList){
-			if(openService.getSite()){
-				nextToTravel ++;
-			}				
-		}
-		return nextToTravel;
+		return new ModelAndView("service/newService", "customer", new Customer());
 	}
 	
-	public void initializeComponents(Model model) {
-
-		// Carrega os destinos no mutiple-select
-		List<Destination> destinationList = dashboardFacade
-				.getDestinationList();
+	public void initializeComponents(ModelMap model) {
+		// Carrega os destinos no componente de DropDown
+		List<Destination> destinationList = dashboardFacade.getDestinationList();
 		model.addAttribute("destinationList", destinationList);
 
 		// Carrega o parentesco do passageiro
@@ -148,144 +114,35 @@ public class ServiceController{
 		for (SaleType sale : Arrays.asList(SaleType.values())) {
 			String saleType = sale.getSaleType();
 			saleTypeMap.put(sale, saleType);
-		}
-		
+		}		
 		model.addAttribute("listOfSaleTypes", saleTypeMap);
-
 	}
 
     /**
-     * Ação responsável por adicionar um novo atendimento
+     * Ação responsável por adicionar ou atualizar o atendimento que está em aberto.
      * @param Customer
      * @param result
      * @param model
      * @return ModelAndView
      */
-	@RequestMapping(value = "/addService", method = RequestMethod.POST)
-	public ModelAndView addService(
-			@ModelAttribute("customer") @Valid Customer customer,
-			BindingResult result, Model model, @RequestParam Long id) {
-		if(id==null){
-			if (customer.getBirthDate() == null) {
-	            customer.setBirthDate(customer.getBirthDate());
-	        }
-
-	        List<String> error = new ArrayList<String>();
-
-	        if (result.hasErrors()) {
-	            List<ObjectError> allErrors = result.getAllErrors();
-
-	            for (ObjectError objectError : allErrors) {
-	                String objectName = objectError.getDefaultMessage();
-	                error.add(objectName);
-	            }
-
-	            model.addAttribute("errors", error);
-	            model.addAttribute("validator", true);
-
-	            initializeComponents(model);
-	            return new ModelAndView("service/newService");
-
-	        } else {
-	            
-	        	//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
-	            customer.setPassenger(passengerList);
-	            customer.setSite(Boolean.FALSE);
-	            
-	            //Persiste um novo Cliente
-	            customerFacade.saveCustomer(customer);
-	            
-	            //Inicia um objeto do tipo CustomerService para abrir um atendimento.
-	            CustomerService customerService = new CustomerService();
-	            
-	            //Atualiza a data de abertura do serviço
-	            customerService.setDate(new Date());
-	            
-	            //Verifica se existe algum atendimento marcado como "Orçamento", e marca como aberto e atualiza a data do mesmo
-	            if(isOpenService()){
-	                customerService.setSituation(Boolean.TRUE);         
-	            }else{
-	                customerService.setSituation(Boolean.FALSE);
-	            }
-	            
-	            //Adiciona o atendimento em uma lista
-	            customerServiceList = new HashSet<CustomerService>();
-	            customerServiceList.add(customerService);
-	            
-	            //Seta uma lista de Atendimentos
-	            customer.setCustomerService(customerServiceList);
-	                       
-	            //Cria um objeto com o Historico
-	            history = new ArrayList<History>();
-	            
-	            //Salva um objeto do tipo ServiceItem
-	            for (ServiceItem si : mapOfRequestedDestination.values()) {
-	                 
-	                String formatDate = new SimpleDateFormat("dd/MM/yyyy").format(new Date());
-	                
-	                String saleType = "";  
-	                if (si.getSaleType() == SaleType.SEND_BUDGET) {
-	                    saleType = SaleType.SEND_BUDGET.getSaleType();
-	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate));
-
-	                }else if(si.getSaleType() == SaleType.SUBMITTED_BUDGET){
-	                    saleType = SaleType.SUBMITTED_BUDGET.getSaleType();
-	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
-	                    
-	                }else if(si.getSaleType() == SaleType.NOT_WANTED){
-	                    saleType = SaleType.NOT_WANTED.getSaleType();
-	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
-	                    
-	                }else if(si.getSaleType() == SaleType.MAYBE_FUTURE){
-	                    saleType = SaleType.MAYBE_FUTURE.getSaleType();
-	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " +  formatDate + " Valor: R$" + si.getValueNegotiated()));
-	                    
-	                }else if(si.getSaleType() == SaleType.BOUGHT){
-	                    saleType = SaleType.BOUGHT.getSaleType();
-	                    //TODO: Fazer um link que redirecione para a faura da venda.
-	                    history.add(new History("[ " + saleType + " ]" + " Destino: " + si.getDestination().getDtName() + " Na data de: " + formatDate + " Valor: R$" + si.getValueNegotiated()));
-	                    
-	                }
-	                
-	                customerService.setHistory(history);                        
-	                si.setCustomerService(customerService);
-	            }
-	            List<ServiceItem> list = new ArrayList<ServiceItem>(mapOfRequestedDestination.values());
-	            serviceItemFacade.saveServiceItem(list);
-	        }
-		}else{
-			
-			//Setar informações dos clientes.
-			Customer oldCustomer = customerFacade.getCustomerId(id);
-			
-			if(!passengerList.isEmpty()){
-				oldCustomer.setPassenger(passengerList);
-				customerFacade.saveCustomer(oldCustomer);
-			}
-
-			//Resgata o customerService por ID
-			CustomerService oldCustomerService = customerServiceFacade.getCustomerServiceById(this.cs.getId());
-			
-            if(isOpenService()){
-                oldCustomerService.setSituation(Boolean.TRUE);         
-            }else{
-                oldCustomerService.setSituation(Boolean.FALSE);
-            }
-            
-            if(!mapOfRequestedDestination.isEmpty()){
-                Set<ServiceItem> list = new HashSet<ServiceItem>(mapOfRequestedDestination.values());
-    			oldCustomerService.setServiceItem(list);
-
-            }
-            customerServiceFacade.saveCustomerService(oldCustomerService);
-			
-
-		}
-		return new ModelAndView(new RedirectView("serviceList"));
+	@RequestMapping(value = "/add-service", method = RequestMethod.POST)
+	public ModelAndView addService(@ModelAttribute("customer") @Valid @RequestBody Customer customer, BindingResult result, ModelMap model) {
+		
+        if (result.hasErrors()) {
+        	new JooceBoxUtils().validForm(result, model);
+            initializeComponents(model);
+            return new ModelAndView("service/newService", "customer", customer);
+        } else {
+    		if(customer.getIdCustomer() == null){
+    			customerFacade.save(customer);
+    			return new ModelAndView(new RedirectView("serviceList"));
+    		}else{
+    			//edita o cliente
+    			return new ModelAndView(new RedirectView("serviceList"));
+    		}
+        }
 	}
 
-	
-	
     /**
      * Ação responsável por apresentar o formulário de edição do novo a
      * @param id
@@ -294,14 +151,14 @@ public class ServiceController{
      * @return destinationNegotiated
      */
     @RequestMapping(value = "editService", method = RequestMethod.GET)
-    public String editService(@RequestParam Long id, @RequestParam Long cs,Model model) {
+    public String editService(@RequestParam Long id, @RequestParam Long cs, ModelMap model) {
     	initializeComponents(model);
     	
     	this.cs = new CustomerService();
     	this.cs.setId(cs);
 
     	Customer customerId = customerFacade.getCustomerId(id);
-    	getHistoryListCustomerId(model, customerId);
+    	//getHistoryListCustomerId(model, customerId);
     	
     	List<ServiceItem> serviceItemAuxBD = new ArrayList<ServiceItem>();
 
@@ -326,34 +183,12 @@ public class ServiceController{
         return "service/editService";
     }
 
-	public void getHistoryListCustomerId(Model model, Customer customerId) {
-		for(CustomerService cs : customerId.getCustomerService()){
-    		List<History> historyMain = cs.getHistory();
-    		model.addAttribute("historyList", historyMain);
-    	}
-	}
-	
-    /**
-     * Ação responsável pela somatorio de um contador de orçamentos
-     * @param model
-     */
-	public void countOfBudgets(Model model){
-		List<ServiceItem> serviceItemList = serviceItemFacade.getAllServiceItems();
-		
-		int send_budget_var = 0;
-		int submitted_budget_var = 0;
-		
-		for (ServiceItem serviceItem : serviceItemList) {
-			if(serviceItem.getSaleType() == SaleType.SEND_BUDGET){
-				send_budget_var ++;
-				
-			}else if(serviceItem.getSaleType() == SaleType.SUBMITTED_BUDGET){
-				submitted_budget_var ++;
-			}
-		}
-		model.addAttribute("send_budget_div", send_budget_var);
-		model.addAttribute("submitted_budget_div", submitted_budget_var);
-	}
+//	public void getHistoryListCustomerId(ModelMap model, Customer customerId) {
+//		for(CustomerService cs : customerId.getCustomerService()){
+//    		List<History> historyMain = cs.getHistory();
+//    		model.addAttribute("historyList", historyMain);
+//    	}
+//	}
 
     /**
      * Ação responsável por verificar se existem destinos negociados como "Orçamento Enviado ou Enviar Orçamento"
@@ -380,23 +215,7 @@ public class ServiceController{
 		return Boolean.FALSE;
 	}
 
-    /**
-     * Ação responsável por calcular o valor total dos orçamentos enviados
-     * @param model
-     */
-	public void avgBudgets(Model model) {
-		List<ServiceItem> serviceItemList = serviceItemFacade.getAllServiceItems();
-		
-		Double amount = 0.00;
-		
-		for (ServiceItem si : serviceItemList) {
-			if (si.getSaleType() == SaleType.SEND_BUDGET) {
-				Double price = si.getValueNegotiated();
-				amount += price;
-			}
-		}
-		model.addAttribute("totalAmount", amount);
-	}
+
 	
     /**
      * Ação responsável por adicionar passageiros
@@ -406,7 +225,7 @@ public class ServiceController{
      * @return Passenger
      */
 	@RequestMapping(value = "/addPassenger", method = RequestMethod.POST)
-	public @ResponseBody Passenger addPassenger(@Valid Passenger passenger, BindingResult result, Model model) {
+	public @ResponseBody Passenger addPassenger(@Valid Passenger passenger, BindingResult result, ModelMap model) {
 
 		if (result.hasErrors()) {
 			logger.warn("[Novo Atendimento] Validação de campos de adição de passageiros com falhas!");
@@ -642,14 +461,6 @@ public class ServiceController{
 			customerList.add(c);
 		}
 		return customerList;	
-	}
-	
-	
-	@InitBinder(value = "customer")
-	public void bindingPreparationDate(WebDataBinder binder) {
-		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-		CustomDateEditor birthDateEditor = new CustomDateEditor(df, false);
-		binder.registerCustomEditor(Date.class, birthDateEditor);
 	}
 
 }

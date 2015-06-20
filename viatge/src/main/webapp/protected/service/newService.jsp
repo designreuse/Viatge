@@ -27,7 +27,7 @@
 </ul>
 <!-- FIM BREADCRUMB -->
 
-<div class="fluida">
+<div class="fluida" ng-controller="ServiceController">
 
 	<div class="content-wrap margin-bottom">
 		<div class="row-cols novo-atendimento">
@@ -36,7 +36,6 @@
 
 				<c:if test="${validator}">
 					<div class="alert alert-danger">
-						<button data-dismiss="alert" class="close" type="button">×</button>
 						<span class="entypo-attention"></span> <strong>Opa!</strong>&nbsp;&nbsp;Houve
 						algum erro na hora de salvar os seguintes dados:
 						<ul>
@@ -47,14 +46,14 @@
 					</div>
 				</c:if>
 
-				<f:form id="transition-duration-demo" class="transition-form"
-					modelAttribute="customer" method="post" action="addService">
+				<f:form id="transition-duration-demo" class="transition-form" modelAttribute="customer" method="post" action="add-service">
 
 				<input id="id" type="hidden" name="id" value="${serviceModify.idCustomer}"/>
-					<fieldset class="row-cols margin-bottom fluida"
-						title="Dados do Cliente">
+				<f:hidden path="idCustomer"/>
+				
+					<fieldset class="row-cols margin-bottom fluida" title="Dados do Cliente">
 						<legend>&nbsp;&nbsp;</legend>
-
+						
 						<!-- Anotações -->
 						<div class="col-sm-4 pull-right">
 							<div class="nest text margin-bottom">
@@ -69,8 +68,7 @@
 								<div class="body-nest" id="obs-note" style="display: none;">
 									<div class="aling-form">
 										<div class="box03">
-											<f:textarea rows="5" cols="5" path="observations"
-												class="form-control" style="min-height:130px;"></f:textarea>
+											<f:textarea rows="5" cols="5" path="observations" class="form-control" style="min-height:130px;"></f:textarea>
 										</div>
 									</div>
 								</div>
@@ -93,7 +91,7 @@
 
 										<div class="box01">
         									<div class="ui-widget">
-												<input id="first-name" placeholder="Primeiro Nome" name="firstName" type="text" class="form-control"/>
+												<f:input id="first-name" placeholder="Primeiro Nome" path="firstName" type="text" class="form-control"/>
 											</div>
 
 										</div>
@@ -198,8 +196,6 @@
 											<f:input id="rg" placeholder="RG" path="document.rg"
 												type="text" class="form-control" />
 										</div>
-
-
 
 										<div class="box01">
 											<f:input id="cep" placeholder="CEP"
@@ -815,9 +811,7 @@
                                             </div>
                                         </div>
 
-
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />                                       
 
                                     </div>
 
