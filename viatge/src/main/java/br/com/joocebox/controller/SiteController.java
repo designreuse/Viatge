@@ -2,8 +2,13 @@ package br.com.joocebox.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -13,12 +18,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import br.com.joocebox.model.Agency;
 import br.com.joocebox.model.Article;
@@ -26,13 +35,18 @@ import br.com.joocebox.model.Category;
 import br.com.joocebox.model.CategoryBlog;
 import br.com.joocebox.model.Customer;
 import br.com.joocebox.model.CustomerPhone;
+import br.com.joocebox.model.CustomerService;
 import br.com.joocebox.model.Destination;
+import br.com.joocebox.model.ServiceItem;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.service.ArticleBlogFacade;
 import br.com.joocebox.service.CategoryBlogFacade;
 import br.com.joocebox.service.CustomerFacade;
+import br.com.joocebox.service.CustomerServiceFacade;
 import br.com.joocebox.service.DashboardFacade;
 import br.com.joocebox.service.DestinationFacade;
+import br.com.joocebox.service.ServiceItemFacade;
+import br.com.joocebox.utils.FormatObjects;
 
 import com.google.common.base.Strings;
 
@@ -46,9 +60,12 @@ public class SiteController{
     private DashboardFacade dashboardFacade;    
     @Autowired
     private DestinationFacade destinationFacade;
-    
     @Autowired
     private CustomerFacade customerFacade;
+    @Autowired
+    private CustomerServiceFacade customerServiceFacade;
+    @Autowired
+    private ServiceItemFacade serviceItemFacade;
     
     @Autowired
     private CurrentTenantResolver<Long> tenantResolver;
@@ -206,21 +223,90 @@ public class SiteController{
 		return new ModelAndView("site/perfectTravel02", "agencyName", dashboardFacade.getAgency().getAgencyName());
 	}
 	
-	
 	//--------- ORÇAMENTO BLOG ---------------------------------------------------------------------------
-	@RequestMapping("/budget")
-	public ModelAndView getBudgetPage(){
-		ModelAndView mv = new ModelAndView("site/budget02");
-		//Busca pelo e-mail // caso tenha cookie.
-		Customer customerForm = customerFacade.getCustomerByEmail("");
-		CustomerPhone customerPhoneForm;
+	private final Map<String, Object> budgetForm = new HashMap<String, Object>();
+	public Map<String, Object> getBudgetForm() { return budgetForm; }
+	
+	@RequestMapping(value="/budget/{idDestination}", method=RequestMethod.GET)
+	public ModelAndView getBudgetPage(@CookieValue(value="jb_client_email", defaultValue="defaultValue") String emailCookie, @PathVariable Long idDestination){
+		//emailCookie = "seven@seventur.com";
+		
+		Customer customerForm = customerFacade.getCustomerByEmail(emailCookie);	
+		Destination destinationForm = destinationFacade.getDestinationById(idDestination);
+		CustomerService cServiceForm;
+		
 		if (customerForm == null) {
 			customerForm = new Customer();
-			customerPhoneForm = new CustomerPhone();
+			customerForm.setCustomerPhone(new CustomerPhone());
+			cServiceForm = new CustomerService();
+		} else {
+			cServiceForm = customerServiceFacade.getCustomerServiceByCustomer(customerForm);
 		}
-		mv.addObject("customerForm", customerForm);
+		
+		budgetForm.put("customerForm", customerForm);
+		budgetForm.put("destinationForm", (destinationForm == null ? new Destination() : destinationForm));
+		budgetForm.put("cServiceIdForm", cServiceForm.getId());
+		ModelAndView mv = new ModelAndView("site/budget02", budgetForm);
 		return mv;
 	}
+	
+	@RequestMapping(value="/budget/enviarOrcamento", method=RequestMethod.POST)
+	public String sendingBudget(@ModelAttribute("customerForm") Customer customerForm,
+								@RequestParam Long customerId, 
+								@RequestParam Long destinationId,
+								@RequestParam Long customerServiceId,
+								@RequestParam(value = "ida", required = false) String ida,
+								@RequestParam(value = "volta", required = false) String volta ,
+								@RequestParam String observacoes,
+								@RequestParam(value = "vinculo", required = false) String vinculo,
+								@RequestParam(value = "acompanhante[]", required = false)  String acompanhante,
+								@RequestParam(value = "idade[]", required = false) String idade,
+								BindingResult result, HttpServletRequest req, RedirectAttributes redirectAttributes, Model model) {
+
+		Destination destinationSelected = destinationFacade.getDestinationById(destinationId);
+		if (result.hasErrors()) {
+			req.setAttribute("validator", true);
+			return "redirect:/site";
+		} else {
+			Customer customer;
+			if (customerId != null) {
+				customer = customerFacade.getCustomerId(customerId);				
+			} else {
+				customer = new Customer();
+				customer.setCustomerPhone(new CustomerPhone());
+				customer.setCustomerService(new HashSet<CustomerService>());
+				
+			}
+			customer.setFirstName(customerForm.getFirstName());
+			customer.setLastName(customerForm.getLastName());
+			customer.setEmail(customerForm.getEmail());
+			customer.getCustomerPhone().setHomePhone(customerForm.getCustomerPhone().getHomePhone());
+			customer.getCustomerPhone().setCelPhone(customerForm.getCustomerPhone().getCelPhone());
+			customer.setPassenger(customerFacade.returnPassangersBudget(vinculo, acompanhante, idade));
+			
+			CustomerService cService = new CustomerService();
+			if (customerServiceId != null) {
+				cService = customerServiceFacade.findById(customerServiceId);
+			}			
+			customer.getCustomerService().add(cService);
+			Date dataIda = FormatObjects.formatStringDateToDateObject(ida, redirectAttributes);
+			Date dataVolta = FormatObjects.formatStringDateToDateObject(volta, redirectAttributes);
+			
+			ServiceItem sItem = new ServiceItem(destinationSelected, cService, dataIda, dataVolta, observacoes, new Date());
+			cService.setServiceItem(new HashSet<ServiceItem>());
+			cService.getServiceItem().add(sItem);
+			//save customer
+			customerFacade.saveCustomer(customer);
+			//save customerService
+			customerServiceFacade.saveCustomerService(cService);
+			//save serviceItem
+			serviceItemFacade.saveServiceItem(sItem);
+			
+			model.addAttribute("customerForm", customer);
+			model.addAttribute("destinationForm", destinationSelected);
+			return "site/submittedBudget02";
+		}
+	}	
 	//--------- FIM ORÇAMENTO BLOG ---------------------------------------------------------------------------
 	
 	@RequestMapping("/templateColorCodHex")

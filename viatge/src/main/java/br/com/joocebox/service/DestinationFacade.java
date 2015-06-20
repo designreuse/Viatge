@@ -35,5 +35,9 @@ public class DestinationFacade {
 		entityManager.setProperty(PersistenceUnitProperties.MULTITENANT_PROPERTY_DEFAULT, currentTenantId);
 		return entityManager.createQuery(query).setParameter(1, true).setParameter(2, true).setParameter(3, true).setParameter(4, true).setParameter(5, true).getResultList();
 	}
+	
+	public Destination getDestinationById(Long id) {
+		return destinationRepository.findOne(id);
+	}
 
 }

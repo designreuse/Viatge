@@ -51,8 +51,13 @@
 		<put-attribute name="body" value="/site/template/tp_02/destinations.jsp"/>
 	</definition>
 	
-	<!-- Mapeamento para a pagina de artigo do blog -->
+	<!-- Mapeamento para a pagina de Orçamento do Site -->
 	<definition extends="default_tp_02" name="site/budget02">
 		<put-attribute name="body" value="/site/template/tp_02/budget.jsp"/>
+	</definition>
+	
+	<!-- Mapeamento para a pagina de orçamento enviado -->
+	<definition extends="default_tp_02" name="site/submittedBudget02">
+		<put-attribute name="body" value="/site/template/tp_02/submittedBudget.jsp"/>
 	</definition>
 </tiles-definitions>

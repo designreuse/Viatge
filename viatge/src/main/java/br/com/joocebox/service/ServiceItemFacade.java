@@ -23,6 +23,10 @@ public class ServiceItemFacade {
 		return serviceItemRepository.save(serviceItem);
 	}
 
+	public void saveServiceItem(ServiceItem serviceItem) {
+		serviceItemRepository.save(serviceItem);
+	}
+	
 	public List<ServiceItem> getAllServiceItems() {
 		return serviceItemRepository.findAll();
 	}

@@ -67,7 +67,8 @@ public class CustomerService implements Serializable {
 	private String serviceObservations;
 
 	public CustomerService() {
-
+		this.setDate(new Date());
+		this.setSituation(true);
 	}
 
 	public Long getId() {

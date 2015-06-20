@@ -122,7 +122,7 @@ $(document).ready(function() {
 		e.preventDefault();
 		if(x < max_fields){
 			x++;
-			$(wrapper).append('<div class="dadosPessoa"><div class="box-03"><label for="vinculo">*Vínculo</label><select name="vinculo" id="vinculo" class="select01"><option value="cônjuge">Cônjuge</option><option value="filho">Filho(a)</option><option value="tio">Tio(a)</option><option value="outros">Outros</option></select></div><div class="box-03"><label for="acompanhante">*Nome</label><input type="text" name="acompanhante[]" id="acompanhante" class="input01"></div><div class="box-04"><label for="idade">Idade</label><input type="text" name="idade[]" id="idade" class="input01"></div><a href="#" class="removarPessoa">Remover</a></div>');
+			$(wrapper).append('<div class="dadosPessoa"><div class="box-03"><label for="vinculo">*Vínculo</label><select name="vinculo" id="vinculo" class="select01"><option value="PARTNER">Cônjuge</option><option value="CHILDREN">Filho(a)</option><option value="DATE">Namorado(a)</option><option value="FRIEND">Amigo(a)</option><option value="PARENTS">Pai e/ou Mãe</option><option value="SIBLINGS">Irmão e/ou Irmã</option><option value="OTHER_PARENTS">Outros (Parentes)</option><option value="OTHER">Outros</option></select></div><div class="box-03"><label for="acompanhante">*Nome</label><input type="text" name="acompanhante[]" id="acompanhante" class="input01"></div><div class="box-04"><label for="idade">Idade</label><input type="text" name="idade[]" id="idade" class="input01" onkeypress="return SomenteNumero(event)"></div><a href="#" class="removarPessoa">Remover</a></div>');
 		}
 	});
 	

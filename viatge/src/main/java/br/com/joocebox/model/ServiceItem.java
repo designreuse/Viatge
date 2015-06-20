@@ -105,6 +105,23 @@ public class ServiceItem implements Serializable{
 		this.negociationObservations = negociationObservations;
 	}
 
+	// Construtor para orçamento.
+	public ServiceItem(Destination destination,
+					   CustomerService cService,
+					   Date departureDate,
+					   Date arrivalDate,
+					   String negociationObservations,
+					   Date seeIn) {
+		this.destination = destination;
+		this.customerService = cService;
+		this.departureDate = departureDate;
+		this.arrivalDate = arrivalDate;
+		this.negociationObservations = negociationObservations;
+		this.setSeeIn(seeIn);
+		this.saleType = SaleType.SEND_BUDGET;
+		
+	}
+	
 	public Long getId() {
 		return id;
 	}

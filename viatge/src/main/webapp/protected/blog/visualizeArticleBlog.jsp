@@ -60,6 +60,7 @@
 							style="margin-right: 10px;"
 								class="pull-right btn btn-info "
 								title="Editar Artigo">Editar </a> 
+								&nbsp;&nbsp;
 								<a href="#"
 								style="margin-left: 10px;"
 								class="pull-right btn btn-info" title="Ver Artigo no Site">

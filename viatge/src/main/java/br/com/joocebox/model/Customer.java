@@ -89,7 +89,6 @@ public class Customer implements Serializable {
 	private Set<CustomerService> customerService;
 
 	public Customer() {
-		this.setCustomerPhone(new CustomerPhone());
 	}
 
 	public Long getIdCustomer() {

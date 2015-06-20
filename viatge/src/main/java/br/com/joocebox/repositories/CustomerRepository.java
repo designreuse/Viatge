@@ -15,5 +15,4 @@ public interface CustomerRepository extends BaseRepository<Customer, Long>{
 	
 	List<Customer> findAll();
 	
-	List<Customer> findByEmail(String email);
 }
