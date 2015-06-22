@@ -57,7 +57,7 @@ public class ArticleBlogController {
 
 	@RequestMapping("article-blog-list")
 	public ModelAndView getMenuArticleBlogList() {
-		List<Article> articlesBlogList = articleBlogFacade.getArticlesBlogList();
+		List<Article> articlesBlogList = articleBlogFacade.findActivesArticles();
 		ModelAndView mv = new ModelAndView("blog/articleBlogList", "articlesBlogList", articlesBlogList);
 		mv.addObject("categoryBlogList", categoryBlogFacade.getAtivesCategoriesBlog());
 		mv.addObject("categoryBlog", new CategoryBlog());

@@ -59,7 +59,7 @@
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="LogoMarca"><i class="entypo-newspaper"></i><span>LogoMarca</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Endereço e Contato"><i class="entypo-newspaper"></i><span>Endereço e Contato</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Página Quem Somos"><i class="entypo-newspaper"></i><span>Página Quem Somos</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="#" title="Redes Sociais"><i class="entypo-newspaper"></i><span>Redes Sociais</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/social-network" title="Redes Sociais"><i class="entypo-newspaper"></i><span>Redes Sociais</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Motores de Busca"><i class="entypo-newspaper"></i><span>Motores de Busca</span></a></li>
                                 <li><a class="tooltip-tip2 ajax-load" href="#" title="Dominios"><i class="entypo-newspaper"></i><span>Dominios</span></a></li>
                             </ul>

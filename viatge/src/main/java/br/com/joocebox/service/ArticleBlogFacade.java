@@ -25,16 +25,12 @@ public class ArticleBlogFacade {
 	@Autowired
 	private CategoryBlogFacade categoryBlogFacade;
 
-	public List<Article> getArticlesBlogList() {
-		return articleBlogRepository.findAll();
-	}
-
 	/**
 	 * Método que retorna uma lista de Artigos(Blog) ativos.
 	 * @return List<Article> Artigos Ativos.
 	 */
 	public List<Article> findActivesArticles() {
-		return articleBlogRepository.findByAtActiveEquals(1);
+		return articleBlogRepository.findByAtActiveOrderByPostingDateDesc(1);
 	}
 
 	public void addArticleBlog(Article article) {
@@ -55,6 +51,6 @@ public class ArticleBlogFacade {
 	}
 	
 	public List<Article> findByCategoryBlogAndAtActive(CategoryBlog categoryBlog) {
-		return articleBlogRepository.findByCategoryBlogAndAtActive(categoryBlog, 1);
+		return articleBlogRepository.findByCategoryBlogAndAtActiveOrderByPostingDateDesc(categoryBlog, 1);
 	}
 }

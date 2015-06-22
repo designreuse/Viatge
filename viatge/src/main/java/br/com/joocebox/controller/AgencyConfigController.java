@@ -61,4 +61,24 @@ public class AgencyConfigController {
 		return url;
 	}
 	
+	// ##### REDES SOCIAIS #####
+	@RequestMapping("/social-network")
+	public ModelAndView getMenuSocialNetwork() {
+		Agency agencyCurrent = dashboardFacade.getAgency();
+		ModelAndView mv = new ModelAndView("website/social-network", "agConfig", agencyCurrent.getAgencyConfig());
+		return mv;
+	}
+	
+	@RequestMapping("saveSocialNetwork")
+	public ModelAndView saveSocialNetwork(@ModelAttribute("agConfig") AgencyConfig agConfigRef) {
+		Agency agencyCurrent = dashboardFacade.getAgency();
+		agencyCurrent.getAgencyConfig().setFacebookLink(agConfigRef.getFacebookLink());
+		agencyCurrent.getAgencyConfig().setTwitterLink(agConfigRef.getTwitterLink());
+		agencyCurrent.getAgencyConfig().setInstagramLink(agConfigRef.getInstagramLink());
+		agencyCurrent.getAgencyConfig().setGooglePlusLink(agConfigRef.getGooglePlusLink());
+		dashboardFacade.addAgency(agencyCurrent);
+		ModelAndView mv = new ModelAndView("website/social-network", "agConfig", agencyCurrent.getAgencyConfig());
+		return mv;
+	}
+	
 }

@@ -29,7 +29,7 @@
                 	<a href="#">CATEGORIAS</a>
                     <!-- MENU DE CATEGORIAS -->
                 	<ul>
-					<c:forEach var="category" items="${categoryList}">
+					<c:forEach var="category" items="${categoryListSession}">
 						<li>
 							<a href="${pageContext.request.contextPath}/category-list/${category.idCategory}">${category.ctName}</a>
 						</li>

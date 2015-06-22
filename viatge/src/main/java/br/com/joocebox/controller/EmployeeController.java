@@ -78,7 +78,7 @@ public class EmployeeController{
 		ModelAndView mv = new ModelAndView("staff/employee");
 		mv.addObject("staff", new Employee());
 		mv.addObject("systemRoles", jbUtils.getListOfSytemRoles());
-		mv.addObject("showRole", false);
+		mv.addObject("showRole", true);
 		return mv;
 	}
 	
@@ -121,13 +121,12 @@ public class EmployeeController{
 	@RequestMapping(value = "employee/edit/{id}", method = RequestMethod.GET)
 	public String editEmployee(@PathVariable Long id, Model model) {
 		Employee findEmployeeById = staffFacade.findEmployeeById(id);		
+		model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
+		model.addAttribute("staff", findEmployeeById);   
+
 		if(Role.ROLE_MASTER.equals(findEmployeeById.getLogin().getRole())){
-			model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
-			model.addAttribute("staff", findEmployeeById);   
 		    model.addAttribute("showRole", false);
 		}else{
-			model.addAttribute("systemRoles", jbUtils.getListOfSytemRoles());
-			model.addAttribute("staff", findEmployeeById);
 		    model.addAttribute("showRole", true);
 		}
 		return "staff/employee";

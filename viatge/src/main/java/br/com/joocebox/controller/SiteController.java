@@ -74,7 +74,8 @@ public class SiteController{
     private ArticleBlogFacade articleBlogFacade;
     @Autowired
     private CategoryBlogFacade categoryBlogFacade;
-
+    
+    
     /**
 	 * Método utilizado para apresentar os dados do tenant corrente no site.
 	 *  
@@ -93,27 +94,17 @@ public class SiteController{
 		
 		String fileName = agencyLogo.replace("/app/joocebox-img/"+agency.getSubdomain()+"/logo/", "");
 		agency.getAgencyConfig().setAgencyLogo(fileName);
-		getAllCategories(model);
 		getDestinationsForWebSite(model);
 		session.setAttribute("tenant", agency);
 		model.addAttribute("destination", new Destination());
 		logger.info("Buscando agência e adicionando seus atributos");
-		model.addAttribute("articlesFooter", articleBlogFacade.findActivesArticles());
+		headerFooterData(session);
 		
 		if (agency.getAgencyConfig().getSiteTemplate() == 1) {
 			return "site/index";
 		} else {
 			return "site/index02";
 		}
-	}
-	
-	/**
-	 * Método utilizado para-se recuperar todas as categorias do site.
-	 * @param Model model
-	 */
-	public void getAllCategories(Model model){
-		List<Category> categoryList = dashboardFacade.getCategoryList();
-		model.addAttribute("categoryList", categoryList);		
 	}
 	
 	/**
@@ -139,11 +130,12 @@ public class SiteController{
 	//------------------------------------------------------------------------------------------
 	
 	@RequestMapping("/destinationDetail/{destinationId}")
-	public String getDestinationDetail(@PathVariable Long destinationId,  Model model){
+	public String getDestinationDetail(@PathVariable Long destinationId,  Model model, HttpSession session){
 		Agency agency = dashboardFacade.getAgency();
 		
 		model.addAttribute("destinationDetail",dashboardFacade.getDestinationId(destinationId));
 		model.addAttribute("agencyDetail", agency);
+		headerFooterData(session);
 		
 		if(agency.getAgencyConfig().getSiteTemplate() == 1){
 			return "site/destinationDetail";
@@ -154,11 +146,12 @@ public class SiteController{
 	}
 	
 	@RequestMapping("/category-list/{id}")
-	public String getCategoryList(@PathVariable Long id, Model model){
+	public String getCategoryList(@PathVariable Long id, Model model, HttpSession session){
 		Agency agency = dashboardFacade.getAgency();
 		
 		Category categoryId = dashboardFacade.getCategoryId(id);
 		model.addAttribute("listOfDestinationByCategory", categoryId.getDestination());
+		headerFooterData(session);
 		
 		if(agency.getAgencyConfig().getSiteTemplate() == 1){
 			return "site/categoryList";
@@ -168,14 +161,16 @@ public class SiteController{
 	}
 	
 	@RequestMapping("/contact")
-	public String getContactPage(){
+	public String getContactPage(HttpSession session){
+		headerFooterData(session);
 		//TODO: Implementar as atributos para a view
 		
 		return "site/contact02";
 	}
 	
 	@RequestMapping("/about-us")
-	public String getAboutUsPage(){
+	public String getAboutUsPage(HttpSession session){
+		headerFooterData(session);
 		//TODO: Implementar as atributos para a view
 		
 		return "site/aboutUs02";
@@ -183,44 +178,46 @@ public class SiteController{
 	
 	//--------- BLOG ---------------------------------------------------------------------------
 	@RequestMapping("/blog")
-	public ModelAndView getBlogPage(){
+	public ModelAndView getBlogPage(HttpSession session){
 		ModelAndView mv = new ModelAndView("site/blog02");
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
 		mv.addObject("articlesBlog", articleBlogFacade.findActivesArticles());
-		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
+		headerFooterData(session);
 		
 		return mv;
 	}
 	
 	@RequestMapping("/blog/post/{idArticle}")
-	public ModelAndView getPostPage(@PathVariable Long idArticle){
+	public ModelAndView getPostPage(@PathVariable Long idArticle, HttpSession session){
 		Article articleId = articleBlogFacade.getArticleBlogId(idArticle);
 		ModelAndView mv = new ModelAndView("site/post02", "articleCurrent", articleId);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
-		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
+		headerFooterData(session);
 		return mv;
 	}
 	
 	@RequestMapping(value="/blog/category", method=RequestMethod.GET)
-	public ModelAndView getPostCategory(@RequestParam Long id) {
+	public ModelAndView getPostCategory(@RequestParam Long id, HttpSession session) {
 		CategoryBlog cb = categoryBlogFacade.getCategoryBlogId(id);
 		List<Article> articles = articleBlogFacade.findByCategoryBlogAndAtActive(cb);
 		ModelAndView mv = new ModelAndView("site/blog02", "articlesBlog", articles);
 		mv.addObject("categories", categoryBlogFacade.getAtivesCategoriesBlog());
-		mv.addObject("articlesFooter", articleBlogFacade.findActivesArticles());
+		headerFooterData(session);
 		return mv;
 	}
 	//--------- FIM BLOG ---------------------------------------------------------------------------
 	
 	@RequestMapping("/online-shop")
-	public String getonlineShopPage(){
+	public String getonlineShopPage(HttpSession session){
+		headerFooterData(session);
 		//TODO: Implementar as atributos para a view
 		
 		return "site/onlineShop02";
 	}
 	
 	@RequestMapping("/perfect-travel")
-	public ModelAndView getPerfectTravelPage(){		
+	public ModelAndView getPerfectTravelPage(HttpSession session){
+		headerFooterData(session);
 		return new ModelAndView("site/perfectTravel02", "agencyName", dashboardFacade.getAgency().getAgencyName());
 	}
 	
@@ -229,7 +226,7 @@ public class SiteController{
 	public Map<String, Object> getBudgetForm() { return budgetForm; }
 	
 	@RequestMapping(value="/budget/{idDestination}", method=RequestMethod.GET)
-	public ModelAndView getBudgetPage(@CookieValue(value="jb_client_email", defaultValue="defaultValue") String emailCookie, @PathVariable Long idDestination){
+	public ModelAndView getBudgetPage(@CookieValue(value="jb_client_email", defaultValue="defaultValue") String emailCookie, @PathVariable Long idDestination, HttpSession session){
 		//emailCookie = "seven@seventur.com";
 		
 		Customer customerForm = customerFacade.getCustomerByEmail(emailCookie);	
@@ -247,6 +244,7 @@ public class SiteController{
 		budgetForm.put("customerForm", customerForm);
 		budgetForm.put("destinationForm", (destinationForm == null ? new Destination() : destinationForm));
 		budgetForm.put("cServiceIdForm", cServiceForm.getId());
+		headerFooterData(session);
 		ModelAndView mv = new ModelAndView("site/budget02", budgetForm);
 		return mv;
 	}
@@ -262,7 +260,7 @@ public class SiteController{
 								@RequestParam(value = "vinculo", required = false) String vinculo,
 								@RequestParam(value = "acompanhante[]", required = false)  String acompanhante,
 								@RequestParam(value = "idade[]", required = false) String idade,
-								BindingResult result, HttpServletRequest req, RedirectAttributes redirectAttributes, Model model) {
+								BindingResult result, HttpServletRequest req, RedirectAttributes redirectAttributes, Model model, HttpSession session) {
 
 		Destination destinationSelected = destinationFacade.getDestinationById(destinationId);
 		if (result.hasErrors()) {
@@ -304,6 +302,7 @@ public class SiteController{
 			
 			model.addAttribute("customerForm", customer);
 			model.addAttribute("destinationForm", destinationSelected);
+			headerFooterData(session);
 			return "site/submittedBudget02";
 		}
 	}	
@@ -311,18 +310,21 @@ public class SiteController{
 	
 	@RequestMapping("/templateColorCodHex")
 	@ResponseBody
-	public String getCodHex(){
+	public String getCodHex(HttpSession session){
+		headerFooterData(session);
 		return dashboardFacade.getAgency().getAgencyConfig().getTemplateColor();
 	}
 	
 	@RequestMapping(value = "/add-new-customer", method = RequestMethod.GET)
 	@ResponseBody
-	public void saveCustomerBySite(String name, String email){
+	public void saveCustomerBySite(String name, String email, HttpSession session){
+		headerFooterData(session);
 		customerFacade.saveCustomerBySite(name, email);
 	}
 	
 	@RequestMapping(value = "/perfect-travel-filter", method = RequestMethod.GET)
-	public ModelAndView getDestinations(@RequestParam String social, @RequestParam String economic, @RequestParam String trip, @RequestParam String weather, @RequestParam String general, Model model) throws SQLException{
+	public ModelAndView getDestinations(@RequestParam String social, @RequestParam String economic, @RequestParam String trip, @RequestParam String weather, @RequestParam String general, Model model, HttpSession session) throws SQLException{
+		headerFooterData(session);
 		if(Strings.isNullOrEmpty(social) || Strings.isNullOrEmpty(economic) || Strings.isNullOrEmpty(trip) || Strings.isNullOrEmpty(weather) || Strings.isNullOrEmpty(general)){
 			return new ModelAndView("site/destinations02", "perfectDestinationError", true);
 		}else{
@@ -330,4 +332,24 @@ public class SiteController{
 		}
 
 	}
+	
+	/**
+	 * Este método é utilizado para colocar na sessão todos os valores fixo do site, no cabelçalho ou rodapé.
+	 * Exemplo: Artigos do blog, que vão aparecer no rodapé, de todas as páginas do site.
+	 * @param session
+	 */
+    public void headerFooterData(HttpSession session) {
+    	try {
+    		Object objectArticle = session.getAttribute("articlesFooter");
+    		Object objectCategory = session.getAttribute("categoryListSession");
+    		if(objectArticle == null) {
+    			session.setAttribute("articlesFooterSession", articleBlogFacade.findActivesArticles());
+    		}
+    		if (objectCategory == null) {
+    			session.setAttribute("categoryListSession", dashboardFacade.getCategoryList());
+			}
+    	} catch(IllegalStateException ise) {    		
+    	}
+    }
+	
 }
