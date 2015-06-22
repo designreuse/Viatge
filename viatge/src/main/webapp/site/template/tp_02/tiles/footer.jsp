@@ -39,7 +39,7 @@
             	<h2 class="txt-thema">NO BLOG</h2>
                 <!-- FEEDS DE NOTÍCIAS -->
                 <ul>
-                <c:forEach items="${articlesFooter}" var="aFooter" end="1">
+                <c:forEach items="${articlesFooterSession}" var="aFooter" end="1">
 	                	<li>
 	                    	<figure><a href="${pageContext.request.contextPath}/blog/post/${aFooter.idArticle}"><img src="${pageContext.request.contextPath}/image/articleBlog/thumbnail/${aFooter.atName}" alt="imagemPost"></a></figure> <!-- IMAGEM DE 70 x 70 PX -->
 	                        <div>

@@ -17,10 +17,17 @@
     <!-- Create o datasource da aplicacao -->	
     <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />    
+<<<<<<< HEAD
         <property name="url" value="jdbc:mysql://localhost:3306/viatgedb?useUnicode=yes&amp;characterEncoding=UTF-8"/>
         <property name="username" value="admindb" /> 
         <property name="password" value="rootad" /> 
         <!--<property name="url" value="jdbc:mysql://jb-crm-db.cbksm68rmq6y.sa-east-1.rds.amazonaws.com:3306/viatgedb?useUnicode=true&amp;characterEncoding=utf8"/>
+=======
+<!--         <property name="url" value="jdbc:mysql://localhost:3306/viatgedb?useUnicode=yes&amp;characterEncoding=UTF-8"/> -->
+<!--         <property name="username" value="admindb" />  -->
+<!--         <property name="password" value="rootad" /> -->
+        <property name="url" value="jdbc:mysql://jb-crm-db.cbksm68rmq6y.sa-east-1.rds.amazonaws.com:3306/viatgedb?useUnicode=true&amp;characterEncoding=utf8"/>
+>>>>>>> branch 'master' of https://github.com/JooceBox/Viatge.git
         <property name="username" value="UsViatge_2014" />
         <property name="password" value="PsViatge_2014" />-->
     </bean>	

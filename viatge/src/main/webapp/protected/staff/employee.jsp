@@ -139,8 +139,31 @@
 					<div class="body-nest" id="dados-profissionais"
 						style="display: none;">
 
-						<c:choose>
-							<c:when test="${showRole}">
+							<security:authorize ifAllGranted="ROLE_MASTER,ROLE_ADMIN" access="${showRole}">
+								<div class="aling-form">
+
+									<div class="box01">
+										<div class="input-group ">
+											<span class="input-group-addon btn-success"> <i
+												class="fa fa-cogs"></i>
+											</span>
+											<f:input id="employee-jobTitle" placeholder="Cargo"
+												type="text" cssClass="form-control" path="jobTitle"/>
+										</div>
+									</div>
+
+									<div class="box02">
+										<f:select id="employee-role" cssClass="form-control"
+											path="login.role">
+											<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
+											<f:options items="${systemRoles}" />
+										</f:select>
+									</div>
+
+								</div>
+							</security:authorize>
+							
+							<security:authorize ifAllGranted="ROLE_USER,ROLE_MASTER,ROLE_ADMIN" access="${!showRole}">
 								<div class="aling-form">
 
 									<div class="box01">
@@ -163,32 +186,7 @@
 									</div>
 
 								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="aling-form">
-
-									<div class="box01">
-										<div class="input-group ">
-											<span class="input-group-addon btn-success"> <i
-												class="fa fa-cogs"></i>
-											</span>
-											<f:input id="employee-jobTitle" placeholder="Cargo"
-												type="text" cssClass="form-control" path="jobTitle"
-												readonly="true" />
-										</div>
-									</div>
-
-									<div class="box02">
-										<f:select id="employee-role" cssClass="form-control"
-											path="login.role" disabled="true">
-											<f:option value="" label="Permissão de Acesso ao Sistema"></f:option>
-											<f:options items="${systemRoles}" />
-										</f:select>
-									</div>
-
-								</div>
-							</c:otherwise>
-						</c:choose>
+							</security:authorize>
 					</div>
 
 				</div>

@@ -28,6 +28,18 @@ public class AgencyConfig implements Serializable {
 	@Column(name="site_template")
 	private int siteTemplate;
 
+	@Column(name="facebook_link")
+	private String facebookLink;
+	
+	@Column(name="twitter_link")
+	private String twitterLink;
+	
+	@Column(name="instagram_link")
+	private String instagramLink;
+	
+	@Column(name="googlePlus_link")
+	private String googlePlusLink;
+	
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +70,38 @@ public class AgencyConfig implements Serializable {
 
 	public void setSiteTemplate(int siteTemplate) {
 		this.siteTemplate = siteTemplate;
+	}
+	
+	public String getFacebookLink() {
+		return facebookLink;
+	}
+
+	public void setFacebookLink(String facebookLink) {
+		this.facebookLink = facebookLink;
+	}
+
+	public String getTwitterLink() {
+		return twitterLink;
+	}
+
+	public void setTwitterLink(String twitterLink) {
+		this.twitterLink = twitterLink;
+	}
+
+	public String getInstagramLink() {
+		return instagramLink;
+	}
+
+	public void setInstagramLink(String instagramLink) {
+		this.instagramLink = instagramLink;
+	}
+
+	public String getGooglePlusLink() {
+		return googlePlusLink;
+	}
+
+	public void setGooglePlusLink(String googlePlusLink) {
+		this.googlePlusLink = googlePlusLink;
 	}
 
 	@Override

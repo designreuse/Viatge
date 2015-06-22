@@ -11,4 +11,9 @@
 	<definition extends="default" name="website/templateSelected">
 		<put-attribute name="body" value="/protected/website/templateSelected.jsp" />
 	</definition>
+	
+	<!-- Map to social network soacialNetwork.jsp view -->
+	<definition extends="default" name="website/social-network">
+		<put-attribute name="body" value="/protected/website/socialNetwork.jsp" />
+	</definition>
 </tiles-definitions>

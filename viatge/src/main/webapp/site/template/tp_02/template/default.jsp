@@ -24,6 +24,7 @@
 <![endif]-->
 
 <script type="text/javascript" src="http://sawpf.com/1.0.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.tooltipster.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/jquery.cycle.all.js"></script>
@@ -36,13 +37,14 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/placeholder.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/application.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/changeThemeColor.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/app-crm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/app-crm/app-crm.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/app-crm/budgetController.js"></script>
 
 
 
 </head>
 
-<body>
+<body ng-app="JooceboxSite">
 
 		<tiles:insertAttribute name="header" />
 

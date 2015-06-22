@@ -12,7 +12,6 @@ public interface ArticleBlogRepository extends BaseRepository<Article, Long>{
 
 	List<Article> findAll();
 	
-	List<Article> findByCategoryBlogAndAtActive(CategoryBlog categoryBlog, int active);
+	List<Article> findByCategoryBlogAndAtActiveOrderByPostingDateDesc(CategoryBlog categoryBlog, int active);
 
-	List<Article> findByAtActiveEquals(int i);
 }
