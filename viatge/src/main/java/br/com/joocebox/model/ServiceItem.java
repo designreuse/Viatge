@@ -43,9 +43,6 @@ public class ServiceItem implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id_service_item")
 	private Long id;
-
-	@Column(name="hash_id")
-	private String hashId;
 	
 	@ManyToOne
 	@JoinColumn(name="fk_destination")
@@ -128,14 +125,6 @@ public class ServiceItem implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getHashId() {
-		return hashId;
-	}
-
-	public void setHashId(String hashId) {
-		this.hashId = hashId;
 	}
 
 	public Destination getDestination() {
@@ -233,8 +222,7 @@ public class ServiceItem implements Serializable{
 	            && Objects.equal(this.seeIn, other.seeIn)
 	            && Objects.equal(this.tenantId, other.tenantId)
 	            && Objects.equal(this.customerService, other.customerService)
-	            && Objects.equal(this.saleType, other.saleType)
-	            && Objects.equal(this.hashId, other.hashId);
+	            && Objects.equal(this.saleType, other.saleType);
 	}
 
 	@Override

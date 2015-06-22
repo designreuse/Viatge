@@ -127,7 +127,7 @@
 									<c:forEach items="${serviceListRegister}" var="service" varStatus="status">
 									<tr>
 										<td>
-											<a href="editService?id=${service.id}&cs=${service.idCustomerService}">${service.firstName}</a>
+											<a href="edit-service?id=${service.id}">${service.firstName}</a>
                                         </td>
                                         <td>${service.lastName}</td>
                                         <td>

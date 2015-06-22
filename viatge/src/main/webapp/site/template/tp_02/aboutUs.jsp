@@ -8,7 +8,11 @@
     <div class="container">
     	
         <h1>Quem Somos</h1>     
-        <figure><img src="http://retaildesignblog.net/wp-content/uploads/2012/05/World-of-TUI-travel-agency-by-NEST-ONE-Berlin-03.jpg" width="100%" alt="nome da agência"></figure>
+
+        	<video width="100%" controls>
+        		<source src="https://s3-sa-east-1.amazonaws.com/joocebox-media/Poltrona+1/V%C3%ADdeo+first+version.mp4" type="video/mp4">
+        	</video>
+
         <br>
 		<p>Com uma proposta inovadora no mercado nacional, a Poltrona 1 possui em seu DNA a preocupação em satisfazer as expectativas pessoais de cada cliente.</p>
 		<p>Existem muitos lugares incríveis para conhecer e em cada um destes lugares diversas opções de hospedagem, entretenimento, passeios e experiências das mais radicais as mais relaxantes ou românticas.</p>
@@ -20,7 +24,7 @@
 		<p>Seja bem vindo a melhor experiência em viagens de sua vida.</p>
 		
         <h2>Gostou da nossa Agência? Podemos encontrar o destino perfeito para você!</h2>
-        <p><a href="destino-perfeito.php" class="btn bg-thema">DESTINO PERFEITO</a></p>
+        <p><a href="${pageContext.request.contextPath}/perfect-travel" class="btn bg-thema">DESTINO PERFEITO</a></p>
     </div>
     
 </section>

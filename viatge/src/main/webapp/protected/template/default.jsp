@@ -8,9 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <script type="text/javascript" src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js">
-    <!-- Le styles -->
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <!-- default header name is X-CSRF-TOKEN -->
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+    
+    <!-- Importa o Angular -->
+    <script type="text/javascript" src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
 
+    <!-- Le styles -->
     <script src="${pageContext.request.contextPath}/resources/js/wizard/lib/modernizr-2.6.2.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
@@ -144,31 +149,24 @@
     
     <!-- Validação via JS -->
     <script src="${pageContext.request.contextPath}/resources/js/validate/jquery.validate.js"></script>
+    
+    <!-- Carrega o Angular Service Modal -->
+    <script src="${pageContext.request.contextPath}/resources/js/angular-modal-service.min.js" type="text/javascript"></script>
 
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>
     
-    <!-- Funcionalidade de "Gestão de Atendimentos" -->
-    <script src="${pageContext.request.contextPath}/resources/js/app-crm/serviceController.js" type="text/javascript"></script>
+    <!-- Carrega o modulo principal do Angular.js -->
+    <script src="${pageContext.request.contextPath}/resources/js/app-crm/app.js" type="text/javascript"></script>
+    
+    <!-- Importação do arquivo Angular.js da funcionalidade de "Atendimentos"-->
+    <script src="${pageContext.request.contextPath}/resources/js/app-crm/service.js" type="text/javascript"></script>
 
     
 <script type="text/javascript">
 $(function() {
 	var winWrap = $(window).height() - 75;
 	$('.paper-wrap').css('min-height', winWrap);
-	
-	//Mascaras da funcionalidade de Novo Atendimento
-	$("#birthday").mask("99/99/9999");
-	$("#residential-phone").mask("(99) 9999-9999");
-	$("#mobile-telefone").mask("(99) 9999-9999");
-	$("#work-telephone").mask("(99) 9999-9999");
-	$("#cpf").mask("999.999.999-99");
-	$("#rg").mask("9.999.999-9");
-	
-    $("#passenger-phone").mask("(99) 9999-9999");
-    $("#passenger-birth").mask("99/99/9999");
-    $("#passenger-rg").mask("9.999.999-9");
-    $("#passenger-cpf").mask("999.999.999-99");
 	
 	//Controla o componente de "fechar e abrar" as div's
 	$('.toggle-box').click( function(event){

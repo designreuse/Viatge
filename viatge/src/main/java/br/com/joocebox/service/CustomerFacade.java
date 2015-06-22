@@ -21,9 +21,9 @@ import br.com.joocebox.model.Customer;
 import br.com.joocebox.model.CustomerAddress;
 import br.com.joocebox.model.CustomerPhone;
 import br.com.joocebox.model.CustomerService;
+import br.com.joocebox.model.Document;
 import br.com.joocebox.model.FamilyBond;
 import br.com.joocebox.model.Passenger;
-import br.com.joocebox.model.Document;
 import br.com.joocebox.multitenancy.CurrentTenantResolver;
 import br.com.joocebox.repositories.CountryRepository;
 import br.com.joocebox.repositories.CustomerRepository;
@@ -53,19 +53,16 @@ public class CustomerFacade {
 	}
 	
 	public void save(Customer customer) {
-		//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
-        customer.setSite(Boolean.FALSE);
-        
-        //Inicia um objeto do tipo CustomerService para abrir um atendimento.
-        CustomerService customerService = new CustomerService();        
-        //Atualiza a data da ultima abertura do serviço
-        customerService.setDate(new Date());
-        
-        //Seta 
-        //customerService.setSituation(Boolean.TRUE);         
+		if(customer.getCustomerService() == null){
+			CustomerService cs = new CustomerService();
+			cs.setDate(new Date());
+			cs.setSituation(Boolean.TRUE);
+			customer.setCustomerService(cs);
+			customerRepository.save(customer);
+		}else{
+			customerRepository.save(customer);
+		}
 
-	
-		//return customerRepository.save(customer);
 	}
 
 	public Customer getCustomerId(Long id) {

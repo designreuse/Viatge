@@ -30,7 +30,7 @@ public class StreetView implements Serializable {
 	@Column(name="embedCode", length=4000)
 	private String embedCode;
 	
-	@Column(name="src")
+	@Column(name="src", length=2000)
 	private String src;
 	
 	@Column(name="link")

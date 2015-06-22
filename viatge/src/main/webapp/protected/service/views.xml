@@ -4,7 +4,7 @@
 <tiles-definitions>
 	<!-- Abre um novo Atendimento -->
 	<definition extends="default" name="service/newService">
-		<put-attribute name="body" value="/protected/service/newService.jsp"/>
+		<put-attribute name="body" value="/protected/service/service.jsp"/>
 	</definition>
 	
 	<!-- Lista de Atendimentos feitos pela agencia-->
