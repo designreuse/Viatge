@@ -14,5 +14,4 @@ public interface ArticleBlogRepository extends BaseRepository<Article, Long>{
 	
 	List<Article> findByCategoryBlogAndAtActiveOrderByPostingDateDesc(CategoryBlog categoryBlog, int active);
 
-	List<Article> findByAtActiveOrderByPostingDateDesc(int i);
 }

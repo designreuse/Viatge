@@ -11,6 +11,7 @@ import br.com.joocebox.controller.FileArticleBlogController;
 import br.com.joocebox.model.Article;
 import br.com.joocebox.model.CategoryBlog;
 import br.com.joocebox.repositories.ArticleBlogRepository;
+import br.com.joocebox.repositories.dao.ArticleBlogDAO;
 
 @Service
 @Transactional(propagation = Propagation.MANDATORY)
@@ -24,13 +25,15 @@ public class ArticleBlogFacade {
 	private FileArticleBlogController fileController;
 	@Autowired
 	private CategoryBlogFacade categoryBlogFacade;
+	@Autowired
+	private ArticleBlogDAO articleBlogDao;
 
 	/**
 	 * Método que retorna uma lista de Artigos(Blog) ativos.
 	 * @return List<Article> Artigos Ativos.
 	 */
 	public List<Article> findActivesArticles() {
-		return articleBlogRepository.findByAtActiveOrderByPostingDateDesc(1);
+		return articleBlogDao.findArticlesByActivesOrderByPostingDateDesc();
 	}
 
 	public void addArticleBlog(Article article) {
