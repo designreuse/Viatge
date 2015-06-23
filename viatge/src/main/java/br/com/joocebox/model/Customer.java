@@ -89,7 +89,7 @@ public class Customer implements Serializable {
 	@Column(name = "site")
 	private Boolean site;
 
-	@OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_customerService")
 	private CustomerService customerService;
 

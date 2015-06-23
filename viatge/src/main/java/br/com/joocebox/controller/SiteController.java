@@ -288,7 +288,10 @@ public class SiteController{
 			CustomerService cService = new CustomerService();
 			if (customerServiceId != null) {
 				cService = customerServiceFacade.findById(customerServiceId);
-			}			
+				if (cService != null) {
+					cService.setSituation(Boolean.TRUE);
+				}
+			}
 			customer.setCustomerService(cService);
 			Date dataIda = FormatObjects.formatStringDateToDateObject(ida, redirectAttributes);
 			Date dataVolta = FormatObjects.formatStringDateToDateObject(volta, redirectAttributes);
@@ -297,9 +300,7 @@ public class SiteController{
 			cService.setServiceItem(new HashSet<ServiceItem>());
 			cService.getServiceItem().add(sItem);
 			//save customer
-			customerFacade.save(customer);
-			//save customerService
-			customerServiceFacade.saveCustomerService(cService);
+			customerFacade.saveByBudget(customer);
 			//save serviceItem
 			serviceItemFacade.saveServiceItem(sItem);
 			

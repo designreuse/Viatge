@@ -62,6 +62,10 @@ public class CustomerFacade {
         customerRepository.save(customer);
 	}
 
+	public void saveByBudget(Customer customer) {
+		customerRepository.save(customer);
+	}
+	
 	public Customer getCustomerId(Long id) {
 		return customerRepository.findOne(id);
 	}
