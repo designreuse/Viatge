@@ -285,8 +285,8 @@ public class AgencyController {
 	 * @return url
 	 */
 	protected String getAgencyRegisterWizardFullUrl(Agency agency) {
-		String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/register/wizard";
-		//String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/register/wizard";
+		//String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/register/wizard";
+		String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/register/wizard";
 		return url;
 	}
 	
@@ -297,8 +297,8 @@ public class AgencyController {
 	 * @return url
 	 */
 	protected String getAgencyFullUrl(Agency agency) {
-		String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/login";
-		//String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/login";		
+		//String url = "http://" + agency.getSubdomain() + ".lvh.me:8080/viatge/login";
+		String url = "http://" + agency.getSubdomain() + ".joocebox.com:8080/viatge/login";		
 		return url;
 	}
 	

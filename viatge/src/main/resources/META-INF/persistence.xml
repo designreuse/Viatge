@@ -56,7 +56,7 @@
 			ALL	 This level currently logs at the same level as FINEST.
 		 -->		 
 <!-- 			<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>			 -->
-			<property name="eclipselink.ddl-generation" value="none"/>			
+			<property name="eclipselink.ddl-generation" value="create-or-extend-tables"/>			
 			<property name="eclipselink.logging.logger" value="org.eclipse.persistence.logging.DefaultSessionLog"/>
 			<property name="eclipselink.logging.level" value="SEVERE"/>
 		</properties>
