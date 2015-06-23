@@ -40,10 +40,6 @@ public class VwOpenService implements Serializable {
 	@Column(name="id_customer_service")
 	private Long idCustomerService;
 	
-	
-	@Column(name="hash_id")
-	private String hashId;
-	
 	@Column(name="tenant_id", insertable=false, updatable=false)
 	private Long tenantId;
 	
@@ -93,16 +89,6 @@ public class VwOpenService implements Serializable {
 
 	public void setIdCustomerService(Long idCustomerService) {
 		this.idCustomerService = idCustomerService;
-	}
-
-
-	public String getHashId() {
-		return hashId;
-	}
-
-
-	public void setHashId(String hashId) {
-		this.hashId = hashId;
 	}
 
 
@@ -210,8 +196,7 @@ public class VwOpenService implements Serializable {
 	        return Objects.equal(this.price, other.price)
 	            && Objects.equal(this.firstName, other.firstName)
 	            && Objects.equal(this.saleType, other.saleType)
-	            && Objects.equal(this.seeIn, other.seeIn)
-	            && Objects.equal(this.hashId, other.hashId);
+	            && Objects.equal(this.seeIn, other.seeIn);
 	}
 
 
@@ -219,7 +204,6 @@ public class VwOpenService implements Serializable {
 	public String toString() {
 		return "VwOpenService [id=" + id + ", tenantId=" + tenantId
 				+ ", idCustomerService=" + idCustomerService
-				+ ", hashId=" + hashId 
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", dateService=" + dateService + ", price=" + price
 				+ ", saleType=" + saleType + "]";

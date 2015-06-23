@@ -42,7 +42,7 @@
                             <li class="divider"></li>
                             <li>
                                 <a href="#">
-                                    Ei! Você tem 1 cliente próximo(s) de viajar!
+                                    Você tem 1 cliente próximo(s) de viajar!
                                 </a>
                             </li>
                             <li class="divider"></li>
@@ -90,7 +90,7 @@
                         </a>
                         <ul style="margin-top:14px;" role="menu" class="dropdown-setting dropdown-menu">
                             <li>
-                                <a href="<c:url value="${employeeAvatar.id}"/>">
+                                <a href="${pageContext.request.contextPath}/auth/employee/view/${employeeAvatar.id}">
                                     <span class="entypo-user"></span>&#160;&#160;Meu Perfil</a>
                             </li>
                             <li>

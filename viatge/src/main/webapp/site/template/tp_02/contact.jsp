@@ -47,8 +47,8 @@
             	<h2>Endereço</h2>
                 <p>
                 	<i class="txt-thema"></i>
-                	Rua posuere sapien et, 365<br>
-                	Londrina - Paraná
+                	 Rua Pres Faria, 282<br>
+                	Curitiba - Paraná
                 </p>
                 
                 <p><a href="#mapa" onclick="$('html,body').animate({ scrollTop: $('#mapa').offset().top }, 1800);" class="btn bg-thema">VER NO MAPA</a></p>
@@ -59,7 +59,7 @@
             	<h2>TELEFONE</h2>
                 <p>
                 	<i class="txt-thema"></i>
-                    <a href="tel:04332589856" class="link-telefone"><small>(43)</small> 0000-0000</a>
+                    <a href="#" class="link-telefone"><small>(41) 9644-5090</small> </a>
                 </p>
             </div>
             
@@ -68,7 +68,7 @@
             	<h2>E-MAIL</h2>
                 <p>
                 	<i class="txt-thema"></i>
-                	<a href="mailto:contato@seusiteaqui.com.br">contato@seusiteaqui.com.br</a>
+                	<a href="mailto:contato@seusiteaqui.com.br">info@poltrona1.com.br</a>
                 </p>
             </div>
         </div>
@@ -88,12 +88,12 @@
                     scaleControl: true,
                     scrollwheel: false,
                     disableDoubleClickZoom: true,
-                    center : new google.maps.LatLng(-23.3344613,-51.148428,15), //alterar coordenadas de endereço
+                    center : new google.maps.LatLng(-25.427908,-49.268486), //alterar coordenadas de endereço
                     mapTypeId : google.maps.MapTypeId.ROADMAP
                 });
     
-                var image = 'public/image/icons-location.png',
-                    myLatLng = new google.maps.LatLng(-23.3344613,-51.148428,15); //alterar coordenadas de endereço
+                var image = '/site/template/tp_02/assets/image/icons-location.png',
+                    myLatLng = new google.maps.LatLng(-25.427908,-49.268486); //alterar coordenadas de endereço
     
                 var beachMarker = new google.maps.Marker({
                     position : myLatLng,
