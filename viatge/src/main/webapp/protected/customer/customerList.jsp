@@ -24,8 +24,42 @@
 	<li><a href="#" title="Sample page 1">Página Inicial</a></li>
 	<li><i class="fa fa-lg fa-angle-right"></i></li>
 	<li><a href="#" title="Sample page 1">Lista de Clientes</a></li>
+	<li><i class="fa fa-lg fa-angle-right"></i></li>
+	<li><a href="javascript:void(null);" onclick="showDialog();"><img src="../resources/img/help.png" height="18"/></a></li>	
 </ul>
 <!-- FIM BREADCRUMB -->
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript">
+function showDialog()
+{
+    $("#dialog-modal").dialog(
+    {
+        width: 600,
+        height: 400,
+        open: function(event, ui)
+        {
+            var textarea = $('<textarea style="height: 276px;">');
+            $(textarea).redactor({
+                focus: true,
+                maxHeight: 300,
+                initCallback: function()
+                {
+                    //this.code.set('<p>Lorem...</p>');
+                }
+            });
+        }
+     });
+}
+</script>
+<div id="dialog-modal" style="display: none;">
+		<video width="100%" controls>
+			<source
+				src="https://s3-sa-east-1.amazonaws.com/joocebox-media/Poltrona+1/Lista+de+Clientes.mp4"
+				type="video/mp4">
+		</video>
+
+</div>
 
 
 <div class="content-wrap margin-bottom">

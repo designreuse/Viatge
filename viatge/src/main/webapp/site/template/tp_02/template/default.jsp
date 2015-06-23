@@ -39,6 +39,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/changeThemeColor.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/app-crm/app-crm.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/site/resources/tp_02/js/app-crm/budgetController.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 
 
 
