@@ -292,6 +292,37 @@ Clientes
 	<table>
 		<tr>
 			<td>
+			 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+  <div id="chart_div" style="width: 900px;"></div>
+      
+			<script> 
+			google.load('visualization', '1', {packages: ['corechart', 'line']});
+			google.setOnLoadCallback(drawCurveTypes);
+
+			function drawCurveTypes() {
+			      var data = google.visualization.arrayToDataTable([
+			          ['Ano', 'Vendas Total', 'Site', 'Físico'],
+			          ['03/2015',  30000, 21000, 9000],
+			          ['04/2015',  27000, 15000, 12000],
+			          ['05/2015',  40500, 10200, 30300],
+			          ['06/2015',  60000, 35000, 25000],
+			        ]);
+
+			    var options = {
+			    		width: 900,
+			          title: 'Vendas por Período',
+			          curveType: 'function',
+			          legend: { position: 'bottom' },
+		          vAxis: {
+		            title: 'Valor'
+		          },
+			        };
+
+			    var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+			      chart.draw(data, options);
+			    }
+			</script>
+			      			
 			</td>
 		</tr>
 	</table>
