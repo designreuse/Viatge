@@ -46,11 +46,10 @@ public class CustomerServiceFacade {
 		String query = "SELECT cService FROM Customer customer "
 					 + " JOIN customer.customerService cService "
 					 + " WHERE customer = :p0 "
-					 + " AND cService.situation = :p1 "
 					 + " ORDER BY cService.id DESC";
 		Long currentTenantId = tenantResolver.getCurrentTenantId();
 		entityManager.setProperty(PersistenceUnitProperties.MULTITENANT_PROPERTY_DEFAULT, currentTenantId);
-		List<CustomerService> cServices = entityManager.createQuery(query).setParameter("p0", customer).setParameter("p1", Boolean.TRUE).getResultList();
+		List<CustomerService> cServices = entityManager.createQuery(query).setParameter("p0", customer).getResultList();
 		if (cServices != null && !cServices.isEmpty()) {
 			return cServices.get(0);
 		} else {
