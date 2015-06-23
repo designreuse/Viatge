@@ -13,11 +13,11 @@
             
             <!-- MÍDIA SOCIAL -->
             <ul class="midia-social">
-            	<li class="facebook"><a href="#"></a></li>
-                <li class="twitter"><a href="#"></a></li>
-                <li class="instagram"><a href="#"></a></li>
+            	<li class="facebook"><a href="javascript:window.open('${linkFacebookSession}');"></a></li>
+                <li class="twitter"><a href="javascript:window.open('${linkTwitterSession}');"></a></li>
+                <li class="instagram"><a href="javascript:window.open('${linkInstagramSession}');"></a></li>
+                <li class="plus"><a href="javascript:window.open('${linkGooglePlusSession}');"></a></li>
                 <li class="youtube"><a href="#"></a></li>
-                <li class="plus"><a href="#"></a></li>
                 <li class="linkedin"><a href="#"></a></li>
             </ul>
 			

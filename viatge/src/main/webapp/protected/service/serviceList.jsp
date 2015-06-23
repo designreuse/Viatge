@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- CONTENT -->
 <!--TITLE -->
 <div class="row">
@@ -37,7 +37,8 @@
 				<div>
 					<p>PRÓXIMOS DE VIAJAR</p>
 					<div class="var-metrica">
-						<span class="entypo-clock"></span> <c:out value="${nextToTravel}"></c:out>
+						<span class="entypo-clock"></span>
+						<c:out value="${nextToTravel}"></c:out>
 					</div>
 				</div>
 			</li>
@@ -46,7 +47,8 @@
 				<div>
 					<p>ENVIAR ORÇAMENTO</p>
 					<div class="var-metrica">
-						<span class="fontawesome-money"></span> <c:out value="${send_budget_div}"/>
+						<span class="fontawesome-money"></span>
+						<c:out value="${send_budget_div}" />
 					</div>
 				</div>
 
@@ -57,7 +59,8 @@
 				<div>
 					<p>ORÇAMENTO ENVIADO</p>
 					<div class="var-metrica">
-						<span class="fontawesome-comments"></span> <c:out value="${submitted_budget_div}"/>
+						<span class="fontawesome-comments"></span>
+						<c:out value="${submitted_budget_div}" />
 					</div>
 				</div>
 			</li>
@@ -85,7 +88,7 @@
 					<p>RETORNO DE VIAGEM</p>
 					<div class="var-metrica">
 						<span class="entypo-home"></span> 0
-					</div>										
+					</div>
 				</div>
 			</li>
 		</ul>
@@ -112,16 +115,17 @@
 
 
 							<table id="footable-res2" class="demo margin-bottom"
-								data-filter="#filter" data-filter-text-only="true">
+								data-filter="#filter" data-filter-text-only="true"
+								data-page-size="15">
 								<thead>
 									<tr>
 										<th>Nome</th>
 										<th>Sobrenome</th>
 										<th>Valor Estimado</th>
 										<th>Data de Abertura</th>
-										<th>Visualizar em</th>										
+										<th>Visualizar em</th>
 										<th>Status</th>
-									</tr>
+									</tr>	
 								</thead>
 								<tbody>
 									<c:forEach items="${serviceListRegister}" var="service" varStatus="status">
@@ -155,10 +159,17 @@
                                     </tr> 
 									</c:forEach>
 								</tbody>
+								<tfoot>
+									<tr>
+										<td colspan="5">
+											<div class="pagination pagination-centered"></div>
+										</td>
+									</tr>
+								</tfoot>
 							</table>
 						</c:when>
 						<c:otherwise>
-							<div class="alert alert-info">								
+							<div class="alert alert-info">
 								<span class="entypo-info-circled"></span> <strong>Hummm!</strong>&nbsp;&nbsp;Parece
 								que você ainda não possui nenhuma atendimento cadastrado, clique
 								no menu <b>"Novo Atendimento"</b>

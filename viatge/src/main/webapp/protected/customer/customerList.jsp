@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="f"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!-- CONTENT -->
 <!--TITLE -->
 <div class="row">
@@ -38,7 +38,11 @@
 			</div>
 
 			<div class="col-sm-12">
-				<p>Você possui  <c:out value="${customerCount}"></c:out> clientes ativos</p>
+				<p>
+					Você possui
+					<c:out value="${customerCount}"></c:out>
+					clientes ativos
+				</p>
 			</div>
 
 			<form action="#" method="post" class="form-filtro">
@@ -52,7 +56,8 @@
 				<c:choose>
 					<c:when test="${!empty customerList}">
 						<table id="footable-res2" class="demo margin-bottom"
-								data-filter="#filter" data-filter-text-only="true">
+							data-filter="#filter" data-filter-text-only="true"
+							data-page-size="15">
 							<thead>
 								<tr>
 									<th class="vertical-align-center">Nome</th>
@@ -65,7 +70,8 @@
 							<tbody>
 								<c:forEach items="${customerList}" var="c">
 									<tr>
-										<td><a href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}&nbsp;${c.lastName}</a></td>
+										<td><a
+											href="<c:url value="customer/view/${c.idCustomer}"/>">${c.firstName}&nbsp;${c.lastName}</a></td>
 										<td>${c.email}</td>
 										<td>${c.customerPhone.celPhone}</td>
 										<td>${c.customerPhone.homePhone}</td>
@@ -76,6 +82,13 @@
 									</tr>
 								</c:forEach>
 							</tbody>
+							<tfoot>
+								<tr>
+									<td colspan="5">
+										<div class="pagination pagination-centered"></div>
+									</td>
+								</tr>
+							</tfoot>
 						</table>
 					</c:when>
 					<c:otherwise>

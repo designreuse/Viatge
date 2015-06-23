@@ -20,6 +20,7 @@
 			    <input type="hidden" id="customerId"  name="customerId" value="${customerForm.idCustomer}"/>
 			    <input type="hidden" id="destinationId"  name="destinationId" value="${destinationForm.idDestination}"/>
 			    <input type="hidden" id="customerServiceId"  name="customerServiceId" value="${cServiceIdForm}"/>
+			    <input type="hidden" id="customerSite"  name="customerSite" value="${customerForm.site}"/>
 
 			<h2>Dados de contato</h2>
 			
