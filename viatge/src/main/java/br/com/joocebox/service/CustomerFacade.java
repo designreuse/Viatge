@@ -52,10 +52,7 @@ public class CustomerFacade {
 		return countryRepsitory.findAll();
 	}
 	
-	public void save(Customer customer) {
-		//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
-        customer.setSite(Boolean.FALSE);
-        
+	public void save(Customer customer) {        
         //Inicia um objeto do tipo CustomerService para abrir um atendimento.
         CustomerService customerService = new CustomerService();        
         //Atualiza a data da ultima abertura do serviço

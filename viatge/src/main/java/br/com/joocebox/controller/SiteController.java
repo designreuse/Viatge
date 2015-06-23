@@ -8,7 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -226,8 +228,7 @@ public class SiteController{
 	public Map<String, Object> getBudgetForm() { return budgetForm; }
 	
 	@RequestMapping(value="/budget/{idDestination}", method=RequestMethod.GET)
-	public ModelAndView getBudgetPage(@CookieValue(value="jb_client_email", defaultValue="defaultValue") String emailCookie, @PathVariable Long idDestination, HttpSession session){
-		//emailCookie = "seven@seventur.com";
+	public ModelAndView getBudgetPage(@CookieValue(value="jb_client_email", required=false) String emailCookie, @PathVariable Long idDestination, HttpSession session){
 		
 		Customer customerForm = customerFacade.getCustomerByEmail(emailCookie);	
 		Destination destinationForm = destinationFacade.getDestinationById(idDestination);
@@ -254,6 +255,7 @@ public class SiteController{
 								@RequestParam Long customerId, 
 								@RequestParam Long destinationId,
 								@RequestParam Long customerServiceId,
+								@RequestParam boolean customerSite,
 								@RequestParam(value = "ida", required = false) String ida,
 								@RequestParam(value = "volta", required = false) String volta ,
 								@RequestParam String observacoes,
@@ -278,6 +280,7 @@ public class SiteController{
 			customer.setFirstName(customerForm.getFirstName());
 			customer.setLastName(customerForm.getLastName());
 			customer.setEmail(customerForm.getEmail());
+			customer.setSite(customerSite);
 			customer.getCustomerPhone().setHomePhone(customerForm.getCustomerPhone().getHomePhone());
 			customer.getCustomerPhone().setCelPhone(customerForm.getCustomerPhone().getCelPhone());
 			customer.setPassenger(customerFacade.returnPassangersBudget(vinculo, acompanhante, idade));
@@ -317,7 +320,15 @@ public class SiteController{
 	
 	@RequestMapping(value = "/add-new-customer", method = RequestMethod.GET)
 	@ResponseBody
-	public void saveCustomerBySite(String name, String email, HttpSession session){
+	public void saveCustomerBySite(String name, String email, HttpSession session, HttpServletResponse response){
+		// Cookie
+		Cookie cookieName = new Cookie("jb_client_name", name);
+		Cookie cookieEmail = new Cookie("jb_client_email", email);
+		cookieEmail.setMaxAge(1825);
+		cookieName.setMaxAge(1825);
+		response.addCookie(cookieName);
+		response.addCookie(cookieEmail);
+		//Fim Cookie
 		headerFooterData(session);
 		customerFacade.saveCustomerBySite(name, email);
 	}
@@ -342,6 +353,23 @@ public class SiteController{
     	try {
     		Object objectArticle = session.getAttribute("articlesFooter");
     		Object objectCategory = session.getAttribute("categoryListSession");
+    		Object objectLinkFacebook = session.getAttribute("linkFacebookSession");
+    		Object objectLinkTwitter = session.getAttribute("linkTwitterSession");
+    		Object objectLinkInstagram = session.getAttribute("linkInstagramSession");
+  	    	Object objectLinkGooglePlus = session.getAttribute("linkGooglePlusSession");
+  	    	
+    		if(objectLinkFacebook == null) {
+    			session.setAttribute("linkFacebookSession", dashboardFacade.getAgency().getAgencyConfig().getFacebookLink());
+    		}
+    		if(objectLinkTwitter == null) {
+    			session.setAttribute("linkTwitterSession", dashboardFacade.getAgency().getAgencyConfig().getTwitterLink());
+    		}
+    		if(objectLinkInstagram == null) {
+    			session.setAttribute("linkInstagramSession", dashboardFacade.getAgency().getAgencyConfig().getInstagramLink());
+    		}
+    		if(objectLinkGooglePlus == null) {
+    			session.setAttribute("linkGooglePlusSession", dashboardFacade.getAgency().getAgencyConfig().getGooglePlusLink());
+    		}
     		if(objectArticle == null) {
     			session.setAttribute("articlesFooterSession", articleBlogFacade.findActivesArticles());
     		}

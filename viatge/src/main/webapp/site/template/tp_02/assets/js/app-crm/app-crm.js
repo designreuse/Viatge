@@ -108,8 +108,6 @@
 	      valid = valid && checkRegexp( email, emailRegex, "Insira um e-mail valido Ex. fulano@joocebox.com" );
 	      
 	      if(valid && (!getCookie("jb_client_name") && !getCookie("jb_client_email"))){
-	    	  createCookie("jb_client_name", $(name).val(), 1825);
-	    	  createCookie("jb_client_email", $(email).val(), 1825);
 	          callAJAX(name, email);
 	          dialog.dialog( "close" );
 	      }else{	    		 
