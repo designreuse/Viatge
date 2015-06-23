@@ -268,28 +268,138 @@
 							<div class="nest text margin-bottom">
 								<div class="title-alt">
 									<h6>
-										<a href="#" rel="destino-solicitado" class="toggle-box">Negociar Destinos</a>
+										<a href="#" rel="destino-solicitado" class="toggle-box">Negociar
+											Destinos</a>
 									</h6>
-									<a href="#" rel="destino-solicitado" class="icon-chevron-down toggle-box"></a>
+									<a href="#" rel="destino-solicitado"
+										class="icon-chevron-down toggle-box"></a>
 								</div>
 								<div class="body-nest" id="destino-solicitado">
-									<div class="aling-form">								
-										<div class="box03">									
-												<a class="btn btn-primary btn-lg" data-toggle="modal"
-												data-backdrop="static" data-target="#destinationModal"><span
-												class="entypo-plus-squared"></span>&nbsp;&nbsp;Adicionar um
-												Destino</a>								
-										</div>		
-																		
-										<ul id="destination-list" class="list-user" ng-controller="RequestedDestinationListController">
-										<!-- Linha de cada destino -->
-											<li id="item{{customerObjectTree.id}}" ng-repeat="item in customerObjectTree.data">
-												<label><b>{{item.title}}</b>
-												<button ng-click="deleteItem($index)" id="" type="button" class="btn btn-danger pull-right" style="position: relative;"><span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover</button>
-												<button ng-click="editItem($index)" id="" type="button" data-toggle="modal" data-backdrop="static" data-target="#EditDestinationModal" class="btn btn-info pull-right" style="position: relative;">
-												<span class="entypo-pencil"></span>&nbsp;&nbsp;Editar</button>			
-												</label>											
-											</li>															 
+									<div class="aling-form">
+										<div class="box03" ng-controller="RequestedDestinationModalController as destinationModalCtrl">
+											<button ng-click="open()" class="btn btn-primary btn-lg">
+												<span class="entypo-plus-squared"></span>&nbsp;&nbsp;Adicionar um Destino
+											</button>
+
+											<script type="text/ng-template" id="myModalContent.html">
+												<div class="modal-header">
+	<button type="button" class="close" ng-click="cancel()">
+		<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	</button>
+	<h4 class="modal-title">Negociar Novo Destino</h4>
+</div>
+<div class="modal-body">
+	<div id="div-modal-input-body-destination"
+		class="aling-form col-sm-12 nest text" style="padding-top: 25px">
+		<c:if test="${errUpdateDestinationRequested}">
+			<div class="alert alert-danger">
+				<span class="entypo-attention"></span>Você precisa preencher todos
+				os campos ou inserirum intervalo de datas compatíveis!
+			</div>
+		</c:if>
+		<div class="box01">
+			<select id="destination-passenger-list" class="form-control"
+				ng-model="destinationModalCtrl.destination">
+				<c:forEach items="${destinationList}" var="destination">
+					<option value="${destination.idDestination}">${destination.dtName}</option>
+				</c:forEach>
+			</select>
+		</div>
+
+		<div class="box02">
+			<div class="input-group ">
+				<span id="span-arrive" class="input-group-addon btn-success"><i
+					class="fa fa-calendar"></i></span> <input id="see-in" type="date"
+					ng-model="destinationModalCtrl.seeIn" class="form-control"
+					placeholder="Ver em..." />
+			</div>
+		</div>
+
+		<div class="box01">
+			<div class="input-group ">
+				<span id="span-departure" class="input-group-addon btn-success"><i
+					class="fa fa-calendar"></i></span> <input id="input-departure" type="date"
+					ng-model="destinationModalCtrl.departureDate"
+					class="form-control" placeholder="Data de Ida" />
+			</div>
+		</div>
+
+		<div class="box02">
+			<div class="input-group ">
+				<span id="span-arrive" class="input-group-addon btn-success"><i
+					class="fa fa-calendar"></i></span> <input id="input-arrive" type="date"
+					ng-model="destinationModalCtrl.arrivalDate"
+					class="form-control" placeholder="Data de Volta" />
+			</div>
+		</div>
+
+		<div class="box01">
+			<select id="combo-saleType" class="form-control"
+				ng-model="destinationModalCtrl.saleType">
+				<c:forEach items="${listOfSaleTypes}" var="saleType">
+					<option value="${saleType.key}">${saleType.value}</option>
+				</c:forEach>
+			</select>
+		</div>
+
+		<div class="box02">
+			<div class="input-group ">
+				<span class="input-group-addon btn-success"><i
+					class="fa fa-money"></i></span> <input id="input-price" type="text"
+					ng-model="destinationModalCtrl.valueNegotiated"
+					class="form-control" />
+			</div>
+		</div>
+
+
+		<div class="box03">
+			<textarea id="destination-observations"
+				ng-model="destinationModalCtrl.negociationObservations"
+				rows="3" placeholder="Observações..." class="form-control"
+				style="min-height: 130px;"></textarea>
+		</div>
+
+		<div class="box02">
+			<div class="input-group skin skin-flat">
+				<input id="ckb-requested" type="checkbox"
+					ng-model="destinationModalCtrl.requestedDestination" /> <label
+					id="ckb-label" for="ckb-requested">Destino Solicitado pelo
+					Passageiro?</label>
+
+			</div>
+		</div>
+
+
+	</div>
+
+</div>
+<div class="modal-footer clear" style="margin: 0px;">
+	<button class="btn btn-primary" ng-click="ok()">Cadastrar</button>
+	<button class="btn btn-danger" ng-click="cancel()">Cancelar</button>
+</div>
+</div>
+   											 </script>
+										</div>
+
+										<ul id="destination-list" class="list-user"
+											ng-controller="RequestedDestinationListController">
+											<!-- Linha de cada destino -->
+											<li id="item{{customerObjectTree.id}}"
+												ng-repeat="item in customerObjectTree[0].customerService.serviceItem.id">
+												<label><b>{{item}}</b>
+													<button ng-click="deleteItem($index)" id="" type="button"
+														class="btn btn-danger pull-right"
+														style="position: relative;">
+														<span class="entypo-cancel-squared"></span>&nbsp;&nbsp;Remover
+													</button>
+													<button ng-click="editItem($index)" id="" type="button"
+														data-toggle="modal" data-backdrop="static"
+														data-target="#destinationModal"
+														class="btn btn-info pull-right"
+														style="position: relative;">
+														<span class="entypo-pencil"></span>&nbsp;&nbsp;Editar
+													</button> </label>
+											</li>
 										</ul>
 									</div>
 								</div>
@@ -334,83 +444,3 @@
 		</div>
 	</div>
 </div>
-
-
-<!-- Modal Novo Destino Requisitado-->
-<div class="modal fade" id="destinationModal" role="dialog" aria-labelledby="myModalLabelDestination" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close"
-						data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h4 class="modal-title">Negociar Novo Destino</h4>
-				</div>
-				<div class="modal-body">
-					<div class="aling-form col-sm-12 nest text"
-						style="padding-top: 25px">
-						<form ng-controller="RequestedDestinationModalController as destinationModalCtrl">
-							<div class="box01">
-                            	<select id="destination-passenger-list" class="form-control" ng-model="destinationModalCtrl.destination">
-                                	 <c:forEach items="${destinationList}" var="destination">
-                                     	<option value="${destination.idDestination}">${destination.dtName}</option>
-                                     </c:forEach>
-								</select>
-							</div>
-
-							<div class="box02">
-								<div class="input-group ">
-									<span id="span-arrive" class="input-group-addon btn-success"><i
-										class="fa fa-calendar"></i></span>
-										<input id="see-in" type="text" class="form-control" placeholder="Ver em..." ng-model="destinationModalCtrl.seeIn"/>
-								</div>
-							</div>
-
-							<div class="box01">
-								<div class="input-group ">
-									<span id="span-departure" class="input-group-addon btn-success"><i
-										class="fa fa-calendar"></i></span> <input id="input-departure" type="text" class="form-control" placeholder="Data de Ida" ng-model="destinationModalCtrl.arrivalDate"/>
-								</div>
-							</div>
-
-							<div class="box02">
-								<div class="input-group ">
-									<span id="span-arrive" class="input-group-addon btn-success"><i
-										class="fa fa-calendar"></i></span> <input id="input-arrive" type="text" class="form-control" placeholder="Data de Volta" ng-model="destinationModalCtrl.departureDate"/>
-								</div>
-							</div>
-
-						<div class="box01">
-							<select id="combo-saleType" class="form-control" ng-model="destinationModalCtrl.saleType">
-								<c:forEach items="${listOfSaleTypes}" var="saleType">
-									<option value="${saleType.key}">${saleType.value}</option>
-								</c:forEach>
-							</select>
-						</div>
-
-						<div class="box02">
-								<div class="input-group ">
-									<span class="input-group-addon btn-success"><i
-										class="fa fa-money"></i></span> <input id="input-price" type="text" class="form-control" ng-model="destinationModalCtrl.valueNegotiated"/>
-								</div>
-							</div>
-							<div class="box03">
-								<textarea id="destination-observations" rows="3" placeholder="Observações..." class="form-control" style="min-height: 130px;" ng-model="destinationModalCtrl.negociationObservations"></textarea>
-							</div>
-
-							<div class="box02">
-								<div class="input-group skin skin-flat">
-									<input id="ckb-requested" type="checkbox" ng-model="destinationModalCtrl.requestedDestination" /> <label
-										id="ckb-label" for="ckb-requested">Destino Solicitado
-										pelo Passageiro?</label>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="modal-footer clear" style="margin: 0px;">
-					<button class="btn btn-primary" data-dismiss="modal" ng-click="addReqDestiantion()">Cadastrar</button>
-					<button class="btn btn-danger" data-dismiss="modal">Cancelar</button>
-				</div>
-			</div>
-		</div>
-	</div>

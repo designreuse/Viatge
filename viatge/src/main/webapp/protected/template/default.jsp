@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
-<html>
+<html ng-app="jooceboxCrm">
 <head>
 	<meta charset="utf-8">
     <title>JooceBox v1.0</title>
@@ -87,7 +87,7 @@
     
 </head>
 
-<body ng-app="JooceboxCrm">
+<body>
 
 	<tiles:insertAttribute name="navbar" />
 
@@ -106,6 +106,9 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/load.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+    
+    <!-- Carrega o modulo principal do Angular.js -->
+    <script src="${pageContext.request.contextPath}/resources/js/app-crm/app.js" type="text/javascript"></script>
 	    
     <!-- INICIO TABLE -->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/toggle_close.js"></script>
@@ -149,18 +152,15 @@
     
     <!-- Validação via JS -->
     <script src="${pageContext.request.contextPath}/resources/js/validate/jquery.validate.js"></script>
-    
-    <!-- Carrega o Angular Service Modal -->
-    <script src="${pageContext.request.contextPath}/resources/js/angular-modal-service.min.js" type="text/javascript"></script>
 
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>
     
-    <!-- Carrega o modulo principal do Angular.js -->
-    <script src="${pageContext.request.contextPath}/resources/js/app-crm/app.js" type="text/javascript"></script>
-    
     <!-- Importação do arquivo Angular.js da funcionalidade de "Atendimentos"-->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/service.js" type="text/javascript"></script>
+    
+    <!-- Importação do arquivo Angular.js do Modulo ui.bootstrap-->
+    <script src="${pageContext.request.contextPath}/resources/js/ui-bootstrap-tpls-0.13.0.min.js" type="text/javascript"></script>
 
     
 <script type="text/javascript">
