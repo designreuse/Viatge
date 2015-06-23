@@ -102,6 +102,10 @@ public class CustomerService implements Serializable {
 	public void setSituation(boolean situation) {
 		this.situation = situation;
 	}
+	
+	public boolean getSituation() {
+		return situation;
+	}
 
 	public Set<ServiceItem> getServiceItem() {
 		return serviceItem;

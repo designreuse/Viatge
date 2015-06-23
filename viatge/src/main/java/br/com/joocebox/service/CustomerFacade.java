@@ -52,20 +52,14 @@ public class CustomerFacade {
 		return countryRepsitory.findAll();
 	}
 	
-	public void save(Customer customer) {
+	public void save(Customer customer) {		
 		//Agrega uma lista de passageiros cadastrados a aquele cliente corrente
         customer.setSite(Boolean.FALSE);
-        
-        //Inicia um objeto do tipo CustomerService para abrir um atendimento.
-        CustomerService customerService = new CustomerService();        
-        //Atualiza a data da ultima abertura do serviço
-        customerService.setDate(new Date());
-        
-        //Seta 
-        //customerService.setSituation(Boolean.TRUE);         
-
-	
-		//return customerRepository.save(customer);
+		CustomerService cs = new CustomerService();
+		cs.setDate(new Date());
+		cs.setSituation(false);
+		customer.setCustomerService(cs);
+        customerRepository.save(customer);
 	}
 
 	public Customer getCustomerId(Long id) {
@@ -120,10 +114,10 @@ public class CustomerFacade {
 		oldCustomer.getCustomerAddress().setCity(customer.getCustomerAddress().getCity());
 		oldCustomer.getCustomerAddress().setComplement(customer.getCustomerAddress().getComplement());
 		oldCustomer.getCustomerAddress().setCountry(customer.getCustomerAddress().getCountry());
-		oldCustomer.getCustomerAddress().setNumber(oldCustomer.getCustomerAddress().getNumber());
-		oldCustomer.getCustomerAddress().setQuarter(oldCustomer.getCustomerAddress().getQuarter());
-		oldCustomer.getCustomerAddress().setState(oldCustomer.getCustomerAddress().getState());
-		oldCustomer.getCustomerAddress().setStreet(oldCustomer.getCustomerAddress().getStreet());
+		oldCustomer.getCustomerAddress().setNumber(customer.getCustomerAddress().getNumber());
+		oldCustomer.getCustomerAddress().setQuarter(customer.getCustomerAddress().getQuarter());
+		oldCustomer.getCustomerAddress().setState(customer.getCustomerAddress().getState());
+		oldCustomer.getCustomerAddress().setStreet(customer.getCustomerAddress().getStreet());
 		
 		oldCustomer.getCustomerPhone().setCelPhone(customer.getCustomerPhone().getCelPhone());
 		oldCustomer.getCustomerPhone().setHomePhone(customer.getCustomerPhone().getHomePhone());

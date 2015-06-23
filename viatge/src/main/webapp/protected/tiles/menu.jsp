@@ -31,7 +31,7 @@
                             <a class="tooltip-tip ajax-load" href="#" title="Clientes"><i class="entypo-user"></i><span>Clientes</span></a>
                             <ul>
                                 <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/customer-list" title="Submenu 01"><i class="entypo-doc-text"></i><span>Lista de Clientes</span></a></li>
-                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/add-service" title="Submenu 02"><i class="entypo-newspaper"></i><span>Teste JSON</span></a></li>
+                                <li><a class="tooltip-tip2 ajax-load" href="${pageContext.request.contextPath}/auth/customer" title="Submenu 02"><i class="entypo-newspaper"></i><span>Novo Cliente</span></a></li>
                             </ul>
                         </li>
                         

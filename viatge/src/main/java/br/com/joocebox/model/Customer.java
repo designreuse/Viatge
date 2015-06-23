@@ -25,6 +25,7 @@ import org.eclipse.persistence.annotations.TenantDiscriminatorColumn;
 import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -46,6 +47,7 @@ public class Customer implements Serializable {
 	private Long tenantId;
 
 	@Column(name = "birth_date")
+    @DateTimeFormat(pattern="dd/MM/yyyy")
 	@Temporal(TemporalType.DATE)
 	private Date birthDate;
 

@@ -26,7 +26,37 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div id="bs-example-navbar-collapse-1" class="collapse navbar-collapse">
+				                <ul class="nav navbar-nav">
 
+                    <li class="dropdown">
+
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#"><i style="font-size:20px;" class="icon-conversation"></i><div class="noft-red">3</div></a>
+
+
+                        <ul style="margin: 11px 0 0 9px;" role="menu" class="dropdown-menu dropdown-wrap">
+                            <li>
+                                <a href="#">
+                                    Você tem um novo orçamento
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    Ei! Você tem 1 cliente próximo(s) de viajar!
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="#">
+                                    Um cliente acaba de voltar de viagem.
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                    </li>
+
+                </ul>
                 <div id="nt-title-container" class="navbar-left running-text visible-lg">
                     <ul class="date-top">
                         <li class="entypo-calendar" style="margin-right:5px"></li>

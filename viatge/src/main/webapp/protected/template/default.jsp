@@ -156,6 +156,9 @@
 	<!-- Funcionalidade de "Gestão de Equipes" -->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/staff.js" type="text/javascript"></script>
     
+    <!-- Funcionalidade de "Clientes" -->
+    <script src="${pageContext.request.contextPath}/resources/js/app-crm/customer.js" type="text/javascript"></script>
+    
     <!-- Importação do arquivo Angular.js da funcionalidade de "Atendimentos"-->
     <script src="${pageContext.request.contextPath}/resources/js/app-crm/service.js" type="text/javascript"></script>
     
